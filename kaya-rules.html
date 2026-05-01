@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Management Rules - Kaya Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --bg-card: #fff;
+      --ink: #1a1814;
+      --ink-soft: #5a544a;
+      --ink-faint: #8a8378;
+      --rule: #e5ddd0;
+      --accent: #b8421a;
+      --accent-soft: #f3d9c6;
+      --gold: #c89b3c;
+      --green: #4a7c59;
+      --amber: #c8852f;
+      --red: #b04a3a;
+      --grey: #8a8378;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 20% 50%, rgba(184, 66, 26, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(200, 155, 60, 0.03) 0%, transparent 50%),
+                  var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--rule);
+      backdrop-filter: blur(10px);
+      padding: 0.75rem 0;
+    }
+
+    .topnav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+    }
+
+    .topnav a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .topnav a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .topnav a.active,
+    .topnav a.home {
+      background: var(--accent);
+      color: var(--bg-card);
+    }
+
+    /* Main content */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Intro Banner */
+    .intro-banner {
+      background: var(--bg-card);
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      margin-bottom: 3rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--rule);
+    }
+
+    .intro-text {
+      font-size: 1.05rem;
+      color: var(--ink);
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.95rem;
+    }
+
+    /* Rule Cards */
+    .rule {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-radius: 0.75rem;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 4px 1fr;
+    }
+
+    .rule.critical {
+      border-left-color: var(--red);
+    }
+
+    .rule.important {
+      border-left-color: var(--amber);
+    }
+
+    .rule.standard {
+      border-left-color: var(--green);
+    }
+
+    .rule-border-critical {
+      background: var(--red);
+    }
+
+    .rule-border-important {
+      background: var(--amber);
+    }
+
+    .rule-border-standard {
+      background: var(--green);
+    }
+
+    .rule-content {
+      padding: 1.5rem;
+    }
+
+    .rule-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .rule-text {
+      font-weight: 600;
+      color: var(--ink);
+      font-size: 1.05rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge.always {
+      background: rgba(74, 124, 89, 0.2);
+      color: var(--green);
+    }
+
+    .badge.never {
+      background: rgba(176, 74, 58, 0.2);
+      color: var(--red);
+    }
+
+    .badge.caution {
+      background: rgba(200, 133, 47, 0.2);
+      color: var(--amber);
+    }
+
+    .badge.paused {
+      background: rgba(200, 133, 47, 0.2);
+      color: var(--amber);
+    }
+
+    .badge.strict {
+      background: rgba(200, 133, 47, 0.2);
+      color: var(--amber);
+    }
+
+    .badge.priority {
+      background: rgba(200, 133, 47, 0.2);
+      color: var(--amber);
+    }
+
+    .rule-description {
+      color: var(--ink-soft);
+      margin-top: 0.75rem;
+    }
+
+    .rule-description ul {
+      list-style: none;
+      padding-left: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .rule-description li {
+      margin-bottom: 0.5rem;
+      position: relative;
+      padding-left: 1rem;
+    }
+
+    .rule-description li:before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    .page-footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--ink-faint);
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 1.75rem;
+      }
+
+      .topnav-inner {
+        padding: 0 1rem;
+      }
+
+      main {
+        padding: 1.5rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <a href="index.html" class="home">&larr; Dashboard</a>
+      <a href="kaya-commands.html">Commands</a>
+      <a href="kaya-routine.html">Routine</a>
+      <a href="kaya-diet.html">Diet</a>
+      <a href="kaya-training.html">Training</a>
+      <a href="kaya-behaviour.html">Behaviour</a>
+      <a href="kaya-grooming.html">Grooming</a>
+      <a href="kaya-health.html">Health</a>
+      <a href="kaya-team.html">Team</a>
+      <a href="kaya-rules.html" class="active">Rules</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <h1 class="page-title">Management Rules</h1>
+      <p class="page-subtitle">Non-negotiable protocols for anyone handling Kaya</p>
+    </div>
+
+    <div class="intro-banner">
+      <p class="intro-text">Read this page first if you're looking after Kaya. These rules exist because they work — breaking them undoes weeks of training progress. No exceptions, no shortcuts.</p>
+    </div>
+
+    <!-- Lead & Handling -->
+    <section class="section">
+      <h2 class="section-title">Lead & Handling</h2>
+
+      <div class="rule critical">
+        <div class="rule-border-critical"></div>
+        <div class="rule-content">
+          <div class="rule-header">
+            <span class="rule-text">Treat before lead removal</span>
+            <span class="badge always">Always</span>
+          </div>
+          <p class="rule-description">Every single time. No exceptions. Prevents warning bites.</p>
+        </div>
+      </div>
+
+      <div class="rule important">
+        <div class="rule-border-important"></div>
+        <div class="rule-content">
+          <div class="rule-header">
+            <span class="rule-text">House line on before pen exit</span>
+            <span class="badge always">Always</span>
+          </div>
+          <p class="rule-description">Every time. Control during high-arousal transition.</p>
+        </div>
+      </div>
+
+      <div class="rule important">
+        <div class="rule-border-important"></div>
+        <div class="rule-content">
+          <div class="rule-header">
+            <span class="rule-text">No sit at back door after toilet</span>
+            <span class="badge paused">Paused</span>
+          </div>
+          <p class="rule-description">Being rebuilt from scratch separately.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resource Guarding -->
+    <section class="section">
+      <h2 class="section-title">Resource Guarding</h2>
+
+      <div class="rule critical">
+        <div class="rule-border-critical"></div>
+        <div class="rule-content">
+          <div class="rule-header">
+            <span class="rule-text">Never reach in directly</span>
+            <span class="badge never">Never</span>
+          </div>
+          <p class="rule-description">Will trigger warning bite. Use treat scatter — she moves away, then remove object.</p>
+        </div>
+      </div>
+
+      <div class="rule important">
+        <div class="rule-border-important"></div>
+        <div class="rule-content">
+          <div class="rule-header">
+            <span class="rule-text">Dangerous objects — two-person approach</span>
+            <span class="badge caution">Caution</span>
+          </div>
+          <p class="rule-description">Treat scatter has ceiling-ed. One person distracts, one removes. Intervene at pickup moment.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pen & Rest -->
+    <section class="section">
+      <h2 class="section-title">Pen & Rest</h2>
+
+      <div class="rule standard">
+        <div class="rule-border-standard"></div>
+        <div class="rule-content">
+          <div class="rule-header">
+            <span class="rule-text">Treat every time going in pen</span>
+            <span class="badge always">Always</span>
+          </div>
+          <p class="rule-description">Apple slice. Positive association.</p>
+        </div>
+      </div>
+
+      <div class="rule critical">
+        <div class="rule-border-critical"></div>
+        <div class="rule-content">
+          <div class="rule-header">
+            <span class="rule-text">No toys in pen — ever</span>
+            <span class="badge never">Never</span>
+          </div>
+          <p class="rule-description">Pen is for rest. Low stimulation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Greeting Visitors -->
+    <section class="section">
+      <h2 class="section-title">Greeting Visitors</h2>
+
+      <div class="rule important">
+        <div class="rule-border-important"></div>
+        <div class="rule-content">
+          <div class="rule-header">
+            <span class="rule-text">20-minute ignore protocol</span>
+            <span class="badge always">Always</span>
+          </div>
+          <p class="rule-description">Arms crossed. No dangly items. No eye contact. No talking to her. If over-threshold: remove to garden, re-admit when calm. Showing visible progress — don't skip.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Second Floor Access -->
+    <section class="section">
+      <h2 class="section-title">Second Floor Access</h2>
+
+      <div class="rule important">
+        <div class="rule-border-important"></div>
+        <div class="rule-content">
+          <div class="rule-header">
+            <span class="rule-text">Earned privilege</span>
+            <span class="badge strict">Strict</span>
+          </div>
+          <p class="rule-description">Chew near Juliet balcony for environmental exposure. Single blanket grab, pillow grab, or table lick = immediate removal downstairs. One strike. No warnings. Consistent every time.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toilet -->
+    <section class="section">
+      <h2 class="section-title">Toilet</h2>
+
+      <div class="rule standard">
+        <div class="rule-border-standard"></div>
+        <div class="rule-content">
+          <div class="rule-header">
+            <span class="rule-text">Toilet is queued, not door-triggered</span>
+            <span class="badge always">Always</span>
+          </div>
+          <p class="rule-description">Initiated by owner on schedule, not by Kaya requesting. Prevents demand barking.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recall -->
+    <section class="section">
+      <h2 class="section-title">Recall</h2>
+
+      <div class="rule standard">
+        <div class="rule-border-standard"></div>
+        <div class="rule-content">
+          <div class="rule-header">
+            <span class="rule-text">Fish treats are recall-exclusive</span>
+            <span class="badge always">Always</span>
+          </div>
+          <p class="rule-description">Only for whistle recall. Never anything else. Keeps association clean and high-value.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Owner Consistency -->
+    <section class="section">
+      <h2 class="section-title">Owner Consistency</h2>
+
+      <div class="rule important">
+        <div class="rule-border-important"></div>
+        <div class="rule-content">
+          <div class="rule-header">
+            <span class="rule-text">Both owners follow same rules</span>
+            <span class="badge priority">Priority</span>
+          </div>
+          <p class="rule-description">Consistency is the central challenge. Inconsistency undoes training fastest. Calm-present-engaged disposition is active practice — nervous system co-regulation.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <p>Last updated May 2026 · For Kaya, the floof</p>
+    </footer>
+
+  </main>
+</body>
+</html>

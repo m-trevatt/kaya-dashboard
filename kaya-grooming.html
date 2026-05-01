@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grooming - Kaya Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --bg-card: #fff;
+      --ink: #1a1814;
+      --ink-soft: #5a544a;
+      --ink-faint: #8a8378;
+      --rule: #e5ddd0;
+      --accent: #b8421a;
+      --accent-soft: #f3d9c6;
+      --gold: #c89b3c;
+      --green: #4a7c59;
+      --amber: #c8852f;
+      --red: #b04a3a;
+      --grey: #8a8378;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 20% 50%, rgba(184, 66, 26, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(200, 155, 60, 0.03) 0%, transparent 50%),
+                  var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--rule);
+      backdrop-filter: blur(10px);
+      padding: 0.75rem 0;
+    }
+
+    .topnav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+    }
+
+    .topnav a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .topnav a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .topnav a.active,
+    .topnav a.home {
+      background: var(--accent);
+      color: var(--bg-card);
+    }
+
+    /* Main content */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .page-header {
+      margin-bottom: 3rem;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      font-weight: 400;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .status-dot.green {
+      background: var(--green);
+    }
+
+    .status-dot.amber {
+      background: var(--amber);
+    }
+
+    .status-dot.red {
+      background: var(--red);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card.alert {
+      border-left: 3px solid var(--red);
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card p {
+      color: var(--ink-soft);
+      margin-bottom: 1rem;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .subsection {
+      margin-bottom: 1.5rem;
+    }
+
+    .subsection:last-child {
+      margin-bottom: 0;
+    }
+
+    .subsection-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .detail {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: var(--ink);
+      min-width: 120px;
+    }
+
+    .detail-value {
+      color: var(--ink-soft);
+      flex: 1;
+    }
+
+    .highlight {
+      background: var(--accent-soft);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .alert-text {
+      background: rgba(176, 74, 58, 0.1);
+      border-left: 2px solid var(--red);
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 0.5rem;
+      color: var(--red);
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 1.75rem;
+      }
+
+      .card {
+        padding: 1.5rem;
+      }
+
+      .topnav-inner {
+        padding: 0 1rem;
+      }
+
+      main {
+        padding: 1.5rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <a href="index.html" class="home">&larr; Dashboard</a>
+      <a href="kaya-commands.html">Commands</a>
+      <a href="kaya-routine.html">Routine</a>
+      <a href="kaya-diet.html">Diet</a>
+      <a href="kaya-training.html">Training</a>
+      <a href="kaya-behaviour.html">Behaviour</a>
+      <a href="kaya-grooming.html" class="active">Grooming</a>
+      <a href="kaya-health.html">Health</a>
+      <a href="kaya-team.html">Team</a>
+      <a href="kaya-rules.html">Rules</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <h1 class="page-title">Grooming</h1>
+      <p class="page-subtitle">Coat care, desensitisation status, and professional groom notes</p>
+    </div>
+
+    <!-- Coat Section -->
+    <section class="section">
+      <h2 class="section-title">
+        Coat
+      </h2>
+
+      <div class="card">
+        <h3>
+          <span class="status-dot amber"></span>
+          Spring Coat Blow
+        </h3>
+        <p>Active shedding. First winter coat shedding. Regular brushing needed.</p>
+      </div>
+
+      <div class="card">
+        <h3>
+          <span class="status-dot green"></span>
+          Brushing
+        </h3>
+        <p>Generally good, gotten a lot better. Building consistency in routine.</p>
+      </div>
+
+      <div class="card alert">
+        <h3>
+          <span class="status-dot red"></span>
+          Persistent Knotting
+        </h3>
+        <p>Behind right ear. Deep inside. Must track across sessions or knots grow and can't be combed out.</p>
+        <div class="alert-text">
+          Monitor closely during every grooming session. Risk of matting increases exponentially if missed.
+        </div>
+      </div>
+    </section>
+
+    <!-- Nails Section -->
+    <section class="section">
+      <h2 class="section-title">
+        Nails
+      </h2>
+
+      <div class="card alert">
+        <h3>
+          <span class="status-dot red"></span>
+          Nail Clippers
+        </h3>
+        <p>Producing warning bites. Part of wider pattern. Needs systematic desensitisation.</p>
+      </div>
+    </section>
+
+    <!-- Paws & Nose Section -->
+    <section class="section">
+      <h2 class="section-title">
+        Paws & Nose
+      </h2>
+
+      <div class="card">
+        <h3>
+          <span class="status-dot amber"></span>
+          Paw Pads
+        </h3>
+        <p>Need regular shaving/trimming. Not done often enough. Add to recurring grooming checklist.</p>
+      </div>
+
+      <div class="card">
+        <h3>
+          <span class="status-dot amber"></span>
+          Balm Application
+        </h3>
+        <p>Nose and paw balm should be more regular. Not consistent. Establish daily or post-walk routine.</p>
+      </div>
+    </section>
+
+    <!-- Washing & Drying Section -->
+    <section class="section">
+      <h2 class="section-title">
+        Washing & Drying
+      </h2>
+
+      <div class="card">
+        <h3>
+          <span class="status-dot green"></span>
+          Washing
+        </h3>
+        <p>Good tolerance and behavior. No issues to address.</p>
+      </div>
+
+      <div class="card">
+        <h3>
+          <span class="status-dot amber"></span>
+          Blow Drying
+        </h3>
+        <p>Not great. Was desensitised early but lapsed. Needs reintroduction. Tolerance declining.</p>
+      </div>
+
+      <div class="card alert">
+        <h3>
+          <span class="status-dot red"></span>
+          Professional Groom Alert
+        </h3>
+        <p>Recent professional groom didn't fully dry. <span class="highlight">Dangerous for Samoyeds</span> — dense undercoat retains moisture, can cause skin problems/hot spots.</p>
+        <div class="alert-text">
+          Explicitly brief Eleanor on full dry requirement. Consider hands-on oversight or follow-up dry at home after professional grooms.
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Grooming Section -->
+    <section class="section">
+      <h2 class="section-title">
+        Professional Grooming
+      </h2>
+
+      <div class="card">
+        <div class="subsection">
+          <div class="subsection-title">Eleanor — Els' Dog Grooming</div>
+          <div class="detail">
+            <div class="detail-label">Contact</div>
+            <div class="detail-value">WhatsApp business account</div>
+          </div>
+          <div class="detail">
+            <div class="detail-label">Sessions</div>
+            <div class="detail-value">3 washes completed</div>
+          </div>
+          <div class="detail">
+            <div class="detail-label">Service</div>
+            <div class="detail-value">Mobile grooming van</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team & Contacts - Kaya Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --bg-card: #fff;
+      --ink: #1a1814;
+      --ink-soft: #5a544a;
+      --ink-faint: #8a8378;
+      --rule: #e5ddd0;
+      --accent: #b8421a;
+      --accent-soft: #f3d9c6;
+      --gold: #c89b3c;
+      --green: #4a7c59;
+      --amber: #c8852f;
+      --red: #b04a3a;
+      --grey: #8a8378;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 20% 50%, rgba(184, 66, 26, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(200, 155, 60, 0.03) 0%, transparent 50%),
+                  var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--rule);
+      backdrop-filter: blur(10px);
+      padding: 0.75rem 0;
+    }
+
+    .topnav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+    }
+
+    .topnav a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .topnav a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .topnav a.active,
+    .topnav a.home {
+      background: var(--accent);
+      color: var(--bg-card);
+    }
+
+    /* Main content */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .page-header {
+      margin-bottom: 3rem;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      font-weight: 400;
+    }
+
+    /* Emergency Banner */
+    .emergency-banner {
+      background: rgba(176, 74, 58, 0.1);
+      border-left: 4px solid var(--red);
+      padding: 1.5rem;
+      margin-bottom: 3rem;
+      border-radius: 0.5rem;
+    }
+
+    .emergency-title {
+      font-weight: 700;
+      color: var(--red);
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .emergency-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--red);
+      letter-spacing: 0.05em;
+    }
+
+    /* Team Cards */
+    .team-card {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .team-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .avatar-green { background: var(--green); }
+    .avatar-accent { background: var(--accent); }
+    .avatar-purple { background: #8b6ba8; }
+    .avatar-gold { background: var(--gold); }
+    .avatar-blue { background: #4a7c9e; }
+    .avatar-grey { background: var(--grey); }
+
+    .team-content h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .team-role {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .detail-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: var(--ink);
+      min-width: 110px;
+      font-size: 0.95rem;
+    }
+
+    .detail-value {
+      color: var(--ink-soft);
+      flex: 1;
+      font-size: 0.95rem;
+    }
+
+    .phone-number {
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.02em;
+      font-weight: 500;
+    }
+
+    .detail-value p {
+      margin-bottom: 0.75rem;
+    }
+
+    .detail-value p:last-child {
+      margin-bottom: 0;
+    }
+
+    .phone-emergency {
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 1.75rem;
+      }
+
+      .team-card {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .topnav-inner {
+        padding: 0 1rem;
+      }
+
+      main {
+        padding: 1.5rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <a href="index.html" class="home">&larr; Dashboard</a>
+      <a href="kaya-commands.html">Commands</a>
+      <a href="kaya-routine.html">Routine</a>
+      <a href="kaya-diet.html">Diet</a>
+      <a href="kaya-training.html">Training</a>
+      <a href="kaya-behaviour.html">Behaviour</a>
+      <a href="kaya-grooming.html">Grooming</a>
+      <a href="kaya-health.html">Health</a>
+      <a href="kaya-team.html" class="active">Team</a>
+      <a href="kaya-rules.html">Rules</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <h1 class="page-title">Team & Contacts</h1>
+      <p class="page-subtitle">Everyone involved in Kaya's care</p>
+    </div>
+
+    <!-- Emergency Banner -->
+    <div class="emergency-banner">
+      <div class="emergency-title">Emergency Vet</div>
+      <div class="emergency-number"><span class="phone-number">01634 780 073</span></div>
+    </div>
+
+    <!-- Medway Park Veterinary Centre -->
+    <div class="team-card">
+      <div class="team-avatar avatar-green">V</div>
+      <div class="team-content">
+        <h3>Medway Park Veterinary Centre</h3>
+        <div class="team-role">Vet</div>
+
+        <div class="detail-row">
+          <div class="detail-label">Address</div>
+          <div class="detail-value">46 Watling Street, Gillingham, Kent, ME7 2YN</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Phone</div>
+          <div class="detail-value"><span class="phone-number">01634 570 530</span></div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Emergency</div>
+          <div class="detail-value"><span class="phone-number phone-emergency">01634 780 073</span></div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Email</div>
+          <div class="detail-value">medwayparkvets@gmail.com</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Notes</div>
+          <div class="detail-value">Performed exploratory surgery at ~4-5 months. Familiar with Kaya's history.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adrian — Trainer -->
+    <div class="team-card">
+      <div class="team-avatar avatar-accent">A</div>
+      <div class="team-content">
+        <h3>Adrian</h3>
+        <div class="team-role">Trainer — ABC for Dogs</div>
+
+        <div class="detail-row">
+          <div class="detail-label">Phone</div>
+          <div class="detail-value"><span class="phone-number">07939 203 414</span></div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Sessions</div>
+          <div class="detail-value">2 completed. Available via message between sessions.</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Focus</div>
+          <div class="detail-value">Two primary issues addressed. Good success. Warning bite pattern needs raising urgently.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Eleanor — Groomer -->
+    <div class="team-card">
+      <div class="team-avatar avatar-purple">E</div>
+      <div class="team-content">
+        <h3>Eleanor</h3>
+        <div class="team-role">Groomer — Els' Dog Grooming</div>
+
+        <div class="detail-row">
+          <div class="detail-label">Contact</div>
+          <div class="detail-value">WhatsApp business account</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Sessions</div>
+          <div class="detail-value">3 washes completed</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Service</div>
+          <div class="detail-value">Mobile grooming van</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Notes</div>
+          <div class="detail-value">Last groom didn't fully dry — blow-dry tolerance needs work. Briefing on full dry requirement essential.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ria Newcombe — Dog Walker -->
+    <div class="team-card">
+      <div class="team-avatar avatar-gold">R</div>
+      <div class="team-content">
+        <h3>Ria Newcombe</h3>
+        <div class="team-role">Experienced Dog Walker</div>
+
+        <div class="detail-row">
+          <div class="detail-label">Phone</div>
+          <div class="detail-value"><span class="phone-number">07494 475 494</span></div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Experience</div>
+          <div class="detail-value">
+            <p>Taken Kaya to enclosed dog field with other dogs. Walked almost 2 hours. Can take Kaya in car and walk solo. Very confident with high-energy dogs.</p>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Potential</div>
+          <div class="detail-value">
+            <p>Could introduce Kaya to mature dog at her house. Does dog sitting — one household at a time only.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Briyen Haviska — Dog Sitter -->
+    <div class="team-card">
+      <div class="team-avatar avatar-blue">B</div>
+      <div class="team-content">
+        <h3>Briyen Haviska</h3>
+        <div class="team-role">Dog Sitter</div>
+
+        <div class="detail-row">
+          <div class="detail-label">Phone</div>
+          <div class="detail-value"><span class="phone-number">+39 351 559 1200</span></div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Schedule</div>
+          <div class="detail-value">Regular Fridays. One weekend sit.</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Experience</div>
+          <div class="detail-value">Student. One successful walk completed.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Michael & Esthefanea — Owners -->
+    <div class="team-card">
+      <div class="team-avatar avatar-grey">M</div>
+      <div class="team-content">
+        <h3>Michael & Esthefanea (Stef)</h3>
+        <div class="team-role">Owners</div>
+
+        <div class="detail-row">
+          <div class="detail-label">Context</div>
+          <div class="detail-value">Two owners. Consistency between them is the central challenge.</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Exercise</div>
+          <div class="detail-value">Both run 3x/week. Goal is canicross with Kaya.</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Approach</div>
+          <div class="detail-value">
+            <p>Significant investment in structured routine and positive reinforcement. Owner self-aware about nervous system co-regulation. Modelled behaviour from trainer is most effective.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</body>
+</html>

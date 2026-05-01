@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health & History - Kaya Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --bg-card: #fff;
+      --ink: #1a1814;
+      --ink-soft: #5a544a;
+      --ink-faint: #8a8378;
+      --rule: #e5ddd0;
+      --accent: #b8421a;
+      --accent-soft: #f3d9c6;
+      --gold: #c89b3c;
+      --green: #4a7c59;
+      --amber: #c8852f;
+      --red: #b04a3a;
+      --grey: #8a8378;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 20% 50%, rgba(184, 66, 26, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(200, 155, 60, 0.03) 0%, transparent 50%),
+                  var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--rule);
+      backdrop-filter: blur(10px);
+      padding: 0.75rem 0;
+    }
+
+    .topnav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+    }
+
+    .topnav a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .topnav a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .topnav a.active,
+    .topnav a.home {
+      background: var(--accent);
+      color: var(--bg-card);
+    }
+
+    /* Main content */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .page-header {
+      margin-bottom: 3rem;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      font-weight: 400;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Status Grid */
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .status-card {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .status-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-value {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: fit-content;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .status-dot.green {
+      background: var(--green);
+    }
+
+    .status-dot.amber {
+      background: var(--amber);
+    }
+
+    .status-dot.red {
+      background: var(--red);
+    }
+
+    .status-green {
+      color: var(--green);
+    }
+
+    .status-amber {
+      color: var(--amber);
+    }
+
+    .status-red {
+      color: var(--red);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+
+    .card p {
+      color: var(--ink-soft);
+      margin-bottom: 1rem;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .subsection {
+      margin-bottom: 1.5rem;
+    }
+
+    .subsection:last-child {
+      margin-bottom: 0;
+    }
+
+    .subsection-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline-item {
+      margin-bottom: 1.75rem;
+      position: relative;
+    }
+
+    .timeline-item:before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 0.25rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .timeline-item:after {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 1.5rem;
+      width: 2px;
+      height: calc(100% + 0.5rem);
+      background: var(--rule);
+    }
+
+    .timeline-item:last-child:after {
+      display: none;
+    }
+
+    .timeline-date {
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-content {
+      color: var(--ink-soft);
+    }
+
+    /* Detail rows */
+    .detail-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: var(--ink);
+      min-width: 130px;
+    }
+
+    .detail-value {
+      color: var(--ink-soft);
+      flex: 1;
+    }
+
+    .alert-banner {
+      background: rgba(200, 133, 47, 0.1);
+      border-left: 3px solid var(--amber);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      color: var(--amber);
+      font-weight: 500;
+    }
+
+    .phone-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 1.75rem;
+      }
+
+      .card {
+        padding: 1.5rem;
+      }
+
+      .topnav-inner {
+        padding: 0 1rem;
+      }
+
+      main {
+        padding: 1.5rem 1rem;
+      }
+
+      .status-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <a href="index.html" class="home">&larr; Dashboard</a>
+      <a href="kaya-commands.html">Commands</a>
+      <a href="kaya-routine.html">Routine</a>
+      <a href="kaya-diet.html">Diet</a>
+      <a href="kaya-training.html">Training</a>
+      <a href="kaya-behaviour.html">Behaviour</a>
+      <a href="kaya-grooming.html">Grooming</a>
+      <a href="kaya-health.html" class="active">Health</a>
+      <a href="kaya-team.html">Team</a>
+      <a href="kaya-rules.html">Rules</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <h1 class="page-title">Health & History</h1>
+      <p class="page-subtitle">Medical records, vaccinations, insurance, and future plans</p>
+    </div>
+
+    <!-- Current Status -->
+    <section class="section">
+      <h2 class="section-title">Current Status</h2>
+
+      <div class="status-grid">
+        <div class="status-card">
+          <div class="status-label">Weight</div>
+          <div class="status-value">~20 kg</div>
+        </div>
+        <div class="status-card">
+          <div class="status-label">Microchip</div>
+          <div class="status-value">
+            <span class="status-indicator status-green">
+              <span class="status-dot green"></span>
+              Registered
+            </span>
+          </div>
+        </div>
+        <div class="status-card">
+          <div class="status-label">Vaccinations</div>
+          <div class="status-value">
+            <span class="status-indicator status-green">
+              <span class="status-dot green"></span>
+              Up to date
+            </span>
+          </div>
+        </div>
+        <div class="status-card">
+          <div class="status-label">Deworming</div>
+          <div class="status-value">
+            <span class="status-indicator status-amber">
+              <span class="status-dot amber"></span>
+              Check schedule
+            </span>
+          </div>
+        </div>
+        <div class="status-card">
+          <div class="status-label">Spay Status</div>
+          <div class="status-value">Intact</div>
+          <p style="font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.5rem;">Planned after second season</p>
+        </div>
+        <div class="status-card">
+          <div class="status-label">Reproductive</div>
+          <div class="status-value">1 heat completed</div>
+          <p style="font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.5rem;">Recently finished</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Medical History -->
+    <section class="section">
+      <h2 class="section-title">Medical History</h2>
+
+      <div class="card">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">September 2025 (8 weeks)</div>
+            <div class="timeline-content">
+              <p>Acquired from family near Leamington Spa. Not a breeder.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">September — November 2025</div>
+            <div class="timeline-content">
+              <p>Puppy vaccinations completed.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">November — December 2025 (4–5 months)</div>
+            <div class="timeline-content">
+              <p><strong>Vomiting episode.</strong> Chewing mobile phone fragment. Vomit smelled like faeces — concern about bowel perforation.</p>
+              <p style="margin-top: 0.75rem;"><strong>Workup at Medway Park:</strong> Physical exam nothing, blood test nothing, scan nothing. Exploratory surgery while sedated — no stricture, no perforations. Conclusion: GI issue, not serious.</p>
+              <p style="margin-top: 0.75rem;"><strong>Recovery:</strong> Couple days low energy, body suit, normal within weeks.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">November 2025</div>
+            <div class="timeline-content">
+              <p>Insurance claim CL2512138494 submitted. Approved Jan 2026. Used most of annual cover.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">March — April 2026</div>
+            <div class="timeline-content">
+              <p><strong>First heat completed.</strong> Measurable improvement in arousal baseline.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Insurance -->
+    <section class="section">
+      <h2 class="section-title">Insurance</h2>
+
+      <div class="card">
+        <div class="alert-banner">
+          Most of annual cover used. Be careful with vet costs this year.
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Provider</div>
+          <div class="detail-value">More Than Pet Insurance</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Policy</div>
+          <div class="detail-value">MTHP25000167365</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Claim</div>
+          <div class="detail-value">CL2512138494 (Approved) — GI investigation</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Status</div>
+          <div class="detail-value">
+            <span class="status-indicator status-amber">
+              <span class="status-dot amber"></span>
+              Moderate caution
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vet Details -->
+    <section class="section">
+      <h2 class="section-title">Veterinary Practice</h2>
+
+      <div class="card">
+        <h3>Medway Park Veterinary Centre</h3>
+
+        <div class="detail-row">
+          <div class="detail-label">Address</div>
+          <div class="detail-value">46 Watling Street, Gillingham, Kent, ME7 2YN</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Phone</div>
+          <div class="detail-value"><span class="phone-number">01634 570 530</span></div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Emergency</div>
+          <div class="detail-value" style="color: var(--red); font-weight: 600;"><span class="phone-number">01634 780 073</span></div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Email</div>
+          <div class="detail-value">medwayparkvets@gmail.com</div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label">Notes</div>
+          <div class="detail-value">Performed exploratory surgery at ~4–5 months. Familiar with Kaya's full history.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Future Plans -->
+    <section class="section">
+      <h2 class="section-title">Future Plans</h2>
+
+      <div class="card">
+        <div class="subsection">
+          <div class="subsection-title">Spaying</div>
+          <p>After second season. Allowing hormonal maturation. Current heat cycle completed — watch for second heat and plan spay procedure accordingly.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Deworming Schedule</div>
+          <p>Needs confirming with vet. Done once — check protocol with Medway Park to establish ongoing schedule.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

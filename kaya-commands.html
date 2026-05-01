@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Repertoire — Kaya Santos-Trevatt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f4efe6;
+            --bg-card: #fff;
+            --ink: #1a1814;
+            --ink-soft: #5a544a;
+            --ink-faint: #8a8378;
+            --rule: #e5ddd0;
+            --accent: #b8421a;
+            --accent-soft: #f3d9c6;
+            --gold: #c89b3c;
+            --green: #4a7c59;
+            --amber: #c8852f;
+            --red: #b04a3a;
+            --grey: #8a8378;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at 50% 0%, rgba(184, 66, 26, 0.05), rgba(184, 66, 26, 0.02)), var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+        }
+
+        /* Top Navigation */
+        .topnav {
+            position: sticky;
+            top: 0;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--rule);
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+
+        .topnav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .topnav a {
+            text-decoration: none;
+            color: var(--ink-soft);
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            transition: all 0.2s ease;
+            background: var(--bg);
+            display: inline-block;
+        }
+
+        .topnav a:hover {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+        .topnav a.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .topnav a.home {
+            margin-right: auto;
+            font-weight: 600;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.125rem;
+            color: var(--ink-soft);
+            font-weight: 500;
+        }
+
+        /* Tier Navigation */
+        .tier-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tier-btn {
+            background: var(--bg);
+            border: 1px solid var(--rule);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            color: var(--ink-soft);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tier-btn:hover {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+        .tier-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* Tier Section */
+        .tier-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tier-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .tier-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--ink);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--rule);
+        }
+
+        /* Command Card */
+        .command-list {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .command {
+            background: var(--bg-card);
+            border: 1px solid var(--rule);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .command-header {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .command-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--ink);
+            flex-grow: 1;
+        }
+
+        .command-type {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.35rem 0.65rem;
+            border-radius: 0.35rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .type-command {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+        .type-warning {
+            background: #fde8d8;
+            color: var(--amber);
+        }
+
+        .type-cue {
+            background: #f5f0e0;
+            color: var(--gold);
+        }
+
+        .type-release {
+            background: #d8e8db;
+            color: var(--green);
+        }
+
+        .type-praise {
+            background: #e0d8e8;
+            color: #7a5a9a;
+        }
+
+        .reliability {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .reliability-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .reliability-green { background: var(--green); }
+        .reliability-amber { background: var(--amber); }
+        .reliability-red { background: var(--red); }
+        .reliability-grey { background: var(--grey); }
+
+        .reliability-label {
+            font-size: 0.75rem;
+            color: var(--ink-faint);
+            font-weight: 600;
+        }
+
+        .command-body {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .command-field {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .command-label {
+            color: var(--ink-faint);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.5px;
+        }
+
+        .command-value {
+            color: var(--ink-soft);
+        }
+
+        .gesture {
+            background: var(--bg);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.35rem;
+            border-left: 3px solid var(--gold);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .expect {
+            background: var(--bg);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.35rem;
+            border-left: 3px solid var(--green);
+        }
+
+        .reality {
+            background: var(--bg);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.35rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--ink-faint);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--rule);
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tier-nav {
+                gap: 0.35rem;
+            }
+
+            .tier-btn {
+                padding: 0.6rem 0.9rem;
+                font-size: 0.75rem;
+            }
+
+            .command-field {
+                grid-template-columns: 1fr;
+                gap: 0.35rem;
+            }
+
+            .command-label {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="topnav"><div class="topnav-inner">
+        <a href="index.html" class="home">&larr; Dashboard</a>
+        <a href="kaya-commands.html" class="active">Commands</a>
+        <a href="kaya-routine.html">Routine</a>
+        <a href="kaya-diet.html">Diet</a>
+        <a href="kaya-training.html">Training</a>
+        <a href="kaya-behaviour.html">Behaviour</a>
+        <a href="kaya-grooming.html">Grooming</a>
+        <a href="kaya-health.html">Health</a>
+        <a href="kaya-team.html">Team</a>
+        <a href="kaya-rules.html">Rules</a>
+    </div></nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Command Repertoire</h1>
+            <p>42 cues, gestures & honest reliability notes</p>
+        </div>
+
+        <div class="tier-nav">
+            <button class="tier-btn active" onclick="showTier('tier1')">Tier 1 — Safety (8)</button>
+            <button class="tier-btn" onclick="showTier('tier2')">Tier 2 — Core (7)</button>
+            <button class="tier-btn" onclick="showTier('tier3')">Tier 3 — Walking (9)</button>
+            <button class="tier-btn" onclick="showTier('tier4')">Tier 4 — Engagement (6)</button>
+            <button class="tier-btn" onclick="showTier('tier5')">Tier 5 — Household (3)</button>
+            <button class="tier-btn" onclick="showTier('tier6')">Tier 6 — Markers (2)</button>
+            <button class="tier-btn" onclick="showTier('tier7')">Tier 7 — Tricks (7)</button>
+        </div>
+
+        <!-- Tier 1 -->
+        <div id="tier1" class="tier-section active">
+            <h2 class="tier-title">Tier 1: Safety-Critical</h2>
+            <div class="command-list">
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Kaya</div>
+                        <span class="command-type type-cue">Cue</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Hit and miss</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Give attention immediately</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Hit and miss</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Come</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Ok with incentives</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">One short clap, palm outfacing</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Stops and returns within touching distance</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Ok with clear incentives or small lead pull</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Stop</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-grey"></div>
+                            <span class="reliability-label">Untested</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Full arm raised above head</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Immediately stop in place</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Only practiced, not tested</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Wait</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">General area</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">One finger pointed vertically</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Pause in place until return or another command</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Waits in the general area</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Leave it</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Prevention best</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Quick lead snap</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Not grab item</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Prevention best</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Drop</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-red"></div>
+                            <span class="reliability-label">Very unreliable</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Finger pointed down</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Drop item on ground</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Good with toys, very bad with anything else</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Ah-ah</div>
+                        <span class="command-type type-warning">Warning</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Hit and miss</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Stops actions immediately</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Hit and miss</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Careful</div>
+                        <span class="command-type type-warning">Warning</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Hit and miss</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Choose another action or be moved</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Hit and miss</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 2 -->
+        <div id="tier2" class="tier-section">
+            <h2 class="tier-title">Tier 2: Core Obedience</h2>
+            <div class="command-list">
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Sit</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">0–10s delay</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Flat palm up, or slight vertical pressure with lead</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Sits in place</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">0–10s delay</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Down</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">0–10s delay</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">One finger pointing floor, or touch floor</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Lays down flat</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Lays mostly down, 0–10s delay</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Break</div>
+                        <span class="command-type type-release">Release</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Very solid</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Release from down for treat/food</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Very solid</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">OK</div>
+                        <span class="command-type type-cue">Cue</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Permission to continue</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Off</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-red"></div>
+                            <span class="reliability-label">Not great</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Get off person or counter</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Not great</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Out</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Requires intensity</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Flick hand away</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Leave area immediately</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Requires intensity</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Back up</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Good</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Hand gesturing away</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Moves backwards one dog length</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Little bounce and bark, but does it</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 3 -->
+        <div id="tier3" class="tier-section">
+            <h2 class="tier-title">Tier 3: Walking & Positioning</h2>
+            <div class="command-list">
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Heel</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Inconsistent</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Left flat palm facing back at left leg</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Walk behind/parallel to left leg</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Goes to left leg and sits, goes out of heel immediately</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">This way</div>
+                        <span class="command-type type-cue">Cue</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Reliable</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Change direction</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Changes direction</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Pretty reliable</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Let's go</div>
+                        <span class="command-type type-cue">Cue</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Leaving together</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Walkies</div>
+                        <span class="command-type type-cue">Cue</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Comes close</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Attention, goes to place and waits</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Comes close</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">On ya' spot</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Fairly reliable</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Point</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Go to place and wait</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Fairly reliable</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Front</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Not bad</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Flat palm turned forward at couch</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Comes in front, nose to hand</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Not bad</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Middle</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Not bad</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Move legs wide</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Between legs and waits</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Not bad, but won't stay long</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Under</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Won't stay</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Point under legs</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Go under seated legs and lay down</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Goes under, doesn't always stay</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Up</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Reliable</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Jump up on item</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Reliable</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 4 -->
+        <div id="tier4" class="tier-section">
+            <h2 class="tier-title">Tier 4: Engagement & Focus</h2>
+            <div class="command-list">
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Look</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Pretty reliable</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Treat near right eye</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Eye contact immediately</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Pretty reliable</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">What's this?</div>
+                        <span class="command-type type-cue">Cue</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Pretty reliable</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Give attention and come</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Pretty reliable</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Find it</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Pretty decent</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Vague wave</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Sniff for treats on ground</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Pretty decent</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Go Smell</div>
+                        <span class="command-type type-release">Release</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Loves it</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Explore freely</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Loves it</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Gentle</div>
+                        <span class="command-type type-cue">Cue</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Pretty reliable</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Lower energy, stop biting/wrestling</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Pretty reliable</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Enough</div>
+                        <span class="command-type type-cue">Cue</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Reliable</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Stop activity, get reward, don't return</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Reliable</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 5 -->
+        <div id="tier5" class="tier-section">
+            <h2 class="tier-title">Tier 5: Household</h2>
+            <div class="command-list">
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Bed time / night night</div>
+                        <span class="command-type type-cue">Cue</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Needs encouragement</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Button press</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Goes to pen, sits at entrance</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Needs encouragement</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Wee wee</div>
+                        <span class="command-type type-cue">Cue</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Will do</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Toilet</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Will do, but tries to lick it too</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Belly Rubs</div>
+                        <span class="command-type type-cue">Cue</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Going to touch belly</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 6 -->
+        <div id="tier6" class="tier-section">
+            <h2 class="tier-title">Tier 6: Markers & Praise</h2>
+            <div class="command-list">
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Yes</div>
+                        <span class="command-type type-praise">Praise</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Correct action done</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Good girl</div>
+                        <span class="command-type type-praise">Praise</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Continue same action</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 7 -->
+        <div id="tier7" class="tier-section">
+            <h2 class="tier-title">Tier 7: Tricks</h2>
+            <div class="command-list">
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Paw</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Reliable</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Hold out hand</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Give mirrored hand</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Reliable</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">High five</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Reliable</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Hold palm up</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Touch paw to palm</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Reliable</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Kiss</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Reliable</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Flat palm presented</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Nose to palm</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Reliable</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Catch</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-green"></div>
+                            <span class="reliability-label">Reliable</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Holding item</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Catch in mouth</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Reliable</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Spin</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Hit and miss</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Twirl finger</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Spin in direction of finger</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Hit and miss</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Wave / bye bye</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-amber"></div>
+                            <span class="reliability-label">Only in sit</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Wave hand</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Sits and raises paw above head</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Does after delay, only in sit</div></div>
+                    </div>
+                </div>
+
+                <div class="command">
+                    <div class="command-header">
+                        <div class="command-name">Roll over</div>
+                        <span class="command-type type-command">Command</span>
+                        <div class="reliability">
+                            <div class="reliability-dot reliability-red"></div>
+                            <span class="reliability-label">Out of date</span>
+                        </div>
+                    </div>
+                    <div class="command-body">
+                        <div class="command-field"><span class="command-label">Gesture</span><div class="gesture">Twirl finger</div></div>
+                        <div class="command-field"><span class="command-label">Expect</span><div class="expect">Full roll on back</div></div>
+                        <div class="command-field"><span class="command-label">Reality</span><div class="reality">Out of date command</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Last updated May 2026 · For Kaya, the floof</p>
+    </footer>
+
+    <script>
+        function showTier(tierId) {
+            // Hide all tier sections
+            const sections = document.querySelectorAll('.tier-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Show selected tier
+            document.getElementById(tierId).classList.add('active');
+
+            // Update button states
+            const buttons = document.querySelectorAll('.tier-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

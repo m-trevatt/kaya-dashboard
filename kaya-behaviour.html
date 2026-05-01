@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Behaviour Profiles - Kaya Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --bg-card: #fff;
+      --ink: #1a1814;
+      --ink-soft: #5a544a;
+      --ink-faint: #8a8378;
+      --rule: #e5ddd0;
+      --accent: #b8421a;
+      --accent-soft: #f3d9c6;
+      --gold: #c89b3c;
+      --green: #4a7c59;
+      --amber: #c8852f;
+      --red: #b04a3a;
+      --grey: #8a8378;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 20% 50%, rgba(184, 66, 26, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(200, 155, 60, 0.03) 0%, transparent 50%),
+                  var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--rule);
+      backdrop-filter: blur(10px);
+      padding: 0.75rem 0;
+    }
+
+    .topnav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+    }
+
+    .topnav a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .topnav a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .topnav a.active,
+    .topnav a.home {
+      background: var(--accent);
+      color: var(--bg-card);
+    }
+
+    /* Main content */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .page-header {
+      margin-bottom: 3rem;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      font-weight: 400;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.375rem 0.875rem;
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge.red {
+      background: rgba(176, 74, 58, 0.15);
+      color: var(--red);
+    }
+
+    .badge.amber {
+      background: rgba(200, 133, 47, 0.15);
+      color: var(--amber);
+    }
+
+    .badge.green {
+      background: rgba(74, 124, 89, 0.15);
+      color: var(--green);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+
+    .card p {
+      color: var(--ink-soft);
+      margin-bottom: 1rem;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .subsection {
+      margin-bottom: 1.5rem;
+    }
+
+    .subsection:last-child {
+      margin-bottom: 0;
+    }
+
+    .subsection-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .list-item {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .list-item:before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .highlight {
+      background: var(--accent-soft);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .detail-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: var(--ink);
+      min-width: 120px;
+    }
+
+    .detail-value {
+      color: var(--ink-soft);
+      flex: 1;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 1.75rem;
+      }
+
+      .card {
+        padding: 1.5rem;
+      }
+
+      .topnav-inner {
+        padding: 0 1rem;
+      }
+
+      main {
+        padding: 1.5rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <a href="index.html" class="home">&larr; Dashboard</a>
+      <a href="kaya-commands.html">Commands</a>
+      <a href="kaya-routine.html">Routine</a>
+      <a href="kaya-diet.html">Diet</a>
+      <a href="kaya-training.html">Training</a>
+      <a href="kaya-behaviour.html" class="active">Behaviour</a>
+      <a href="kaya-grooming.html">Grooming</a>
+      <a href="kaya-health.html">Health</a>
+      <a href="kaya-team.html">Team</a>
+      <a href="kaya-rules.html">Rules</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <h1 class="page-title">Behaviour Profiles</h1>
+      <p class="page-subtitle">Arousal, guarding, socialisation, and fear profiles with management strategies</p>
+    </div>
+
+    <!-- Arousal Profile -->
+    <section class="section">
+      <h2 class="section-title">
+        Arousal Profile
+        <span class="badge red">Elevated baseline</span>
+      </h2>
+
+      <div class="card">
+        <div class="subsection">
+          <div class="subsection-title">Baseline</div>
+          <p>Elevated beyond typical adolescent norms — confirmed by trainer. First heat produced measurable improvement but still high.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Triggers</div>
+          <ul>
+            <li class="list-item">Greetings with known people</li>
+            <li class="list-item">Seeing other dogs</li>
+            <li class="list-item">Lead going on</li>
+            <li class="list-item">Transitions between activities</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Key Pattern</div>
+          <p><span class="highlight">Energy mirroring and escalation.</span> If stimulus reflects energy back, she escalates immediately. Calm dog = very excited but manageable. High-energy dog = matches and doubles. Same with people. Pre-walk animation is frustration-based, not positive excitement.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Management</div>
+          <ul>
+            <li class="list-item">Engage-disengage practiced regularly</li>
+            <li class="list-item">Owner working on calm-present-engaged disposition</li>
+            <li class="list-item">Nervous system co-regulation</li>
+            <li class="list-item">Modelled behaviour from trainer is most effective learning tool</li>
+            <li class="list-item">Ball and tug reinstated post-heat without problems</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Guarding Profile -->
+    <section class="section">
+      <h2 class="section-title">
+        Guarding Profile
+        <span class="badge amber">Specific, not generalised</span>
+      </h2>
+
+      <div class="card">
+        <div class="subsection">
+          <div class="subsection-title">Scope</div>
+          <p>Self-discovered/stolen objects only. No food bowl guarding, no space guarding.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Indoors</div>
+          <p>Glasses case, sharp tin lids, screws, bolts — genuinely dangerous items. Protocol: treat scatter, remove when she moves away, never reach in directly. Protocol ceiling reached for high-value dangerous items — she's learned the pattern and locks jaw pre-emptively.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Outdoors</div>
+          <p>Improving. Dynamic movement helping natural drop. Scavenging reduced but ongoing.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Socialisation Profile -->
+    <section class="section">
+      <h2 class="section-title">
+        Socialisation Profile
+        <span class="badge amber">Work in progress</span>
+      </h2>
+
+      <div class="card">
+        <div class="subsection">
+          <div class="subsection-title">Other Dogs</div>
+          <p>Calm dog = mostly well behaved but very excited (can mask anxiety). High-energy dog = matches and doubles. Parallel walking building calm template. Whistle recall worked for fence-reactive moment.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">People</div>
+          <p>Same energy-mirroring pattern. Greeting protocol in place (20-min ignore). Visible progress.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">On-Walk Management</div>
+          <p>Cross road or stick to one side. Sometimes sit, sometimes distraction treats on nose. Foot-planting when caught too close — she plants feet and won't move. Management: ask person to move on, encourage four-feet stance. After trigger passes, sometimes follows behind at distance.</p>
+          <p style="margin-top: 0.75rem;">Engage-disengage: "yes" for looking at trigger, "yes" for looking away, treating at correct moments.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Untested</div>
+          <p>Cats, squirrels, other small animals.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fear Profile -->
+    <section class="section">
+      <h2 class="section-title">
+        Fear Profile
+        <span class="badge green">Minimal</span>
+      </h2>
+
+      <div class="card">
+        <div class="subsection">
+          <div class="subsection-title">Response History</div>
+          <p>Single fear response to sail dropping at front of house (boat yard nearby). Not a problem since.</p>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Unafraid Of</div>
+          <ul>
+            <li class="list-item">Fireworks</li>
+            <li class="list-item">Thunder</li>
+            <li class="list-item">Being alone</li>
+            <li class="list-item">New environments (excited/arousal, not fear)</li>
+            <li class="list-item">Handling</li>
+            <li class="list-item">Car travel (settles after initial unsettledness)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

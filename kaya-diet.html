@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaya — Diet &amp; Treats</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4efe6;--bg-card:#fff;--ink:#1a1814;--ink-soft:#5a544a;--ink-faint:#8a8378;--rule:#e5ddd0;--accent:#b8421a;--accent-soft:#f3d9c6;--green:#4a7c59;--amber:#c8852f;--red:#b04a3a}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;background-image:radial-gradient(circle at 20% 10%,rgba(184,66,26,.04) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(200,155,60,.05) 0%,transparent 50%)}.container{max-width:720px;margin:0 auto;padding:32px 20px 80px}
+.topnav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--rule);padding:10px 20px;margin:0 -20px 32px}.topnav-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;overflow-x:auto;scrollbar-width:none}.topnav-inner::-webkit-scrollbar{display:none}.topnav a{font-size:13px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--bg-card);white-space:nowrap;transition:all .15s;flex-shrink:0}.topnav a:hover{color:var(--ink);border-color:var(--ink-faint)}.topnav a.home{background:var(--ink);color:var(--bg);border-color:var(--ink)}.topnav a.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.page-header{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--rule)}.page-header h1{font-weight:800;font-size:clamp(28px,7vw,40px);letter-spacing:-.02em;margin-bottom:6px}.page-header h1 em{font-style:normal;color:var(--accent)}.page-header p{font-size:14px;color:var(--ink-soft)}
+.section{margin-bottom:36px}.section-title{font-weight:700;font-size:18px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.kibble-card{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;padding:18px 20px;margin-bottom:12px}.kibble-card.transitioning{border-left:4px solid var(--amber)}.kibble-label{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:var(--ink-faint);margin-bottom:4px}.kibble-label.current{color:var(--green)}.kibble-label.new{color:var(--amber)}.kibble-name{font-weight:600;font-size:16px;margin-bottom:4px}.kibble-detail{font-size:13px;color:var(--ink-soft)}
+.treat-list{display:flex;flex-direction:column;gap:10px}.treat-item{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;padding:14px 18px;display:flex;align-items:baseline;gap:12px}.treat-value{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;padding:3px 8px;border-radius:2px;flex-shrink:0;font-weight:500}.treat-value.highest{background:#f5e0d0;color:var(--red)}.treat-value.high{background:#fce8d0;color:var(--amber)}.treat-value.medium{background:#e8e1d0;color:#6a5a30}.treat-value.low{background:#e0e0d8;color:var(--ink-faint)}.treat-value.exclusive{background:#d8e5d8;color:var(--green)}.treat-name{font-weight:600;font-size:15px}.treat-note{font-size:13px;color:var(--ink-soft)}
+.supplement-card{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--green);border-radius:4px;padding:16px 18px;margin-bottom:10px}.supplement-name{font-weight:600;font-size:15px;margin-bottom:4px}.supplement-detail{font-size:13px;color:var(--ink-soft)}
+.water-card{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;padding:16px 18px;display:flex;align-items:center;gap:12px}.water-icon{font-size:24px}.water-text{font-size:14px;color:var(--ink-soft)}.water-text strong{color:var(--ink)}
+footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid var(--rule);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.2em}
+@media(max-width:480px){.container{padding:24px 16px 60px}.topnav{margin-left:-16px;margin-right:-16px;padding:8px 16px}}
+</style>
+</head>
+<body>
+<nav class="topnav"><div class="topnav-inner"><a href="index.html" class="home">&larr; Dashboard</a><a href="kaya-commands.html">Commands</a><a href="kaya-routine.html">Routine</a><a href="kaya-diet.html" class="active">Diet</a><a href="kaya-training.html">Training</a><a href="kaya-behaviour.html">Behaviour</a><a href="kaya-grooming.html">Grooming</a><a href="kaya-health.html">Health</a><a href="kaya-team.html">Team</a><a href="kaya-rules.html">Rules</a></div></nav>
+<div class="container">
+<div class="page-header"><h1>Diet &amp; <em>Treats</em></h1><p>Kibble, treat hierarchy, supplements, and feeding notes</p></div>
+<div class="section">
+  <div class="section-title">Kibble &mdash; 300g daily</div>
+  <div class="kibble-card"><div class="kibble-label current">Previous / current</div><div class="kibble-name">IAMS Complete Dry Dog Food &mdash; Puppy Large Breeds, Chicken (12kg)</div><div class="kibble-detail">Turning her nose up but still eating most of it within 24 hours.</div></div>
+  <div class="kibble-card transitioning"><div class="kibble-label new">Transitioning to</div><div class="kibble-name">Eukanuba Complete Dry Dog Food &mdash; Puppy Large &amp; Giant Breeds, Fresh Chicken (15kg)</div><div class="kibble-detail">Transition in progress.</div></div>
+</div>
+<div class="section">
+  <div class="section-title">Treat hierarchy</div>
+  <div class="treat-list">
+    <div class="treat-item"><span class="treat-value exclusive">Recall only</span><div><div class="treat-name">Fish treats</div><div class="treat-note">In a bag, exclusively for whistle recall. Never used for anything else.</div></div></div>
+    <div class="treat-item"><span class="treat-value highest">Highest</span><div><div class="treat-name">Woven dehydrated intestine chews</div><div class="treat-note">Very long lasting. Big favourite.</div></div></div>
+    <div class="treat-item"><span class="treat-value high">High</span><div><div class="treat-name">Chicken jerky strips</div><div class="treat-note">Dog-specific chicken strips.</div></div></div>
+    <div class="treat-item"><span class="treat-value high">High</span><div><div class="treat-name">Cheese</div><div class="treat-note">High value, used for training.</div></div></div>
+    <div class="treat-item"><span class="treat-value high">High</span><div><div class="treat-name">Homemade dehydrated sweet potato</div><div class="treat-note">Big fan. Made at home.</div></div></div>
+    <div class="treat-item"><span class="treat-value medium">Medium</span><div><div class="treat-name">Peanut butter</div><div class="treat-note">Small amounts. Used for enrichment.</div></div></div>
+    <div class="treat-item"><span class="treat-value medium">Medium</span><div><div class="treat-name">Yoghurt / frozen yoghurt lick mats</div><div class="treat-note">Used for decompression and enrichment.</div></div></div>
+    <div class="treat-item"><span class="treat-value medium">Medium</span><div><div class="treat-name">Kongs</div><div class="treat-note">Filled with apple, kibble, and carrot. Decompression tool.</div></div></div>
+    <div class="treat-item"><span class="treat-value low">Low</span><div><div class="treat-name">Small bone-shaped treats</div><div class="treat-note">Milk bone type. General purpose.</div></div></div>
+    <div class="treat-item"><span class="treat-value low">Low</span><div><div class="treat-name">Apple slices</div><div class="treat-note">Small slice every time she goes in the pen.</div></div></div>
+    <div class="treat-item"><span class="treat-value low">Low</span><div><div class="treat-name">Blueberries</div><div class="treat-note">Morning treat.</div></div></div>
+  </div>
+</div>
+<div class="section">
+  <div class="section-title">Supplements</div>
+  <div class="supplement-card"><div class="supplement-name">Okk&ouml;bi No Poo Chews</div><div class="supplement-detail">Chicken flavour, 150 soft chews. For digestion, intestinal health, pica correction, and digestive enzymes. Addresses coprophagia.</div></div>
+</div>
+<div class="section">
+  <div class="section-title">Water</div>
+  <div class="water-card"><div class="water-icon">&#x1F4A7;</div><div class="water-text">Drinks at least <strong>1.5 litres per day</strong> &mdash; a full bowl minimum.</div></div>
+</div>
+<footer>Last updated May 2026 &middot; For Kaya, the floof</footer>
+</div>
+</body>
+</html>
