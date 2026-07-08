@@ -1,488 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Management Rules - Kaya Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #f4efe6;
-      --bg-card: #fff;
-      --ink: #1a1814;
-      --ink-soft: #5a544a;
-      --ink-faint: #8a8378;
-      --rule: #e5ddd0;
-      --accent: #b8421a;
-      --accent-soft: #f3d9c6;
-      --gold: #c89b3c;
-      --green: #4a7c59;
-      --amber: #c8852f;
-      --red: #b04a3a;
-      --grey: #8a8378;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaya - Rules</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4efe6;--bg-card:#fff;--ink:#1a1814;--ink-soft:#5a544a;--ink-faint:#8a8378;--rule:#e5ddd0;--accent:#b8421a;--accent-soft:#f3d9c6;--green:#4a7c59;--amber:#c8852f;--red:#b04a3a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;background-image:radial-gradient(circle at 20% 10%,rgba(184,66,26,.04) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(200,155,60,.05) 0%,transparent 50%)}
+.container{max-width:720px;margin:0 auto;padding:32px 20px 80px}
+.topnav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--rule);padding:10px 20px;margin:0 -20px 32px}
+.topnav-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;overflow-x:auto;scrollbar-width:none}
+.topnav-inner::-webkit-scrollbar{display:none}
+.topnav a{font-size:13px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--bg-card);white-space:nowrap;transition:all .15s;flex-shrink:0}
+.topnav a:hover{color:var(--ink);border-color:var(--ink-faint)}
+.topnav a.home{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.topnav a.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.page-header{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--rule)}
+.page-header h1{font-weight:800;font-size:clamp(28px,7vw,40px);letter-spacing:-.02em;margin-bottom:6px}
+.page-header h1 em{font-style:normal;color:var(--accent)}
+.page-header p{font-size:14px;color:var(--ink-soft)}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+.rules-section{margin-bottom:36px;scroll-margin-top:80px}
+.rules-title{font-weight:700;font-size:18px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at 20% 50%, rgba(184, 66, 26, 0.05) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 80%, rgba(200, 155, 60, 0.03) 0%, transparent 50%),
-                  var(--bg);
-      color: var(--ink);
-      line-height: 1.6;
-    }
+.rule-card{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;padding:18px 20px;margin-bottom:12px}
+.rule-card.critical{border-left:4px solid var(--red)}
+.rule-card.important{border-left:4px solid var(--amber)}
+.rule-card.standard{border-left:4px solid var(--green)}
 
-    /* Navigation */
-    .topnav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--rule);
-      backdrop-filter: blur(10px);
-      padding: 0.75rem 0;
-    }
+.rule-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.rule-icon{font-size:18px}
+.rule-name{font-weight:700;font-size:16px}
+.rule-tag{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;padding:3px 8px;border-radius:2px;font-weight:500}
+.tag-never{background:#f5d0d0;color:var(--red)}
+.tag-always{background:#d8e5d8;color:var(--green)}
+.tag-caution{background:#fce8d0;color:var(--amber)}
 
-    .topnav-inner {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      display: flex;
-      gap: 0.5rem;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-    }
+.rule-body{font-size:14px;color:var(--ink-soft);line-height:1.6}
+.rule-body p{margin-bottom:6px}
+.rule-body p:last-child{margin-bottom:0}
+.rule-body ol,.rule-body ul{margin:6px 0 8px 20px}
+.rule-body li{margin-bottom:5px}
+.rule-emphasis{font-weight:600;color:var(--ink)}
 
-    .topnav a {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      border-radius: 2rem;
-      text-decoration: none;
-      color: var(--ink-soft);
-      font-size: 0.9rem;
-      font-weight: 500;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
+.access-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule)}
+.access-row:last-child{border-bottom:none}
+.access-badge{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;padding:3px 8px;border-radius:2px;font-weight:500;height:fit-content;white-space:nowrap;flex-shrink:0;min-width:120px;text-align:center}
+.access-free{background:#d8e5d8;color:var(--green)}
+.access-semi{background:#fce8d0;color:var(--amber)}
+.access-supervised{background:#f3d9c6;color:var(--accent)}
+.access-none{background:#f5d0d0;color:var(--red)}
+.access-detail{font-size:14px;color:var(--ink-soft);flex:1}
 
-    .topnav a:hover {
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    .topnav a.active,
-    .topnav a.home {
-      background: var(--accent);
-      color: var(--bg-card);
-    }
-
-    /* Main content */
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-    }
-
-    .page-header {
-      margin-bottom: 2rem;
-    }
-
-    .page-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 0.5rem;
-    }
-
-    .page-subtitle {
-      font-size: 1.1rem;
-      color: var(--ink-soft);
-      font-weight: 400;
-      margin-bottom: 1.5rem;
-    }
-
-    /* Intro Banner */
-    .intro-banner {
-      background: var(--bg-card);
-      border-left: 4px solid var(--accent);
-      padding: 1.5rem;
-      margin-bottom: 3rem;
-      border-radius: 0.75rem;
-      border: 1px solid var(--rule);
-    }
-
-    .intro-text {
-      font-size: 1.05rem;
-      color: var(--ink);
-      line-height: 1.7;
-      font-weight: 500;
-    }
-
-    /* Sections */
-    .section {
-      margin-bottom: 3rem;
-    }
-
-    .section-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-size: 0.95rem;
-    }
-
-    /* Rule Cards */
-    .rule {
-      background: var(--bg-card);
-      border: 1px solid var(--rule);
-      border-radius: 0.75rem;
-      margin-bottom: 1rem;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 4px 1fr;
-    }
-
-    .rule.critical {
-      border-left-color: var(--red);
-    }
-
-    .rule.important {
-      border-left-color: var(--amber);
-    }
-
-    .rule.standard {
-      border-left-color: var(--green);
-    }
-
-    .rule-border-critical {
-      background: var(--red);
-    }
-
-    .rule-border-important {
-      background: var(--amber);
-    }
-
-    .rule-border-standard {
-      background: var(--green);
-    }
-
-    .rule-content {
-      padding: 1.5rem;
-    }
-
-    .rule-header {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .rule-text {
-      font-weight: 600;
-      color: var(--ink);
-      font-size: 1.05rem;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 0.375rem 0.75rem;
-      border-radius: 0.5rem;
-      font-size: 0.75rem;
-      font-weight: 700;
-      white-space: nowrap;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .badge.always {
-      background: rgba(74, 124, 89, 0.2);
-      color: var(--green);
-    }
-
-    .badge.never {
-      background: rgba(176, 74, 58, 0.2);
-      color: var(--red);
-    }
-
-    .badge.caution {
-      background: rgba(200, 133, 47, 0.2);
-      color: var(--amber);
-    }
-
-    .badge.paused {
-      background: rgba(200, 133, 47, 0.2);
-      color: var(--amber);
-    }
-
-    .badge.strict {
-      background: rgba(200, 133, 47, 0.2);
-      color: var(--amber);
-    }
-
-    .badge.priority {
-      background: rgba(200, 133, 47, 0.2);
-      color: var(--amber);
-    }
-
-    .rule-description {
-      color: var(--ink-soft);
-      margin-top: 0.75rem;
-    }
-
-    .rule-description ul {
-      list-style: none;
-      padding-left: 1rem;
-      margin-top: 0.5rem;
-    }
-
-    .rule-description li {
-      margin-bottom: 0.5rem;
-      position: relative;
-      padding-left: 1rem;
-    }
-
-    .rule-description li:before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    /* Footer */
-    .page-footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--ink-faint);
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--rule);
-    }
-
-    @media (max-width: 768px) {
-      .page-title {
-        font-size: 1.75rem;
-      }
-
-      .topnav-inner {
-        padding: 0 1rem;
-      }
-
-      main {
-        padding: 1.5rem 1rem;
-      }
-    }
-  </style>
+footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid var(--rule);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.2em}
+@media(max-width:480px){.container{padding:24px 16px 60px}.topnav{margin-left:-16px;margin-right:-16px;padding:8px 16px}.access-row{flex-direction:column;gap:4px}.access-badge{min-width:auto}}
+</style>
 </head>
 <body>
-  <nav class="topnav">
-    <div class="topnav-inner">
-      <a href="index.html" class="home">&larr; Dashboard</a>
-      <a href="kaya-commands.html">Commands</a>
-      <a href="kaya-routine.html">Routine</a>
-      <a href="kaya-diet.html">Diet</a>
-      <a href="kaya-training.html">Training</a>
-      <a href="kaya-behaviour.html">Behaviour</a>
-      <a href="kaya-grooming.html">Grooming</a>
-      <a href="kaya-health.html">Health</a>
-      <a href="kaya-team.html">Team</a>
-      <a href="kaya-rules.html" class="active">Rules</a>
+<nav class="topnav"><div class="topnav-inner">
+  <a href="index.html" class="home">&larr; Dashboard</a>
+  <a href="kaya-commands.html">Commands</a>
+  <a href="kaya-routine.html">Routine</a>
+  <a href="kaya-diet.html">Diet</a>
+  <a href="kaya-training.html">Training</a>
+  <a href="kaya-behaviour.html">Behaviour</a>
+  <a href="kaya-grooming.html">Grooming</a>
+  <a href="kaya-health.html">Health</a>
+  <a href="kaya-team.html">Team</a>
+  <a href="kaya-rules.html" class="active">Rules</a>
+</div></nav>
+<div class="container">
+<div class="page-header">
+  <h1>Management <em>Rules</em></h1>
+  <p>Non-negotiable protocols for anyone handling Kaya</p>
+</div>
+
+<div class="rules-section" id="access">
+  <div class="rules-title">Access</div>
+
+  <div class="rule-card critical">
+    <div class="rule-header"><span class="rule-tag tag-always">First</span><span class="rule-name">Access comes before everything</span></div>
+    <div class="rule-body">
+      <p>She can't guard something she can't reach. <span class="rule-emphasis">Keep shoes, socks, bags, jumpers, towels and similar items out of her reach.</span> Prevention is the whole game, and it stops most guarding before it starts.</p>
     </div>
-  </nav>
+  </div>
 
-  <main>
-    <div class="page-header">
-      <h1 class="page-title">Management Rules</h1>
-      <p class="page-subtitle">Non-negotiable protocols for anyone handling Kaya</p>
+  <div class="rule-card">
+    <div class="rule-header"><span class="rule-name">Where she can go</span></div>
+    <div class="rule-body">
+      <div class="access-row"><span class="access-badge access-free">Unsupervised</span><span class="access-detail"><strong>Ground floor</strong> with the kitchen door and back door closed.</span></div>
+      <div class="access-row"><span class="access-badge access-semi">Semi-supervised</span><span class="access-detail"><strong>Floor 1</strong> with the study door and both bedroom doors closed. Any blanket grab, pillow grab or table lick is an immediate removal downstairs.</span></div>
+      <div class="access-row"><span class="access-badge access-supervised">Direct supervision</span><span class="access-detail"><strong>Bedrooms, top bathroom, study, summer house.</strong> Someone with her at all times.</span></div>
+      <div class="access-row"><span class="access-badge access-supervised">Check often</span><span class="access-detail"><strong>Back yard.</strong> Regular checks that she is not licking wee or eating poo. A fox has been up the top lately, let her watch for short intervals and practise whistle recall to avoid prey drive.</span></div>
+      <div class="access-row"><span class="access-badge access-none">No access</span><span class="access-detail"><strong>Shoe cupboard, garden shed, garage.</strong></span></div>
     </div>
+  </div>
+</div>
 
-    <div class="intro-banner">
-      <p class="intro-text">Read this page first if you're looking after Kaya. These rules exist because they work — breaking them undoes weeks of training progress. No exceptions, no shortcuts.</p>
+<div class="rules-section" id="guarding">
+  <div class="rules-title">Resource guarding protocol</div>
+
+  <div class="rule-card critical">
+    <div class="rule-header"><span class="rule-tag tag-never">Never</span><span class="rule-name">Do not take items from her while she is guarding</span></div>
+    <div class="rule-body">
+      <p>If she has grabbed and is holding something, do not take it and do not pull the lead. Follow this exactly:</p>
+      <ol>
+        <li>Kaya steals an item.</li>
+        <li>Close the pen immediately.</li>
+        <li>She will go to her raised bed.</li>
+        <li>Do not attempt to take the item from her, no matter what it is. Do not pull on the lead.</li>
+        <li>Stay calm at all times. Get several high-value treats from the cupboard or fridge.</li>
+        <li>Walk near her and throw a treat about 1 metre away from her, then walk away.</li>
+        <li>Return and throw another treat to the other side, further away, then walk away.</li>
+        <li>Once enough trust is built, get close enough to take the item only when she is far away from you, ideally without her seeing you take it.</li>
+        <li>The intention is that she senses a human approaching and anticipates something great is about to happen, rather than something being taken away.</li>
+      </ol>
+      <p>If the item gets damaged, we will pay for repairs or replacement. <span class="rule-emphasis">If the item is dangerous, she won't swallow it unless you try to take it directly from her</span>, so do not try.</p>
     </div>
+  </div>
 
-    <!-- Lead & Handling -->
-    <section class="section">
-      <h2 class="section-title">Lead & Handling</h2>
+  <div class="rule-card important">
+    <div class="rule-header"><span class="rule-tag tag-caution">Reset</span><span class="rule-name">Quick grab and release</span></div>
+    <div class="rule-body">
+      <p>Sometimes she grabs something and lets it go immediately. If she does this, reset her in the pen for 1 to 2 minutes.</p>
+    </div>
+  </div>
+</div>
 
-      <div class="rule critical">
-        <div class="rule-border-critical"></div>
-        <div class="rule-content">
-          <div class="rule-header">
-            <span class="rule-text">Treat before lead removal</span>
-            <span class="badge always">Always</span>
-          </div>
-          <p class="rule-description">Every single time. No exceptions. Prevents warning bites.</p>
-        </div>
-      </div>
+<div class="rules-section">
+  <div class="rules-title">Lead &amp; handling</div>
 
-      <div class="rule important">
-        <div class="rule-border-important"></div>
-        <div class="rule-content">
-          <div class="rule-header">
-            <span class="rule-text">House line on before pen exit</span>
-            <span class="badge always">Always</span>
-          </div>
-          <p class="rule-description">Every time. Control during high-arousal transition.</p>
-        </div>
-      </div>
+  <div class="rule-card critical">
+    <div class="rule-header"><span class="rule-tag tag-always">Always</span><span class="rule-name">Treat before lead removal</span></div>
+    <div class="rule-body">
+      <p><span class="rule-emphasis">Every single time</span> the lead is removed, give a treat before the clip is touched. No exceptions. This prevents warning bites during lead removal, an active problem.</p>
+    </div>
+  </div>
 
-      <div class="rule important">
-        <div class="rule-border-important"></div>
-        <div class="rule-content">
-          <div class="rule-header">
-            <span class="rule-text">No sit at back door after toilet</span>
-            <span class="badge paused">Paused</span>
-          </div>
-          <p class="rule-description">Being rebuilt from scratch separately.</p>
-        </div>
-      </div>
-    </section>
+  <div class="rule-card important">
+    <div class="rule-header"><span class="rule-tag tag-always">Always</span><span class="rule-name">House line on before pen exit</span></div>
+    <div class="rule-body">
+      <p>Attach the house line before Kaya is let out of the pen. Every time. It gives you control while she is excited, coming out of the pen into open space.</p>
+    </div>
+  </div>
+</div>
 
-    <!-- Resource Guarding -->
-    <section class="section">
-      <h2 class="section-title">Resource Guarding</h2>
+<div class="rules-section">
+  <div class="rules-title">Pen &amp; rest</div>
 
-      <div class="rule critical">
-        <div class="rule-border-critical"></div>
-        <div class="rule-content">
-          <div class="rule-header">
-            <span class="rule-text">Never reach in directly</span>
-            <span class="badge never">Never</span>
-          </div>
-          <p class="rule-description">Will trigger warning bite. Use treat scatter — she moves away, then remove object.</p>
-        </div>
-      </div>
+  <div class="rule-card standard">
+    <div class="rule-header"><span class="rule-tag tag-always">Always</span><span class="rule-name">Treat every time going in the pen</span></div>
+    <div class="rule-body">
+      <p>Kaya gets a treat (apple slice) every time she goes into the pen. Keeps the pen a good thing, every single time.</p>
+    </div>
+  </div>
 
-      <div class="rule important">
-        <div class="rule-border-important"></div>
-        <div class="rule-content">
-          <div class="rule-header">
-            <span class="rule-text">Dangerous objects — two-person approach</span>
-            <span class="badge caution">Caution</span>
-          </div>
-          <p class="rule-description">Treat scatter has ceiling-ed. One person distracts, one removes. Intervene at pickup moment.</p>
-        </div>
-      </div>
-    </section>
+  <div class="rule-card critical">
+    <div class="rule-header"><span class="rule-tag tag-never">Never</span><span class="rule-name">No toys in the pen, ever</span></div>
+    <div class="rule-body">
+      <p>The pen is for rest. No toys go in. No exceptions. Keeps the pen calm and boring, which is the whole point.</p>
+      <p>Remove all toys off the ground before you say bed time, to avoid conflict at pen time.</p>
+    </div>
+  </div>
+</div>
 
-    <!-- Pen & Rest -->
-    <section class="section">
-      <h2 class="section-title">Pen & Rest</h2>
+<div class="rules-section">
+  <div class="rules-title">Greeting new people</div>
 
-      <div class="rule standard">
-        <div class="rule-border-standard"></div>
-        <div class="rule-content">
-          <div class="rule-header">
-            <span class="rule-text">Treat every time going in pen</span>
-            <span class="badge always">Always</span>
-          </div>
-          <p class="rule-description">Apple slice. Positive association.</p>
-        </div>
-      </div>
+  <div class="rule-card important">
+    <div class="rule-header"><span class="rule-tag tag-always">Always</span><span class="rule-name">Ignore completely, release from a sit</span></div>
+    <div class="rule-body">
+      <p>When someone new enters the room they must ignore her completely, especially keeping hands away from her. Any engagement at all, including saying "no", is read by her as play.</p>
+      <p>Counter surfing is temporarily allowed during this. Any jump that touches the person is a reset in the pen. Once barking has stopped <span class="rule-emphasis">and</span> she has sat (both required), open the door and give the release command "OK" or "Break". She must wait for the release, or the door closes again. Any additional jumps also get reset.</p>
+      <p><span class="rule-emphasis">Manage access to grabbable items (shoes, socks, bags, jumpers) during greetings.</span> There is a real risk of a grab at this moment. If she grabs, switch to the guarding protocol above.</p>
+    </div>
+  </div>
+</div>
 
-      <div class="rule critical">
-        <div class="rule-border-critical"></div>
-        <div class="rule-content">
-          <div class="rule-header">
-            <span class="rule-text">No toys in pen — ever</span>
-            <span class="badge never">Never</span>
-          </div>
-          <p class="rule-description">Pen is for rest. Low stimulation.</p>
-        </div>
-      </div>
-    </section>
+<div class="rules-section">
+  <div class="rules-title">Household manners</div>
 
-    <!-- Greeting Visitors -->
-    <section class="section">
-      <h2 class="section-title">Greeting Visitors</h2>
+  <div class="rule-card important">
+    <div class="rule-header"><span class="rule-tag tag-never">Never</span><span class="rule-name">Not allowed on furniture</span></div>
+    <div class="rule-body">
+      <p>Kaya is not allowed on the furniture. The one exception is when she is invited up to sit on you on the lounge.</p>
+    </div>
+  </div>
 
-      <div class="rule important">
-        <div class="rule-border-important"></div>
-        <div class="rule-content">
-          <div class="rule-header">
-            <span class="rule-text">20-minute ignore protocol</span>
-            <span class="badge always">Always</span>
-          </div>
-          <p class="rule-description">Arms crossed. No dangly items. No eye contact. No talking to her. If over-threshold: remove to garden, re-admit when calm. Showing visible progress — don't skip.</p>
-        </div>
-      </div>
-    </section>
+  <div class="rule-card standard">
+    <div class="rule-header"><span class="rule-tag tag-always">Always</span><span class="rule-name">All good things come from a sit</span></div>
+    <div class="rule-body">
+      <p>Attention, treats, the door opening, a smell of an item, all of it should come from a sit. You shouldn't have to command it, just wait for her to offer the sit.</p>
+    </div>
+  </div>
+</div>
 
-    <!-- Second Floor Access -->
-    <section class="section">
-      <h2 class="section-title">Second Floor Access</h2>
+<div class="rules-section">
+  <div class="rules-title">Toilet</div>
 
-      <div class="rule important">
-        <div class="rule-border-important"></div>
-        <div class="rule-content">
-          <div class="rule-header">
-            <span class="rule-text">Earned privilege</span>
-            <span class="badge strict">Strict</span>
-          </div>
-          <p class="rule-description">Chew near Juliet balcony for environmental exposure. Single blanket grab, pillow grab, or table lick = immediate removal downstairs. One strike. No warnings. Consistent every time.</p>
-        </div>
-      </div>
-    </section>
+  <div class="rule-card standard">
+    <div class="rule-header"><span class="rule-tag tag-always">Always</span><span class="rule-name">Button to queue, prompt before upstairs</span></div>
+    <div class="rule-body">
+      <p>Kaya has a button she can push to queue for the toilet. We also recommend prompting her to wee before she goes upstairs.</p>
+      <p>If she is regularly fussing, meaning taking too long to wee when she goes outside, put the house line on, stand near the pebbles holding it still, and cue "wee-wee" once. If she doesn't wee within 1 minute, cue "ok" and return inside. Repeat as needed.</p>
+    </div>
+  </div>
+</div>
 
-    <!-- Toilet -->
-    <section class="section">
-      <h2 class="section-title">Toilet</h2>
+<div class="rules-section">
+  <div class="rules-title">Recall</div>
 
-      <div class="rule standard">
-        <div class="rule-border-standard"></div>
-        <div class="rule-content">
-          <div class="rule-header">
-            <span class="rule-text">Toilet is queued, not door-triggered</span>
-            <span class="badge always">Always</span>
-          </div>
-          <p class="rule-description">Initiated by owner on schedule, not by Kaya requesting. Prevents demand barking.</p>
-        </div>
-      </div>
-    </section>
+  <div class="rule-card standard">
+    <div class="rule-header"><span class="rule-tag tag-always">Always</span><span class="rule-name">Fish treats are recall-exclusive</span></div>
+    <div class="rule-body">
+      <p>The fish treats in the recall bag are <span class="rule-emphasis">only used for whistle recall</span>. Never for anything else. This keeps the whistle recall association clean and high-value.</p>
+    </div>
+  </div>
+</div>
 
-    <!-- Recall -->
-    <section class="section">
-      <h2 class="section-title">Recall</h2>
+<div class="rules-section">
+  <div class="rules-title">Hot weather</div>
 
-      <div class="rule standard">
-        <div class="rule-border-standard"></div>
-        <div class="rule-content">
-          <div class="rule-header">
-            <span class="rule-text">Fish treats are recall-exclusive</span>
-            <span class="badge always">Always</span>
-          </div>
-          <p class="rule-description">Only for whistle recall. Never anything else. Keeps association clean and high-value.</p>
-        </div>
-      </div>
-    </section>
+  <div class="rule-card critical">
+    <div class="rule-header"><span class="rule-tag tag-never">Never</span><span class="rule-name">No walks at 20&deg;C or above</span></div>
+    <div class="rule-body">
+      <p>Samoyeds overheat quickly. <span class="rule-emphasis">At 20&deg;C or above there are no walks.</span> Even in the high teens it is often better to sit on the shaded bench near the Strand instead (check under it for rubbish first). Pavement burns paws, so if it is too hot for your hand it is too hot for her.</p>
+      <p>See the <a href="kaya-routine.html">Routine</a> page for the full hot-weather protocol and cooling activities.</p>
+    </div>
+  </div>
 
-    <!-- Owner Consistency -->
-    <section class="section">
-      <h2 class="section-title">Owner Consistency</h2>
+  <div class="rule-card important">
+    <div class="rule-header"><span class="rule-tag tag-caution">Watch for</span><span class="rule-name">Signs of overheating</span></div>
+    <div class="rule-body">
+      <p>Excessive panting, drooling, bright red tongue or gums, lethargy, stumbling, vomiting. If temperature exceeds 40&deg;C, <span class="rule-emphasis">vet immediately</span>. See the <a href="kaya-health.html">Health</a> page for how to check her temperature.</p>
+    </div>
+  </div>
+</div>
 
-      <div class="rule important">
-        <div class="rule-border-important"></div>
-        <div class="rule-content">
-          <div class="rule-header">
-            <span class="rule-text">Both owners follow same rules</span>
-            <span class="badge priority">Priority</span>
-          </div>
-          <p class="rule-description">Consistency is the central challenge. Inconsistency undoes training fastest. Calm-present-engaged disposition is active practice — nervous system co-regulation.</p>
-        </div>
-      </div>
-    </section>
-
-    <footer class="page-footer">
-      <p>Last updated May 2026 · For Kaya, the floof</p>
-    </footer>
-
-  </main>
+<footer>Last updated July 2026 &middot; For Kaya, the floof</footer>
+</div>
 </body>
 </html>

@@ -1,544 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Health & History - Kaya Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #f4efe6;
-      --bg-card: #fff;
-      --ink: #1a1814;
-      --ink-soft: #5a544a;
-      --ink-faint: #8a8378;
-      --rule: #e5ddd0;
-      --accent: #b8421a;
-      --accent-soft: #f3d9c6;
-      --gold: #c89b3c;
-      --green: #4a7c59;
-      --amber: #c8852f;
-      --red: #b04a3a;
-      --grey: #8a8378;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaya - Health & History</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4efe6;--bg-card:#fff;--ink:#1a1814;--ink-soft:#5a544a;--ink-faint:#8a8378;--rule:#e5ddd0;--accent:#b8421a;--accent-soft:#f3d9c6;--green:#4a7c59;--amber:#c8852f;--red:#b04a3a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;background-image:radial-gradient(circle at 20% 10%,rgba(184,66,26,.04) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(200,155,60,.05) 0%,transparent 50%)}
+.container{max-width:720px;margin:0 auto;padding:32px 20px 80px}
+.topnav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--rule);padding:10px 20px;margin:0 -20px 32px}
+.topnav-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;overflow-x:auto;scrollbar-width:none}
+.topnav-inner::-webkit-scrollbar{display:none}
+.topnav a{font-size:13px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--bg-card);white-space:nowrap;transition:all .15s;flex-shrink:0}
+.topnav a:hover{color:var(--ink);border-color:var(--ink-faint)}
+.topnav a.home{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.topnav a.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.page-header{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--rule)}
+.page-header h1{font-weight:800;font-size:clamp(28px,7vw,40px);letter-spacing:-.02em;margin-bottom:6px}
+.page-header h1 em{font-style:normal;color:var(--accent)}
+.page-header p{font-size:14px;color:var(--ink-soft)}
+.section{margin-bottom:36px}
+.section-title{font-weight:700;font-size:18px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+.health-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:24px}
+.health-stat{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;padding:14px 16px}
+.health-stat .label{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-faint);margin-bottom:2px}
+.health-stat .value{font-weight:600;font-size:15px}
+.health-stat .note{font-size:12px;color:var(--ink-faint);margin-top:2px}
+.status-ok{color:var(--green)}
+.status-check{color:var(--amber)}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at 20% 50%, rgba(184, 66, 26, 0.05) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 80%, rgba(200, 155, 60, 0.03) 0%, transparent 50%),
-                  var(--bg);
-      color: var(--ink);
-      line-height: 1.6;
-    }
+.timeline-event{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;padding:18px 20px;margin-bottom:12px;position:relative;padding-left:28px}
+.timeline-event::before{content:'';position:absolute;left:12px;top:24px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.event-date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-faint);margin-bottom:4px}
+.event-title{font-weight:600;font-size:15px;margin-bottom:6px}
+.event-detail{font-size:14px;color:var(--ink-soft);line-height:1.55}
 
-    /* Navigation */
-    .topnav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--rule);
-      backdrop-filter: blur(10px);
-      padding: 0.75rem 0;
-    }
+.insurance-card{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;padding:18px 20px}
+.insurance-card .row{display:flex;gap:10px;margin-bottom:6px}
+.insurance-card .row:last-child{margin-bottom:0}
+.insurance-card .rlabel{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-faint);min-width:72px;padding-top:3px}
+.insurance-card .rvalue{font-size:14px;flex:1}
 
-    .topnav-inner {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      display: flex;
-      gap: 0.5rem;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-    }
+.future-item{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--amber);border-radius:4px;padding:14px 18px;margin-bottom:10px}
+.future-item h4{font-weight:600;font-size:15px;margin-bottom:4px}
+.future-item p{font-size:13px;color:var(--ink-soft)}
 
-    .topnav a {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      border-radius: 2rem;
-      text-decoration: none;
-      color: var(--ink-soft);
-      font-size: 0.9rem;
-      font-weight: 500;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-
-    .topnav a:hover {
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    .topnav a.active,
-    .topnav a.home {
-      background: var(--accent);
-      color: var(--bg-card);
-    }
-
-    /* Main content */
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-    }
-
-    .page-header {
-      margin-bottom: 3rem;
-    }
-
-    .page-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 0.5rem;
-    }
-
-    .page-subtitle {
-      font-size: 1.1rem;
-      color: var(--ink-soft);
-      font-weight: 400;
-    }
-
-    /* Sections */
-    .section {
-      margin-bottom: 3rem;
-    }
-
-    .section-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 1.5rem;
-    }
-
-    /* Status Grid */
-    .status-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .status-card {
-      background: var(--bg-card);
-      border: 1px solid var(--rule);
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .status-label {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--ink-soft);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .status-value {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--ink);
-    }
-
-    .status-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      width: fit-content;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .status-dot {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-
-    .status-dot.green {
-      background: var(--green);
-    }
-
-    .status-dot.amber {
-      background: var(--amber);
-    }
-
-    .status-dot.red {
-      background: var(--red);
-    }
-
-    .status-green {
-      color: var(--green);
-    }
-
-    .status-amber {
-      color: var(--amber);
-    }
-
-    .status-red {
-      color: var(--red);
-    }
-
-    /* Cards */
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--rule);
-      border-radius: 1rem;
-      padding: 2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .card h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--ink);
-    }
-
-    .card p {
-      color: var(--ink-soft);
-      margin-bottom: 1rem;
-    }
-
-    .card p:last-child {
-      margin-bottom: 0;
-    }
-
-    .subsection {
-      margin-bottom: 1.5rem;
-    }
-
-    .subsection:last-child {
-      margin-bottom: 0;
-    }
-
-    .subsection-title {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 0.75rem;
-    }
-
-    /* Timeline */
-    .timeline {
-      position: relative;
-      padding-left: 2rem;
-    }
-
-    .timeline-item {
-      margin-bottom: 1.75rem;
-      position: relative;
-    }
-
-    .timeline-item:before {
-      content: '';
-      position: absolute;
-      left: -2rem;
-      top: 0.25rem;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--accent);
-      border: 2px solid var(--bg);
-      box-shadow: 0 0 0 1px var(--accent);
-    }
-
-    .timeline-item:after {
-      content: '';
-      position: absolute;
-      left: -2rem;
-      top: 1.5rem;
-      width: 2px;
-      height: calc(100% + 0.5rem);
-      background: var(--rule);
-    }
-
-    .timeline-item:last-child:after {
-      display: none;
-    }
-
-    .timeline-date {
-      font-weight: 600;
-      color: var(--accent);
-      font-size: 0.9rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .timeline-content {
-      color: var(--ink-soft);
-    }
-
-    /* Detail rows */
-    .detail-row {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-      margin-bottom: 0.75rem;
-    }
-
-    .detail-label {
-      font-weight: 600;
-      color: var(--ink);
-      min-width: 130px;
-    }
-
-    .detail-value {
-      color: var(--ink-soft);
-      flex: 1;
-    }
-
-    .alert-banner {
-      background: rgba(200, 133, 47, 0.1);
-      border-left: 3px solid var(--amber);
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 0.5rem;
-      color: var(--amber);
-      font-weight: 500;
-    }
-
-    .phone-number {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.95rem;
-    }
-
-    @media (max-width: 768px) {
-      .page-title {
-        font-size: 1.75rem;
-      }
-
-      .card {
-        padding: 1.5rem;
-      }
-
-      .topnav-inner {
-        padding: 0 1rem;
-      }
-
-      main {
-        padding: 1.5rem 1rem;
-      }
-
-      .status-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid var(--rule);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.2em}
+@media(max-width:480px){.container{padding:24px 16px 60px}.topnav{margin-left:-16px;margin-right:-16px;padding:8px 16px}.health-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <nav class="topnav">
-    <div class="topnav-inner">
-      <a href="index.html" class="home">&larr; Dashboard</a>
-      <a href="kaya-commands.html">Commands</a>
-      <a href="kaya-routine.html">Routine</a>
-      <a href="kaya-diet.html">Diet</a>
-      <a href="kaya-training.html">Training</a>
-      <a href="kaya-behaviour.html">Behaviour</a>
-      <a href="kaya-grooming.html">Grooming</a>
-      <a href="kaya-health.html" class="active">Health</a>
-      <a href="kaya-team.html">Team</a>
-      <a href="kaya-rules.html">Rules</a>
+<nav class="topnav"><div class="topnav-inner">
+  <a href="index.html" class="home">&larr; Dashboard</a>
+  <a href="kaya-commands.html">Commands</a>
+  <a href="kaya-routine.html">Routine</a>
+  <a href="kaya-diet.html">Diet</a>
+  <a href="kaya-training.html">Training</a>
+  <a href="kaya-behaviour.html">Behaviour</a>
+  <a href="kaya-grooming.html">Grooming</a>
+  <a href="kaya-health.html" class="active">Health</a>
+  <a href="kaya-team.html">Team</a>
+  <a href="kaya-rules.html">Rules</a>
+</div></nav>
+<div class="container">
+<div class="page-header">
+  <h1>Health &amp; <em>History</em></h1>
+  <p>Medical records, vaccinations, insurance, and future plans</p>
+</div>
+
+<div class="section">
+  <div class="section-title">Current status</div>
+  <div class="health-grid">
+    <div class="health-stat"><div class="label">Weight</div><div class="value">19.4 kg</div><div class="note">Weighed 17 Jun 2026</div></div>
+    <div class="health-stat"><div class="label">Microchip</div><div class="value status-ok">Registered</div></div>
+    <div class="health-stat"><div class="label">Vaccinations</div><div class="value status-ok">Up to date</div></div>
+    <div class="health-stat"><div class="label">Worming &amp; fleas</div><div class="value status-ok">Up to date</div><div class="note">Wormed &amp; flea treated 28 Jun 2026</div></div>
+    <div class="health-stat"><div class="label">Spay status</div><div class="value">Intact</div><div class="note">Planned after second season</div></div>
+    <div class="health-stat"><div class="label">Reproductive</div><div class="value">First heat completed</div><div class="note">Finished 12 Jun 2026, ~3 weeks</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Medical history</div>
+
+  <div class="timeline-event">
+    <div class="event-date">~September 2025 (approx. 8 weeks old)</div>
+    <div class="event-title">Acquired from family near Leamington Spa</div>
+    <div class="event-detail">Not a breeder - a family who had a litter. Collected at 8 weeks.</div>
+  </div>
+
+  <div class="timeline-event">
+    <div class="event-date">~September – November 2025</div>
+    <div class="event-title">Puppy vaccinations</div>
+    <div class="event-detail">Standard vaccination schedule completed. All up to date.</div>
+  </div>
+
+  <div class="timeline-event">
+    <div class="event-date">~November – December 2025 (4–5 months old)</div>
+    <div class="event-title">Vomiting episode - GI investigation</div>
+    <div class="event-detail">
+      Throwing up regularly within a single day. Had been chewing on a half piece of mobile phone outside. Vomit smelled like faeces - concern about possible bowel perforation (could also have been from eating faeces then vomiting).
     </div>
-  </nav>
-
-  <main>
-    <div class="page-header">
-      <h1 class="page-title">Health & History</h1>
-      <p class="page-subtitle">Medical records, vaccinations, insurance, and future plans</p>
+    <div class="event-detail" style="margin-top:8px">
+      <strong>Workup at Medway Park Veterinary Centre:</strong> Physical examination - nothing found. Blood test - nothing found. Scan - nothing found. While sedated, exploratory surgery performed - bowels opened and checked. No stricture, no perforations.
     </div>
+    <div class="event-detail" style="margin-top:8px">
+      <strong>Conclusion:</strong> Some sort of gastrointestinal issue, not considered serious. Recovery: couple of days low energy, body suit worn, back to normal within a couple of weeks.
+    </div>
+  </div>
 
-    <!-- Current Status -->
-    <section class="section">
-      <h2 class="section-title">Current Status</h2>
+  <div class="timeline-event">
+    <div class="event-date">~November 2025</div>
+    <div class="event-title">Insurance claim submitted</div>
+    <div class="event-detail">Claim CL2512138494 submitted to More Than Pet Insurance. Approved January 2026. Used most of annual cover.</div>
+  </div>
 
-      <div class="status-grid">
-        <div class="status-card">
-          <div class="status-label">Weight</div>
-          <div class="status-value">~20 kg</div>
-        </div>
-        <div class="status-card">
-          <div class="status-label">Microchip</div>
-          <div class="status-value">
-            <span class="status-indicator status-green">
-              <span class="status-dot green"></span>
-              Registered
-            </span>
-          </div>
-        </div>
-        <div class="status-card">
-          <div class="status-label">Vaccinations</div>
-          <div class="status-value">
-            <span class="status-indicator status-green">
-              <span class="status-dot green"></span>
-              Up to date
-            </span>
-          </div>
-        </div>
-        <div class="status-card">
-          <div class="status-label">Deworming</div>
-          <div class="status-value">
-            <span class="status-indicator status-amber">
-              <span class="status-dot amber"></span>
-              Check schedule
-            </span>
-          </div>
-        </div>
-        <div class="status-card">
-          <div class="status-label">Spay Status</div>
-          <div class="status-value">Intact</div>
-          <p style="font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.5rem;">Planned after second season</p>
-        </div>
-        <div class="status-card">
-          <div class="status-label">Reproductive</div>
-          <div class="status-value">1 heat completed</div>
-          <p style="font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.5rem;">Recently finished</p>
-        </div>
-      </div>
-    </section>
+  <div class="timeline-event">
+    <div class="event-date">~March – April 2026</div>
+    <div class="event-title">Suspected false heat</div>
+    <div class="event-detail">Earlier signs now believed to have been a false heat rather than a true first season.</div>
+  </div>
 
-    <!-- Medical History -->
-    <section class="section">
-      <h2 class="section-title">Medical History</h2>
+  <div class="timeline-event">
+    <div class="event-date">~23 May – 12 June 2026</div>
+    <div class="event-title">First real heat completed</div>
+    <div class="event-detail">Her first true season finished on 12 June 2026, lasting almost 3 weeks. Her arousal calmed noticeably afterwards. Spaying is planned after her second season to let her hormones mature.</div>
+  </div>
 
-      <div class="card">
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-date">September 2025 (8 weeks)</div>
-            <div class="timeline-content">
-              <p>Acquired from family near Leamington Spa. Not a breeder.</p>
-            </div>
-          </div>
+  <div class="timeline-event">
+    <div class="event-date">12 June 2026</div>
+    <div class="event-title">First bite to break skin</div>
+    <div class="event-detail">On a walk, Kaya bit Faith after Faith grabbed a jumper wrapped around Kaya's waist and tried to take it back off her. Kaya returned immediately and was penned. The teeth broke skin, the first time this has happened. A clear reminder not to take things off her by force. See the Behaviour and Rules pages.</div>
+  </div>
 
-          <div class="timeline-item">
-            <div class="timeline-date">September — November 2025</div>
-            <div class="timeline-content">
-              <p>Puppy vaccinations completed.</p>
-            </div>
-          </div>
+  <div class="timeline-event">
+    <div class="event-date">28 June 2026</div>
+    <div class="event-title">Wormed and flea treated</div>
+    <div class="event-detail">Both done, starting Sunday 28 June 2026.</div>
+  </div>
+</div>
 
-          <div class="timeline-item">
-            <div class="timeline-date">November — December 2025 (4–5 months)</div>
-            <div class="timeline-content">
-              <p><strong>Vomiting episode.</strong> Chewing mobile phone fragment. Vomit smelled like faeces — concern about bowel perforation.</p>
-              <p style="margin-top: 0.75rem;"><strong>Workup at Medway Park:</strong> Physical exam nothing, blood test nothing, scan nothing. Exploratory surgery while sedated — no stricture, no perforations. Conclusion: GI issue, not serious.</p>
-              <p style="margin-top: 0.75rem;"><strong>Recovery:</strong> Couple days low energy, body suit, normal within weeks.</p>
-            </div>
-          </div>
+<div class="section">
+  <div class="section-title">Insurance</div>
+  <div class="insurance-card">
+    <div class="row"><span class="rlabel">Provider</span><span class="rvalue">More Than Pet Insurance</span></div>
+    <div class="row"><span class="rlabel">Policy</span><span class="rvalue">MTHP25000167365</span></div>
+    <div class="row"><span class="rlabel">Claim</span><span class="rvalue">CL2512138494 - Approved (GI investigation)</span></div>
+    <div class="row"><span class="rlabel">Budget</span><span class="rvalue" style="color:var(--amber)">Most of annual cover used. Be careful with vet costs this year.</span></div>
+  </div>
+</div>
 
-          <div class="timeline-item">
-            <div class="timeline-date">November 2025</div>
-            <div class="timeline-content">
-              <p>Insurance claim CL2512138494 submitted. Approved Jan 2026. Used most of annual cover.</p>
-            </div>
-          </div>
+<div class="section">
+  <div class="section-title">Vet</div>
+  <div class="insurance-card">
+    <div class="row"><span class="rlabel">Practice</span><span class="rvalue"><strong>Medway Park Veterinary Centre</strong></span></div>
+    <div class="row"><span class="rlabel">Address</span><span class="rvalue">46 Watling Street, Gillingham, ME7 2YN</span></div>
+    <div class="row"><span class="rlabel">Phone</span><span class="rvalue"><a href="tel:01634570530" style="color:var(--ink)">01634 570 530</a></span></div>
+    <div class="row"><span class="rlabel">Emergency</span><span class="rvalue"><a href="tel:01634780073" style="color:var(--red)">01634 780 073</a></span></div>
+    <div class="row"><span class="rlabel">Email</span><span class="rvalue"><a href="mailto:medwayparkvets@gmail.com" style="color:var(--ink)">medwayparkvets@gmail.com</a></span></div>
+  </div>
+</div>
 
-          <div class="timeline-item">
-            <div class="timeline-date">March — April 2026</div>
-            <div class="timeline-content">
-              <p><strong>First heat completed.</strong> Measurable improvement in arousal baseline.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="section">
+  <div class="section-title">Hot weather safety</div>
+  <div class="insurance-card" style="border-left:4px solid var(--red)">
+    <div class="row"><span class="rlabel">Breed note</span><span class="rvalue"><strong>Samoyeds run hot.</strong> Double coat insulates but traps heat in summer. Kaya needs active management in warm weather.</span></div>
+    <div class="row"><span class="rlabel">Normal temp</span><span class="rvalue">38.0&ndash;39.2&deg;C (100.4&ndash;102.5&deg;F). Above 39.4&deg;C is elevated.</span></div>
+    <div class="row"><span class="rlabel">Quick check</span><span class="rvalue">Feel inside her ears with a finger, or between the toes of her paws, for a fast read.</span></div>
+    <div class="row"><span class="rlabel">Accurate check</span><span class="rvalue">Rectal thermometer with lubricant, insert ~2.5cm, hold 60 seconds. Digital pet thermometers are fastest. Ear thermometers are less accurate for dogs.</span></div>
+    <div class="row"><span class="rlabel">Warning signs</span><span class="rvalue">Excessive panting, drooling, bright red tongue/gums, lethargy, stumbling, vomiting. If temp exceeds 40&deg;C, vet immediately.</span></div>
+    <div class="row"><span class="rlabel">Protocol</span><span class="rvalue">No walks at 20&deg;C or above. See the <a href="kaya-routine.html" style="color:var(--ink)">Routine</a> page for the full hot-weather protocol and cooling activities.</span></div>
+  </div>
+</div>
 
-    <!-- Insurance -->
-    <section class="section">
-      <h2 class="section-title">Insurance</h2>
+<div class="section">
+  <div class="section-title">Future plans</div>
+  <div class="future-item">
+    <h4>Spaying</h4>
+    <p>After second season. Allowing hormonal maturation - still relevant to arousal baseline.</p>
+  </div>
+  <div class="future-item">
+    <h4>Worming &amp; flea schedule</h4>
+    <p>Wormed and flea treated on 28 June 2026. Schedule tracked in the 108 Waterside calendar.</p>
+  </div>
+</div>
 
-      <div class="card">
-        <div class="alert-banner">
-          Most of annual cover used. Be careful with vet costs this year.
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Provider</div>
-          <div class="detail-value">More Than Pet Insurance</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Policy</div>
-          <div class="detail-value">MTHP25000167365</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Claim</div>
-          <div class="detail-value">CL2512138494 (Approved) — GI investigation</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Status</div>
-          <div class="detail-value">
-            <span class="status-indicator status-amber">
-              <span class="status-dot amber"></span>
-              Moderate caution
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Vet Details -->
-    <section class="section">
-      <h2 class="section-title">Veterinary Practice</h2>
-
-      <div class="card">
-        <h3>Medway Park Veterinary Centre</h3>
-
-        <div class="detail-row">
-          <div class="detail-label">Address</div>
-          <div class="detail-value">46 Watling Street, Gillingham, Kent, ME7 2YN</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Phone</div>
-          <div class="detail-value"><span class="phone-number">01634 570 530</span></div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Emergency</div>
-          <div class="detail-value" style="color: var(--red); font-weight: 600;"><span class="phone-number">01634 780 073</span></div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Email</div>
-          <div class="detail-value">medwayparkvets@gmail.com</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Notes</div>
-          <div class="detail-value">Performed exploratory surgery at ~4–5 months. Familiar with Kaya's full history.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Future Plans -->
-    <section class="section">
-      <h2 class="section-title">Future Plans</h2>
-
-      <div class="card">
-        <div class="subsection">
-          <div class="subsection-title">Spaying</div>
-          <p>After second season. Allowing hormonal maturation. Current heat cycle completed — watch for second heat and plan spay procedure accordingly.</p>
-        </div>
-
-        <div class="subsection">
-          <div class="subsection-title">Deworming Schedule</div>
-          <p>Needs confirming with vet. Done once — check protocol with Medway Park to establish ongoing schedule.</p>
-        </div>
-      </div>
-    </section>
-
-  </main>
+<footer>Last updated July 2026 &middot; For Kaya, the floof</footer>
+</div>
 </body>
 </html>

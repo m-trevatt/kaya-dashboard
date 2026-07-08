@@ -3,64 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kaya — Daily Routine</title>
+<title>Kaya - Daily Routine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f4efe6;--bg-card:#fff;--ink:#1a1814;--ink-soft:#5a544a;--ink-faint:#8a8378;--rule:#e5ddd0;--accent:#b8421a;--accent-soft:#f3d9c6;--green:#4a7c59;--amber:#c8852f;--red:#b04a3a}
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;background-image:radial-gradient(circle at 20% 10%,rgba(184,66,26,.04) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(200,155,60,.05) 0%,transparent 50%)}.container{max-width:720px;margin:0 auto;padding:32px 20px 80px}
-.topnav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--rule);padding:10px 20px;margin:0 -20px 32px}.topnav-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;overflow-x:auto;scrollbar-width:none}.topnav-inner::-webkit-scrollbar{display:none}.topnav a{font-size:13px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--bg-card);white-space:nowrap;transition:all .15s;flex-shrink:0}.topnav a:hover{color:var(--ink);border-color:var(--ink-faint)}.topnav a.home{background:var(--ink);color:var(--bg);border-color:var(--ink)}.topnav a.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.page-header{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--rule)}.page-header h1{font-weight:800;font-size:clamp(28px,7vw,40px);letter-spacing:-.02em;margin-bottom:6px}.page-header h1 em{font-style:normal;color:var(--accent)}.page-header p{font-size:14px;color:var(--ink-soft)}
-.timeline{display:flex;flex-direction:column;gap:0;position:relative;padding-left:28px}.timeline::before{content:'';position:absolute;left:8px;top:16px;bottom:16px;width:2px;background:var(--rule)}
-.slot{position:relative;padding:20px 0 20px 24px;border-bottom:1px solid var(--rule)}.slot:last-child{border-bottom:none}.slot-dot{position:absolute;left:-24px;top:24px;width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid var(--bg)}.slot-dot.rest{background:var(--ink-faint)}.slot-time{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}.slot-title{font-weight:700;font-size:17px;margin-bottom:8px}.slot-details{font-size:14px;color:var(--ink-soft);display:flex;flex-direction:column;gap:6px}.slot-detail{padding-left:12px;border-left:2px solid var(--rule)}.slot-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;padding:2px 7px;border-radius:2px;background:var(--accent-soft);color:var(--accent);margin-right:6px}
-.walk-note{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;padding:18px 20px;margin-top:32px}.walk-note h3{font-weight:600;font-size:16px;margin-bottom:10px}.walk-note p{font-size:14px;color:var(--ink-soft);margin-bottom:6px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;background-image:radial-gradient(circle at 20% 10%,rgba(184,66,26,.04) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(200,155,60,.05) 0%,transparent 50%)}
+.container{max-width:720px;margin:0 auto;padding:32px 20px 80px}
+.topnav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--rule);padding:10px 20px;margin:0 -20px 32px}
+.topnav-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;overflow-x:auto;scrollbar-width:none}
+.topnav-inner::-webkit-scrollbar{display:none}
+.topnav a{font-size:13px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--bg-card);white-space:nowrap;transition:all .15s;flex-shrink:0}
+.topnav a:hover{color:var(--ink);border-color:var(--ink-faint)}
+.topnav a.home{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.topnav a.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.page-header{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--rule)}
+.page-header h1{font-weight:800;font-size:clamp(28px,7vw,40px);letter-spacing:-.02em;margin-bottom:6px}
+.page-header h1 em{font-style:normal;color:var(--accent)}
+.page-header p{font-size:14px;color:var(--ink-soft)}
+
+.timeline{display:flex;flex-direction:column;gap:0;position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:8px;top:16px;bottom:16px;width:2px;background:var(--rule)}
+.slot{position:relative;padding:20px 0 20px 24px;border-bottom:1px solid var(--rule)}
+.slot:last-child{border-bottom:none}
+.slot-dot{position:absolute;left:-24px;top:24px;width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid var(--bg)}
+.slot-dot.rest{background:var(--ink-faint)}
+.slot-time{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.slot-title{font-weight:700;font-size:17px;margin-bottom:8px}
+.slot-details{font-size:14px;color:var(--ink-soft);display:flex;flex-direction:column;gap:6px}
+.slot-detail{padding-left:12px;border-left:2px solid var(--rule)}
+.slot-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;padding:2px 7px;border-radius:2px;background:var(--accent-soft);color:var(--accent);margin-right:6px}
+
+.walk-note{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;padding:18px 20px;margin-top:32px}
+.walk-note h3{font-weight:600;font-size:16px;margin-bottom:10px}
+.walk-note p{font-size:14px;color:var(--ink-soft);margin-bottom:6px}
+.walk-note p:last-child{margin-bottom:0}
+
 footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid var(--rule);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.2em}
 @media(max-width:480px){.container{padding:24px 16px 60px}.topnav{margin-left:-16px;margin-right:-16px;padding:8px 16px}}
 </style>
 </head>
 <body>
-<nav class="topnav"><div class="topnav-inner"><a href="index.html" class="home">&larr; Dashboard</a><a href="kaya-commands.html">Commands</a><a href="kaya-routine.html" class="active">Routine</a><a href="kaya-diet.html">Diet</a><a href="kaya-training.html">Training</a><a href="kaya-behaviour.html">Behaviour</a><a href="kaya-grooming.html">Grooming</a><a href="kaya-health.html">Health</a><a href="kaya-team.html">Team</a><a href="kaya-rules.html">Rules</a></div></nav>
+<nav class="topnav"><div class="topnav-inner">
+  <a href="index.html" class="home">&larr; Dashboard</a>
+  <a href="kaya-commands.html">Commands</a>
+  <a href="kaya-routine.html" class="active">Routine</a>
+  <a href="kaya-diet.html">Diet</a>
+  <a href="kaya-training.html">Training</a>
+  <a href="kaya-behaviour.html">Behaviour</a>
+  <a href="kaya-grooming.html">Grooming</a>
+  <a href="kaya-health.html">Health</a>
+  <a href="kaya-team.html">Team</a>
+  <a href="kaya-rules.html">Rules</a>
+</div></nav>
 <div class="container">
-<div class="page-header"><h1>Daily <em>Routine</em></h1><p>Structured schedule with five awake windows and one wind-down</p></div>
-<div class="timeline">
-  <div class="slot"><div class="slot-dot"></div><div class="slot-time">7:30 &ndash; 9:00</div><div class="slot-title">Wake window</div><div class="slot-details">
-    <div class="slot-detail">House line on before pen exit. No mouthing tolerated.</div>
-    <div class="slot-detail"><span class="slot-tag">Barking</span>Wait 30 seconds minimum before responding.</div>
-    <div class="slot-detail"><span class="slot-tag">20 min ignore</span>After release from pen &mdash; no interaction for 20 minutes.</div>
-    <div class="slot-detail">Toilet is queued, not triggered by going to the door.</div>
-    <div class="slot-detail">Walk. Then decompression with Kong, lick mat, or ice block.</div>
-  </div></div>
-  <div class="slot"><div class="slot-dot rest"></div><div class="slot-time">9:00 &ndash; 11:00</div><div class="slot-title">Rest in pen</div><div class="slot-details"><div class="slot-detail">Pen with treat. Camera monitoring. No toys in pen ever.</div></div></div>
-  <div class="slot"><div class="slot-dot"></div><div class="slot-time">11:00 &ndash; 12:00</div><div class="slot-title">Awake window</div><div class="slot-details">
-    <div class="slot-detail"><span class="slot-tag">20 min ignore</span>After release from pen.</div>
-    <div class="slot-detail">Sniff games, training, free shaping, hose play.</div>
-  </div></div>
-  <div class="slot"><div class="slot-dot rest"></div><div class="slot-time">12:00 &ndash; 14:00</div><div class="slot-title">Rest in pen</div><div class="slot-details"><div class="slot-detail">Pen with treat. Camera monitoring.</div></div></div>
-  <div class="slot"><div class="slot-dot"></div><div class="slot-time">14:00 &ndash; 15:30</div><div class="slot-title">Awake window</div><div class="slot-details">
-    <div class="slot-detail">Lunch eaten first (by owner, not Kaya).</div>
-    <div class="slot-detail">Long walk. Decompression after.</div>
-  </div></div>
-  <div class="slot"><div class="slot-dot rest"></div><div class="slot-time">15:30 &ndash; 17:00</div><div class="slot-title">Rest in pen</div><div class="slot-details"><div class="slot-detail">Pen with treat. Camera monitoring.</div></div></div>
-  <div class="slot"><div class="slot-dot"></div><div class="slot-time">17:00 &ndash; 18:30</div><div class="slot-title">Awake window</div><div class="slot-details">
-    <div class="slot-detail"><span class="slot-tag">20 min ignore</span>After release.</div>
-    <div class="slot-detail">Second floor access earned. Chew near Juliet balcony &mdash; controlled environmental exposure (watching traffic, people from distance without triggering).</div>
-    <div class="slot-detail">Short calm play. Then pen.</div>
-  </div></div>
-  <div class="slot"><div class="slot-dot rest"></div><div class="slot-time">18:30 &ndash; 20:30</div><div class="slot-title">Rest in pen</div><div class="slot-details"><div class="slot-detail">Pen with treat. Camera monitoring.</div></div></div>
-  <div class="slot"><div class="slot-dot"></div><div class="slot-time">20:30 &ndash; 21:30</div><div class="slot-title">Dinner observation</div><div class="slot-details"><div class="slot-detail">Watches dinner prep. Minimal interaction. Camera monitoring.</div></div></div>
-  <div class="slot"><div class="slot-dot rest"></div><div class="slot-time">22:00 &ndash; 22:30</div><div class="slot-title">Wind down</div><div class="slot-details">
-    <div class="slot-detail">Food prep observation. Simple known commands only.</div>
-    <div class="slot-detail">Last toilet. Pen with treat. Lights out.</div>
-  </div></div>
+<div class="page-header">
+  <h1>Daily <em>Routine</em></h1>
+  <p>Awake windows, rest, and one wind-down to bed</p>
 </div>
+
+<div class="timeline">
+  <div class="slot">
+    <div class="slot-dot"></div>
+    <div class="slot-time">7:30 – 9:00</div>
+    <div class="slot-title">Awake &amp; walk</div>
+    <div class="slot-details">
+      <div class="slot-detail">House line only if you are actively training (jumping, grabbing, etc.). Out for a wee first, and prevent licking or eating wee and poo.</div>
+      <div class="slot-detail">Morning walk 30 to 45 minutes, always quit while you are ahead.</div>
+      <div class="slot-detail"><span class="slot-tag">Hot weather</span>At 20&deg;C or above there is no walk. Do a cooling or find-it game at home instead (see hot-weather protocol below).</div>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-dot rest"></div>
+    <div class="slot-time">9:00 – 10:00</div>
+    <div class="slot-title">Rest</div>
+    <div class="slot-details">
+      <div class="slot-detail">Pen with treat. Camera monitoring.</div>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-dot"></div>
+    <div class="slot-time">10:00 – 14:00</div>
+    <div class="slot-title">Interaction &amp; play</div>
+    <div class="slot-details">
+      <div class="slot-detail">Sniff games, training, free shaping, find-it, calm play. Paddle bath on hot days (see below).</div>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-dot rest"></div>
+    <div class="slot-time">14:00 – 17:30</div>
+    <div class="slot-title">Rest</div>
+    <div class="slot-details">
+      <div class="slot-detail">Pen with treat. Camera monitoring.</div>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-dot"></div>
+    <div class="slot-time">18:00 – 19:00</div>
+    <div class="slot-title">Short walk or bench</div>
+    <div class="slot-details">
+      <div class="slot-detail">A short walk, or sit at the shaded bench near the Strand in warm weather (check under it for rubbish first).</div>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-dot"></div>
+    <div class="slot-time">19:00 – 21:00</div>
+    <div class="slot-title">Watch dinner cooking</div>
+    <div class="slot-details">
+      <div class="slot-detail">Watches dinner prep. Minimal interaction. Never interact with her while she is eating.</div>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-dot"></div>
+    <div class="slot-time">21:00 – 22:30</div>
+    <div class="slot-title">Calm</div>
+    <div class="slot-details">
+      <div class="slot-detail">Wind down. Simple known commands only.</div>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-dot rest"></div>
+    <div class="slot-time">22:30</div>
+    <div class="slot-title">Bed (pen)</div>
+    <div class="slot-details">
+      <div class="slot-detail">Remove all toys off the ground before you say bed time. Last toilet. Pen with treat. Lights out.</div>
+    </div>
+  </div>
+</div>
+
+<div class="walk-note" style="border-left:4px solid var(--amber)">
+  <h3>Training focus right now</h3>
+  <p><strong>Clothes and object grabbing.</strong> Any grabbing is an immediate pen for a minimum of 5 minutes. Multiple times in a row earns a full sleep (2 to 3 hours). Anything not life-threatening is left with her, use the guarding protocol on the Rules page instead.</p>
+</div>
+
+<div class="walk-note" style="border-left:4px solid var(--red)">
+  <h3>Hot-weather protocol</h3>
+  <p><strong>Samoyeds run hot. No walks at 20&deg;C or above.</strong> Even in the high teens it is often better to sit on the shaded bench near the Strand.</p>
+  <p><strong>Water:</strong> keep lots available. Cycle her water bowls through the fridge and add ice from the freezer.</p>
+  <p><strong>Cooling:</strong> give her the frozen chopping board from the freezer, and freeze wet kibble. A cooling mat is allowed but always supervised. Do not wet her coat on top (underside is fine).</p>
+  <p><strong>Cool sleep spot:</strong> she can sleep in the front toilet instead of the pen, as it stays very cool.</p>
+  <p><strong>Balcony:</strong> allow upstairs access near the Juliet balcony for airflow when it is hot.</p>
+  <p>See the Health page for how to check her temperature and the signs of overheating.</p>
+</div>
+
+<div class="walk-note">
+  <h3>Hot-day activities</h3>
+  <p><strong>Find it:</strong> pen her, hide treats around the whole house, then cue "Find it".</p>
+  <p><strong>Paddle bath:</strong> put the shower head on in the bath facing up, plug down, add her balls, and let her play. Dog towels are in the shoe cupboard on the ground floor.</p>
+</div>
+
+<div class="walk-note" style="border-left:4px solid var(--red)">
+  <h3>Foxtails, walking areas</h3>
+  <p><strong>There are currently many foxtails in all the standard walking areas.</strong> Avoid them. Her long fur hides them very easily, and you still need to check all four legs when you get home.</p>
+  <p>Stick to the paved areas around the Strand, or take her the other way through the forest tunnel (expert handlers only).</p>
+  <p>Rhea takes her semi-regularly to the enclosed dog field for calm parallel walking with other dogs at distance.</p>
+</div>
+
 <div class="walk-note">
   <h3>Walking setup</h3>
-  <p>No Halti currently. Retractable lead. Heel walk to park.</p>
-  <p>The Strand in mornings &mdash; lower footfall, better for threshold management.</p>
-  <p>Full 5 metres at park for sniffing, released with sit-wait then &ldquo;break&rdquo; or &ldquo;go sniff.&rdquo;</p>
-  <p>Scavenging reduced but ongoing &mdash; dynamic movement helps natural drop without direct intervention.</p>
-  <p>Ria Newcombe taking her semi-regularly to enclosed dog field &mdash; parallel walking with dogs at distance, low scavenge risk, calm structured exposure.</p>
+  <p>No Halti currently. Retractable lead. Heel walk to the park, full 5 metres at the park for sniffing, released with a sit-wait then "break" or "go sniff".</p>
+  <p>The Strand in mornings, lower footfall, better for threshold management.</p>
 </div>
-<footer>Last updated May 2026 &middot; For Kaya, the floof</footer>
+
+<footer>Last updated July 2026 &middot; For Kaya, the floof</footer>
 </div>
 </body>
 </html>

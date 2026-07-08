@@ -1,542 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaya Santos-Trevatt — Dashboard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #f4efe6;
-            --bg-card: #fff;
-            --ink: #1a1814;
-            --ink-soft: #5a544a;
-            --ink-faint: #8a8378;
-            --rule: #e5ddd0;
-            --accent: #b8421a;
-            --accent-soft: #f3d9c6;
-            --gold: #c89b3c;
-            --green: #4a7c59;
-            --amber: #c8852f;
-            --red: #b04a3a;
-            --grey: #8a8378;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaya - Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4efe6;
+  --bg-card: #ffffff;
+  --ink: #1a1814;
+  --ink-soft: #5a544a;
+  --ink-faint: #8a8378;
+  --rule: #e5ddd0;
+  --accent: #b8421a;
+  --accent-soft: #f3d9c6;
+  --gold: #c89b3c;
+  --green: #4a7c59;
+  --amber: #c8852f;
+  --red: #b04a3a;
+  --grey: #8a8378;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(184, 66, 26, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(200, 155, 60, 0.05) 0%, transparent 50%);
+}
+.container { max-width: 800px; margin: 0 auto; padding: 32px 20px 80px; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* Hero */
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--rule);
+}
+.hero-photo {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  border: 4px solid var(--bg-card);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--ink-faint);
+  margin-bottom: 8px;
+}
+h1 {
+  font-weight: 800;
+  font-size: clamp(36px, 8vw, 52px);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+h1 em { font-style: normal; color: var(--accent); }
+.subtitle {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-bottom: 24px;
+}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: radial-gradient(ellipse at 50% 0%, rgba(184, 66, 26, 0.05), rgba(184, 66, 26, 0.02)), var(--bg);
-            color: var(--ink);
-            line-height: 1.6;
-        }
+/* Profile stats */
+.profile-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.profile-stats strong { color: var(--ink); font-weight: 600; }
+.stat-divider { color: var(--rule); }
 
-        /* Top Navigation */
-        .topnav {
-            position: sticky;
-            top: 0;
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--rule);
-            z-index: 100;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-        }
+/* Alert banner */
+.alert-banner {
+  background: #fdf0ea;
+  border: 1px solid #e8c4b0;
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.alert-banner strong { color: var(--accent); }
 
-        .topnav-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
+/* Nav grid */
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.nav-card {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 24px 20px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.nav-card:hover {
+  border-color: var(--ink-faint);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+.nav-card-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+.nav-card-title {
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+.nav-card-desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+.nav-card-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  margin-top: auto;
+  padding-top: 8px;
+}
 
-        .topnav a {
-            text-decoration: none;
-            color: var(--ink-soft);
-            font-size: 0.875rem;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 999px;
-            transition: all 0.2s ease;
-            background: var(--bg);
-            display: inline-block;
-        }
+/* Quick contacts */
+.section-title {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 48px;
+}
+.contact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 16px;
+}
+.contact-role {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.contact-name { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+.contact-detail {
+  font-size: 13px;
+  color: var(--ink-soft);
+  word-break: break-all;
+}
+.contact-detail a { color: var(--ink-soft); }
 
-        .topnav a:hover {
-            background: var(--accent-soft);
-            color: var(--accent);
-        }
+/* Insurance */
+.insurance-bar {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 16px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  margin-bottom: 48px;
+  font-size: 14px;
+}
+.insurance-bar .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+}
+.insurance-bar .value { font-weight: 600; }
+.insurance-bar .warning { color: var(--amber); font-size: 13px; }
 
-        .topnav a.active {
-            background: var(--accent);
-            color: white;
-        }
+footer {
+  text-align: center;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
 
-        .topnav a.home {
-            margin-right: auto;
-            font-weight: 600;
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .hero-image {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 1.5rem;
-            border: 4px solid var(--accent);
-            box-shadow: 0 8px 24px rgba(184, 66, 26, 0.15);
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--ink);
-            margin-bottom: 0.5rem;
-            line-height: 1.1;
-        }
-
-        .hero-subtitle {
-            font-size: 1.125rem;
-            color: var(--ink-soft);
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-
-        .profile-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .stat {
-            background: var(--bg-card);
-            padding: 1rem;
-            border-radius: 0.75rem;
-            border: 1px solid var(--rule);
-            text-align: center;
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--ink-faint);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-value {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--ink);
-        }
-
-        /* Alert Banner */
-        .alert {
-            background: var(--bg-card);
-            border-left: 4px solid var(--accent);
-            border-radius: 0.5rem;
-            padding: 1.25rem 1.5rem;
-            margin-bottom: 2rem;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .alert-title {
-            font-weight: 700;
-            color: var(--accent);
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.5px;
-        }
-
-        .alert-text {
-            color: var(--ink-soft);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* Navigation Grid */
-        .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .nav-card {
-            background: var(--bg-card);
-            border: 1px solid var(--rule);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            cursor: pointer;
-        }
-
-        .nav-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 8px 24px rgba(184, 66, 26, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .nav-card-icon {
-            font-size: 2.5rem;
-        }
-
-        .nav-card-title {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--ink);
-        }
-
-        .nav-card-description {
-            font-size: 0.875rem;
-            color: var(--ink-soft);
-            flex-grow: 1;
-        }
-
-        .nav-card-meta {
-            font-size: 0.75rem;
-            color: var(--ink-faint);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Contacts Grid */
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--ink);
-            margin-bottom: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .contacts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .contact-card {
-            background: var(--bg-card);
-            border: 1px solid var(--rule);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-        }
-
-        .contact-role {
-            font-size: 0.75rem;
-            color: var(--ink-faint);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-name {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--ink);
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-phone {
-            font-size: 0.875rem;
-            color: var(--accent);
-            font-family: 'JetBrains Mono', monospace;
-            margin-bottom: 0.25rem;
-        }
-
-        .contact-detail {
-            font-size: 0.875rem;
-            color: var(--ink-soft);
-        }
-
-        /* Insurance Bar */
-        .insurance-bar {
-            background: var(--bg-card);
-            border: 1px solid var(--rule);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .insurance-label {
-            font-size: 0.75rem;
-            color: var(--ink-faint);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .insurance-provider {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--ink);
-            margin-bottom: 0.5rem;
-        }
-
-        .insurance-policy {
-            font-size: 0.875rem;
-            color: var(--ink-soft);
-            font-family: 'JetBrains Mono', monospace;
-            margin-bottom: 0.75rem;
-        }
-
-        .insurance-status {
-            font-size: 0.875rem;
-            color: var(--amber);
-            font-weight: 600;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem 1rem;
-            color: var(--ink-faint);
-            font-size: 0.875rem;
-            border-top: 1px solid var(--rule);
-            margin-top: 3rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 1.75rem;
-            }
-
-            .nav-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contacts-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .topnav-inner {
-                gap: 0.25rem;
-            }
-
-            .topnav a {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.75rem;
-            }
-        }
-    </style>
+@media (max-width: 480px) {
+  .container { padding: 24px 16px 60px; }
+  .nav-grid { grid-template-columns: 1fr; }
+  .contacts-grid { grid-template-columns: 1fr; }
+  .insurance-bar { flex-direction: column; gap: 12px; }
+}
+</style>
 </head>
 <body>
-    <nav class="topnav"><div class="topnav-inner">
-        <a href="index.html" class="home active">&larr; Dashboard</a>
-        <a href="kaya-commands.html">Commands</a>
-        <a href="kaya-routine.html">Routine</a>
-        <a href="kaya-diet.html">Diet</a>
-        <a href="kaya-training.html">Training</a>
-        <a href="kaya-behaviour.html">Behaviour</a>
-        <a href="kaya-grooming.html">Grooming</a>
-        <a href="kaya-health.html">Health</a>
-        <a href="kaya-team.html">Team</a>
-        <a href="kaya-rules.html">Rules</a>
-    </div></nav>
+<div class="container">
 
-    <div class="container">
-        <div class="hero">
-            <img src="kaya.jpeg" alt="Kaya the Samoyed" class="hero-image">
-            <h1>Kaya Santos-Trevatt</h1>
-            <p class="hero-subtitle">Samoyed · Female · Intact</p>
-            <div class="profile-stats">
-                <div class="stat">
-                    <div class="stat-label">Born</div>
-                    <div class="stat-value">5 Jul 2025</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">Age</div>
-                    <div class="stat-value" id="age">—</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">Weight</div>
-                    <div class="stat-value">~20kg</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">Microchip</div>
-                    <div class="stat-value">✓ Yes</div>
-                </div>
-            </div>
-        </div>
+<div class="hero">
+  <div class="hero-photo">
+    <img src="kaya.jpeg" alt="Kaya the Samoyed">
+  </div>
+  <div class="eyebrow">The Complete Manual</div>
+  <h1>Kaya <em>Santos-Trevatt</em></h1>
+  <p class="subtitle">Samoyed &middot; Female &middot; Intact</p>
+  <div class="profile-stats">
+    <span>Born <strong>~5 Jul 2025</strong></span>
+    <span class="stat-divider">|</span>
+    <span>Age <strong id="age-display">10 months</strong></span>
+    <span class="stat-divider">|</span>
+    <span>Weight <strong>19.4 kg</strong></span>
+    <span class="stat-divider">|</span>
+    <span>Microchipped <strong>Yes</strong></span>
+  </div>
+</div>
 
-        <div class="alert">
-            <div class="alert-title">Priority Alert</div>
-            <div class="alert-text">Warning bites spreading across contexts (nail cutting, coat blowing, lead removal, object guarding). Professional assessment needed.</div>
-        </div>
+<div class="alert-banner">
+  <strong>Warning bites from guarding.</strong> Do not take items from her while she is guarding, or you risk a bite. <a href="kaya-rules.html#guarding">Click here for the guarding protocol</a>.
+</div>
 
-        <div class="nav-grid">
-            <a href="kaya-commands.html" class="nav-card">
-                <div class="nav-card-icon">🎯</div>
-                <div class="nav-card-title">Commands</div>
-                <div class="nav-card-description">Full 42-command repertoire with reliability ratings and hand signals</div>
-                <div class="nav-card-meta">7 tiers · 42 commands</div>
-            </a>
+<div class="nav-grid">
+  <a href="kaya-commands.html" class="nav-card">
+    <div class="nav-card-icon">&#x1F4CB;</div>
+    <div class="nav-card-title">Commands</div>
+    <div class="nav-card-desc">Full 45-command repertoire with reliability ratings and hand signals</div>
+    <div class="nav-card-meta">7 tiers &middot; 45 commands</div>
+  </a>
+  <a href="kaya-routine.html" class="nav-card">
+    <div class="nav-card-icon">&#x1F554;</div>
+    <div class="nav-card-title">Daily Routine</div>
+    <div class="nav-card-desc">Five awake windows, decompression, and wind-down schedule</div>
+    <div class="nav-card-meta">7:00 &ndash; 10:30</div>
+  </a>
+  <a href="kaya-diet.html" class="nav-card">
+    <div class="nav-card-icon">&#x1F356;</div>
+    <div class="nav-card-title">Diet &amp; Treats</div>
+    <div class="nav-card-desc">Kibble, treat hierarchy, supplements, and feeding rules</div>
+    <div class="nav-card-meta">Eukanuba &middot; settled</div>
+  </a>
+  <a href="kaya-training.html" class="nav-card">
+    <div class="nav-card-icon">&#x1F3AF;</div>
+    <div class="nav-card-title">Training &amp; Problems</div>
+    <div class="nav-card-desc">Active problems, training wins, and current protocols</div>
+    <div class="nav-card-meta">3 active priorities</div>
+  </a>
+  <a href="kaya-behaviour.html" class="nav-card">
+    <div class="nav-card-icon">&#x1F9E0;</div>
+    <div class="nav-card-title">Behaviour Profiles</div>
+    <div class="nav-card-desc">Arousal, guarding, socialisation, and fear profiles</div>
+    <div class="nav-card-meta">4 profiles</div>
+  </a>
+  <a href="kaya-grooming.html" class="nav-card">
+    <div class="nav-card-icon">&#x2728;</div>
+    <div class="nav-card-title">Grooming</div>
+    <div class="nav-card-desc">Coat care, nail desensitisation, bathing, and blow-dry status</div>
+    <div class="nav-card-meta">Spring shed active</div>
+  </a>
+  <a href="kaya-health.html" class="nav-card">
+    <div class="nav-card-icon">&#x1FA7A;</div>
+    <div class="nav-card-title">Health &amp; History</div>
+    <div class="nav-card-desc">Vet history, vaccinations, surgery, insurance, and future plans</div>
+    <div class="nav-card-meta">1 major incident</div>
+  </a>
+  <a href="kaya-team.html" class="nav-card">
+    <div class="nav-card-icon">&#x1F465;</div>
+    <div class="nav-card-title">Team &amp; Contacts</div>
+    <div class="nav-card-desc">Owners first, then vet, trainer, groomer, and walker</div>
+    <div class="nav-card-meta">5 contacts</div>
+  </a>
+  <a href="kaya-rules.html" class="nav-card">
+    <div class="nav-card-icon">&#x1F6D1;</div>
+    <div class="nav-card-title">Rules</div>
+    <div class="nav-card-desc">Non-negotiable management protocols for anyone handling Kaya</div>
+    <div class="nav-card-meta">Must-read</div>
+  </a>
+</div>
 
-            <a href="kaya-routine.html" class="nav-card">
-                <div class="nav-card-icon">⏰</div>
-                <div class="nav-card-title">Routine</div>
-                <div class="nav-card-description">Five awake windows, decompression, and wind-down schedule</div>
-                <div class="nav-card-meta">7:30 – 10:30</div>
-            </a>
+<div class="section-title">Quick contacts</div>
+<div class="contacts-grid">
+  <div class="contact-card">
+    <div class="contact-role">Vet</div>
+    <div class="contact-name">Medway Park Veterinary Centre</div>
+    <div class="contact-detail"><a href="tel:01634570530">01634 570 530</a></div>
+    <div class="contact-detail" style="color:var(--red);font-size:11px;margin-top:4px"><a href="tel:01634780073" style="color:var(--red)">Emergency: 01634 780 073</a></div>
+  </div>
+  <div class="contact-card">
+    <div class="contact-role">Trainer</div>
+    <div class="contact-name">Adrian - ABC for Dogs</div>
+    <div class="contact-detail"><a href="tel:+447939203414">07939 203 414</a></div>
+  </div>
+  <div class="contact-card">
+    <div class="contact-role">Groomer</div>
+    <div class="contact-name">Eleanor</div>
+    <div class="contact-detail">Mobile van &middot; Number TBC</div>
+  </div>
+  <div class="contact-card">
+    <div class="contact-role">Dog Walker</div>
+    <div class="contact-name">Rhea</div>
+    <div class="contact-detail">Experienced &middot; Number TBC</div>
+  </div>
+</div>
 
-            <a href="kaya-diet.html" class="nav-card">
-                <div class="nav-card-icon">🍖</div>
-                <div class="nav-card-title">Diet</div>
-                <div class="nav-card-description">Kibble, treat hierarchy, supplements, and feeding rules</div>
-                <div class="nav-card-meta">Transitioning kibble</div>
-            </a>
+<div class="section-title">Insurance</div>
+<div class="insurance-bar">
+  <div><div class="label">Provider</div><div class="value">More Than Pet Insurance</div></div>
+  <div><div class="label">Policy</div><div class="value">MTHP25000167365</div></div>
+  <div><div class="label">Status</div><div class="value warning">Budget low - vet claim used most of annual cover</div></div>
+</div>
 
-            <a href="kaya-training.html" class="nav-card">
-                <div class="nav-card-icon">📚</div>
-                <div class="nav-card-title">Training</div>
-                <div class="nav-card-description">Active problems, training wins, and current protocols</div>
-                <div class="nav-card-meta">3 active priorities</div>
-            </a>
+<footer>Last updated July 2026 &middot; For Kaya, the floof</footer>
+</div>
 
-            <a href="kaya-behaviour.html" class="nav-card">
-                <div class="nav-card-icon">🧠</div>
-                <div class="nav-card-title">Behaviour</div>
-                <div class="nav-card-description">Arousal, guarding, socialisation, and fear profiles</div>
-                <div class="nav-card-meta">4 profiles</div>
-            </a>
-
-            <a href="kaya-grooming.html" class="nav-card">
-                <div class="nav-card-icon">✨</div>
-                <div class="nav-card-title">Grooming</div>
-                <div class="nav-card-description">Coat care, nail desensitisation, bathing, and blow-dry status</div>
-                <div class="nav-card-meta">Spring shed active</div>
-            </a>
-
-            <a href="kaya-health.html" class="nav-card">
-                <div class="nav-card-icon">💚</div>
-                <div class="nav-card-title">Health</div>
-                <div class="nav-card-description">Vet history, vaccinations, surgery, insurance, and future plans</div>
-                <div class="nav-card-meta">1 major incident</div>
-            </a>
-
-            <a href="kaya-team.html" class="nav-card">
-                <div class="nav-card-icon">👥</div>
-                <div class="nav-card-title">Team</div>
-                <div class="nav-card-description">Vet, trainer, groomer, dog walkers, and sitters</div>
-                <div class="nav-card-meta">6 contacts</div>
-            </a>
-
-            <a href="kaya-rules.html" class="nav-card">
-                <div class="nav-card-icon">📋</div>
-                <div class="nav-card-title">Rules</div>
-                <div class="nav-card-description">Non-negotiable management protocols for anyone handling Kaya</div>
-                <div class="nav-card-meta">Must-read</div>
-            </a>
-        </div>
-
-        <h2 class="section-title">Quick Contacts</h2>
-        <div class="contacts-grid">
-            <div class="contact-card">
-                <div class="contact-role">Veterinarian</div>
-                <div class="contact-name">Medway Park Vet Centre</div>
-                <div class="contact-phone">01634 570 530</div>
-                <div class="contact-detail">Emergency: 01634 780 073</div>
-            </div>
-
-            <div class="contact-card">
-                <div class="contact-role">Trainer</div>
-                <div class="contact-name">Adrian — ABC for Dogs</div>
-                <div class="contact-phone">07939 203 414</div>
-            </div>
-
-            <div class="contact-card">
-                <div class="contact-role">Groomer</div>
-                <div class="contact-name">Eleanor — Els' Dog Grooming</div>
-                <div class="contact-detail">WhatsApp business</div>
-            </div>
-
-            <div class="contact-card">
-                <div class="contact-role">Dog Walker</div>
-                <div class="contact-name">Ria Newcombe</div>
-                <div class="contact-phone">07494 475 494</div>
-            </div>
-
-            <div class="contact-card">
-                <div class="contact-role">Dog Sitter</div>
-                <div class="contact-name">Briyen Haviska</div>
-                <div class="contact-phone">+39 351 559 1200</div>
-            </div>
-        </div>
-
-        <h2 class="section-title">Pet Insurance</h2>
-        <div class="insurance-bar">
-            <div class="insurance-label">Provider</div>
-            <div class="insurance-provider">More Than Pet Insurance</div>
-            <div class="insurance-policy">Policy: MTHP25000167365</div>
-            <div class="insurance-status">Budget low — vet claim used most of annual cover</div>
-        </div>
-    </div>
-
-    <footer>
-        <p>Last updated May 2026 · For Kaya, the floof</p>
-    </footer>
-
-    <script>
-        // Calculate age
-        function calculateAge() {
-            const birthDate = new Date(2025, 6, 5); // July 5, 2025
-            const today = new Date();
-            let months = (today.getFullYear() - birthDate.getFullYear()) * 12;
-            months += today.getMonth() - birthDate.getMonth();
-
-            const days = today.getDate() - birthDate.getDate();
-            if (days < 0) months--;
-
-            if (months < 1) {
-                document.getElementById('age').textContent = `${Math.floor(today - birthDate) / (1000 * 60 * 60 * 24)} days`;
-            } else if (months < 12) {
-                document.getElementById('age').textContent = `${months}m`;
-            } else {
-                const years = Math.floor(months / 12);
-                const remainingMonths = months % 12;
-                document.getElementById('age').textContent = remainingMonths > 0 ? `${years}y ${remainingMonths}m` : `${years}y`;
-            }
-        }
-
-        calculateAge();
-    </script>
+<script>
+// Auto-calculate age
+const dob = new Date(2025, 6, 5); // July 5 2025
+const now = new Date();
+const months = (now.getFullYear() - dob.getFullYear()) * 12 + (now.getMonth() - dob.getMonth());
+const years = Math.floor(months / 12);
+const remainingMonths = months % 12;
+const ageStr = years > 0 ? `${years}y ${remainingMonths}m` : `${months} months`;
+document.getElementById('age-display').textContent = ageStr;
+</script>
 </body>
 </html>

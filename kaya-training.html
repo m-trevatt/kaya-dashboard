@@ -3,52 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kaya — Training &amp; Problems</title>
+<title>Kaya - Training & Problems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f4efe6;--bg-card:#fff;--ink:#1a1814;--ink-soft:#5a544a;--ink-faint:#8a8378;--rule:#e5ddd0;--accent:#b8421a;--accent-soft:#f3d9c6;--green:#4a7c59;--amber:#c8852f;--red:#b04a3a}
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;background-image:radial-gradient(circle at 20% 10%,rgba(184,66,26,.04) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(200,155,60,.05) 0%,transparent 50%)}.container{max-width:720px;margin:0 auto;padding:32px 20px 80px}
-.topnav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--rule);padding:10px 20px;margin:0 -20px 32px}.topnav-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;overflow-x:auto;scrollbar-width:none}.topnav-inner::-webkit-scrollbar{display:none}.topnav a{font-size:13px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--bg-card);white-space:nowrap;transition:all .15s;flex-shrink:0}.topnav a:hover{color:var(--ink);border-color:var(--ink-faint)}.topnav a.home{background:var(--ink);color:var(--bg);border-color:var(--ink)}.topnav a.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.page-header{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--rule)}.page-header h1{font-weight:800;font-size:clamp(28px,7vw,40px);letter-spacing:-.02em;margin-bottom:6px}.page-header h1 em{font-style:normal;color:var(--accent)}.page-header p{font-size:14px;color:var(--ink-soft)}
-.section{margin-bottom:40px}.section-title{font-weight:700;font-size:18px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
-.problem{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;margin-bottom:16px;overflow:hidden}.problem-header{padding:16px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--rule)}.priority-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:4px 10px;border-radius:2px;flex-shrink:0}.priority-badge.p1{background:#f5d0d0;color:var(--red)}.priority-badge.p2{background:#fce8d0;color:var(--amber)}.priority-badge.p3{background:#e8e1d0;color:#6a5a30}.problem-title{font-weight:700;font-size:17px}.problem-body{padding:16px 18px;font-size:14px;color:var(--ink-soft);display:flex;flex-direction:column;gap:12px}.problem-row{display:flex;gap:10px}.problem-label{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-faint);min-width:72px;flex-shrink:0;padding-top:3px}.problem-value{flex:1;line-height:1.5}
-.wins{display:flex;flex-direction:column;gap:10px}.win{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--green);border-radius:4px;padding:14px 18px}.win-title{font-weight:600;font-size:15px;margin-bottom:4px}.win-detail{font-size:13px;color:var(--ink-soft)}
-.goals{display:flex;flex-direction:column;gap:10px}.goal{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--amber);border-radius:4px;padding:14px 18px}.goal-title{font-weight:600;font-size:15px;margin-bottom:4px}.goal-detail{font-size:13px;color:var(--ink-soft)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;background-image:radial-gradient(circle at 20% 10%,rgba(184,66,26,.04) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(200,155,60,.05) 0%,transparent 50%)}
+.container{max-width:720px;margin:0 auto;padding:32px 20px 80px}
+.topnav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--rule);padding:10px 20px;margin:0 -20px 32px}
+.topnav-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;overflow-x:auto;scrollbar-width:none}
+.topnav-inner::-webkit-scrollbar{display:none}
+.topnav a{font-size:13px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--bg-card);white-space:nowrap;transition:all .15s;flex-shrink:0}
+.topnav a:hover{color:var(--ink);border-color:var(--ink-faint)}
+.topnav a.home{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.topnav a.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.page-header{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--rule)}
+.page-header h1{font-weight:800;font-size:clamp(28px,7vw,40px);letter-spacing:-.02em;margin-bottom:6px}
+.page-header h1 em{font-style:normal;color:var(--accent)}
+.page-header p{font-size:14px;color:var(--ink-soft)}
+.section{margin-bottom:40px}
+.section-title{font-weight:700;font-size:18px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+
+/* Problem cards */
+.problem{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;margin-bottom:16px;overflow:hidden}
+.problem-header{padding:16px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--rule)}
+.priority-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:4px 10px;border-radius:2px;flex-shrink:0}
+.priority-badge.p1{background:#f5d0d0;color:var(--red)}
+.priority-badge.p2{background:#fce8d0;color:var(--amber)}
+.priority-badge.p3{background:#e8e1d0;color:#6a5a30}
+.problem-title{font-weight:700;font-size:17px}
+.problem-body{padding:16px 18px;font-size:14px;color:var(--ink-soft);display:flex;flex-direction:column;gap:12px}
+.problem-row{display:flex;gap:10px}
+.problem-label{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-faint);min-width:72px;flex-shrink:0;padding-top:3px}
+.problem-value{flex:1;line-height:1.5}
+
+/* Win cards */
+.wins{display:flex;flex-direction:column;gap:10px}
+.win{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--green);border-radius:4px;padding:14px 18px}
+.win-title{font-weight:600;font-size:15px;margin-bottom:4px}
+.win-detail{font-size:13px;color:var(--ink-soft)}
+
+/* Goals */
+.goals{display:flex;flex-direction:column;gap:10px}
+.goal{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--amber);border-radius:4px;padding:14px 18px}
+.goal-title{font-weight:600;font-size:15px;margin-bottom:4px}
+.goal-detail{font-size:13px;color:var(--ink-soft)}
+
 footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid var(--rule);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.2em}
 @media(max-width:480px){.container{padding:24px 16px 60px}.topnav{margin-left:-16px;margin-right:-16px;padding:8px 16px}.problem-row{flex-direction:column;gap:2px}.problem-label{min-width:auto}}
 </style>
 </head>
 <body>
-<nav class="topnav"><div class="topnav-inner"><a href="index.html" class="home">&larr; Dashboard</a><a href="kaya-commands.html">Commands</a><a href="kaya-routine.html">Routine</a><a href="kaya-diet.html">Diet</a><a href="kaya-training.html" class="active">Training</a><a href="kaya-behaviour.html">Behaviour</a><a href="kaya-grooming.html">Grooming</a><a href="kaya-health.html">Health</a><a href="kaya-team.html">Team</a><a href="kaya-rules.html">Rules</a></div></nav>
+<nav class="topnav"><div class="topnav-inner">
+  <a href="index.html" class="home">&larr; Dashboard</a>
+  <a href="kaya-commands.html">Commands</a>
+  <a href="kaya-routine.html">Routine</a>
+  <a href="kaya-diet.html">Diet</a>
+  <a href="kaya-training.html" class="active">Training</a>
+  <a href="kaya-behaviour.html">Behaviour</a>
+  <a href="kaya-grooming.html">Grooming</a>
+  <a href="kaya-health.html">Health</a>
+  <a href="kaya-team.html">Team</a>
+  <a href="kaya-rules.html">Rules</a>
+</div></nav>
 <div class="container">
-<div class="page-header"><h1>Training &amp; <em>Problems</em></h1><p>Active priorities, current protocols, and training wins</p></div>
+<div class="page-header">
+  <h1>Training &amp; <em>Problems</em></h1>
+  <p>Active priorities, current protocols, and training wins</p>
+</div>
 
 <div class="section">
-  <div class="section-title">Active problems &mdash; priority order</div>
+  <div class="section-title">Active problems - priority order</div>
+
   <div class="problem">
-    <div class="problem-header"><span class="priority-badge p1">P1 &mdash; Urgent</span><span class="problem-title">Warning bites</span></div>
+    <div class="problem-header"><span class="priority-badge p1">P1 - Urgent</span><span class="problem-title">Warning bites</span></div>
     <div class="problem-body">
       <div class="problem-row"><span class="problem-label">Contexts</span><span class="problem-value">Nail cutting, coat blowing, lead removal at bedtime, dangerous object guarding.</span></div>
-      <div class="problem-row"><span class="problem-label">Pattern</span><span class="problem-value">Spreading across contexts. She has learned that warning bites produce results &mdash; every successful bite that stops an unwanted event reinforces the behaviour.</span></div>
+      <div class="problem-row"><span class="problem-label">Pattern</span><span class="problem-value">Spreading to new situations. She has worked out that a warning bite makes the unwanted thing stop, so every time it works it teaches her to do it again.</span></div>
+      <div class="problem-row"><span class="problem-label">Escalation</span><span class="problem-value">On 12 June 2026 she bit Faith on a walk, after Faith grabbed a jumper wrapped around Kaya's waist and tried to take it off her. The teeth broke skin for the first time. This is exactly why we don't take things off her: anything that isn't life-threatening stays with her.</span></div>
       <div class="problem-row"><span class="problem-label">Status</span><span class="problem-value">Trainer needs to assess this as a pattern, not individual incidents. Professional assessment urgently needed.</span></div>
       <div class="problem-row"><span class="problem-label">Action</span><span class="problem-value">Discuss with Adrian at next session. Frame as an escalating pattern across multiple contexts.</span></div>
     </div>
   </div>
+
   <div class="problem">
-    <div class="problem-header"><span class="priority-badge p2">P2 &mdash; Active</span><span class="problem-title">Dangerous object protocol ceiling</span></div>
+    <div class="problem-header"><span class="priority-badge p2">P2 - Active</span><span class="problem-title">Dangerous object protocol ceiling</span></div>
     <div class="problem-body">
       <div class="problem-row"><span class="problem-label">Issue</span><span class="problem-value">She knows the pattern. Locks jaw pre-emptively when she picks up dangerous items (glasses case, tin lids, screws, bolts).</span></div>
-      <div class="problem-row"><span class="problem-label">Tried</span><span class="problem-value">Treat scatter protocol &mdash; has stopped working because she's factored it in. Interventions happen too late (after jaw lock, not at pickup moment).</span></div>
-      <div class="problem-row"><span class="problem-label">Needed</span><span class="problem-value">Change the treat to something surprising. Intervene at the moment of pickup, not after lock. Two-person approach for genuinely dangerous objects &mdash; one distracts, one removes.</span></div>
+      <div class="problem-row"><span class="problem-label">Tried</span><span class="problem-value">Treat scatter protocol - has stopped working because she's factored it in. Interventions happen too late (after jaw lock, not at pickup moment).</span></div>
+      <div class="problem-row"><span class="problem-label">Needed</span><span class="problem-value">Change the treat to something surprising. Intervene at the moment of pickup, not after lock. Two-person approach for genuinely dangerous objects - one distracts, one removes.</span></div>
       <div class="problem-row"><span class="problem-label">Outdoors</span><span class="problem-value">Improving. Dynamic movement helps natural drop without direct intervention.</span></div>
     </div>
   </div>
+
   <div class="problem">
-    <div class="problem-header"><span class="priority-badge p3">P3 &mdash; Stalled</span><span class="problem-title">Halti conditioning</span></div>
+    <div class="problem-header"><span class="priority-badge p3">P3 - Stalled</span><span class="problem-title">Halti conditioning</span></div>
     <div class="problem-body">
       <div class="problem-row"><span class="problem-label">Status</span><span class="problem-value">Tolerates it for duration of high-value chew only. Removes it the moment chew ends or disappears.</span></div>
-      <div class="problem-row"><span class="problem-label">Ceiling</span><span class="problem-value">Conditioning has plateaued at tolerance, not acceptance. Not progressing to genuine acceptance.</span></div>
-      <div class="problem-row"><span class="problem-label">Missing</span><span class="problem-value">Positive anticipation before it goes on &mdash; not just tolerance while it's on. Need to rethink method.</span></div>
+      <div class="problem-row"><span class="problem-label">Ceiling</span><span class="problem-value">She puts up with it but hasn't come to like it, and that hasn't shifted in a while.</span></div>
+      <div class="problem-row"><span class="problem-label">Missing</span><span class="problem-value">We want her looking forward to it before it goes on, not just putting up with it while it's on. Need a new approach.</span></div>
+      <div class="problem-row"><span class="problem-label">Method</span><span class="problem-value">Both the Halti and the muzzle are trained with a dental chew: worn for the duration of the chew, then removed.</span></div>
       <div class="problem-row"><span class="problem-label">Timeline</span><span class="problem-value">Not suitable for walks for at least another couple of months. Indoor sessions continuing.</span></div>
     </div>
   </div>
@@ -57,24 +113,60 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
 <div class="section">
   <div class="section-title">Training wins</div>
   <div class="wins">
-    <div class="win"><div class="win-title">Whistle recall</div><div class="win-detail">Exclusive to recall, paired with high-value fish treats. Successfully called her off a fence-reactive moment with another dog. Enclosed off-lead recall practice established behind basketball courts at the Strand.</div></div>
-    <div class="win"><div class="win-title">Greeting protocol</div><div class="win-detail">Visitors ignore for 20 minutes, hands crossed, no dangly items. Kaya removed to garden if over-threshold, re-admitted when calm. Visible progress.</div></div>
-    <div class="win"><div class="win-title">Second floor access</div><div class="win-detail">Earned through good behaviour. Strict rules: single blanket grab, pillow grab, or table lick results in immediate removal downstairs. Juliet balcony providing controlled environmental exposure.</div></div>
-    <div class="win"><div class="win-title">Parallel walking</div><div class="win-detail">Building a calm template for other dogs at the enclosed dog field with Ria Newcombe. Structured, low-arousal exposure.</div></div>
-    <div class="win"><div class="win-title">Ball and tug reinstated</div><div class="win-detail">Working well post-heat without the arousal problems previously associated with them.</div></div>
+    <div class="win">
+      <div class="win-title">Whistle recall</div>
+      <div class="win-detail">Only ever used for recall, with the fish treats. It once called her off a dog she was reacting to through a fence. We practise off-lead recall in the enclosed area behind the basketball courts at the Strand.</div>
+    </div>
+    <div class="win">
+      <div class="win-title">Parallel walking</div>
+      <div class="win-detail">Rhea walks her alongside other dogs at the enclosed field. Calm, low-key time near dogs without it tipping over into over-excitement.</div>
+    </div>
+    <div class="win">
+      <div class="win-title">Ball and tug reinstated</div>
+      <div class="win-detail">Working well post-heat without the arousal problems previously associated with them.</div>
+    </div>
+    <div class="win">
+      <div class="win-title">Impulse control - don't take what you're not handed</div>
+      <div class="win-detail">Teaching her not to take things she isn't handed. We walked around for a week with a cloth hanging out of a pocket, and have now graduated to a piece of worn (smelly) clothing. She can sniff it, but the moment her mouth opens it is the pen for 5 minutes. The same person who puts her in should take her out without fanfare, and she still needs the "break" command to be released.</div>
+    </div>
+    <div class="win">
+      <div class="win-title">Heel walking improving</div>
+      <div class="win-detail">Still needs a lot of treats but much better. Say "good girl" repeatedly while she is in range and not pulling, and "Yes" the moment she looks up at you, rewarding immediately. If she pulls ahead, stop and turn the other way ("this way") and circle until she locks back in. If she won't lock in she may be over-stimulated, so squat down until she re-engages. No hellos on walks for now. You can ask for a sit with light lead tension near a trigger and reward. Whenever she is calm and looking at a trigger, count to 3, say "yes", and reward.</div>
+    </div>
+    <div class="win">
+      <div class="win-title">Leave it game</div>
+      <div class="win-detail">Hold a low-value treat in your hand and show it to her. If she tries to grab it, close your hand. Whenever she leaves it, mark "Yes" and reward with a higher-value treat from the other hand (kept behind your back). When she is leaving it consistently, place the treat on the floor with your hand over the top, treating whenever she leaves it and covering it when she doesn't. She should never get the treat, or anything, she has been asked to leave.</div>
+    </div>
+    <div class="win">
+      <div class="win-title">Collar grab desensitisation</div>
+      <div class="win-detail">Training her to accept being taken by the collar, paired with treats, so a collar hold is a good thing rather than a trigger.</div>
+    </div>
+    <div class="win">
+      <div class="win-title">Running with Kaya (started)</div>
+      <div class="win-detail">Now running with her regularly, just 200m up and down the road, 2x a week, with great success. Building toward canicross.</div>
+    </div>
   </div>
 </div>
 
 <div class="section">
   <div class="section-title">Longer-term goals</div>
   <div class="goals">
-    <div class="goal"><div class="goal-title">Muzzle conditioning</div><div class="goal-detail">Flagged as future priority given scavenging and guarding profile. To be conditioned properly before needed, not introduced reactively.</div></div>
-    <div class="goal"><div class="goal-title">Running with Kaya (Canicross)</div><div class="goal-detail">Both owners run 3x/week. Goal deferred until lead manners and dangerous object recall are reliable. Canicross setup identified as appropriate format.</div></div>
-    <div class="goal"><div class="goal-title">Reliable off-lead</div><div class="goal-detail">Currently practiced in enclosed areas only. Whistle recall building the foundation.</div></div>
+    <div class="goal">
+      <div class="goal-title">Muzzle conditioning</div>
+      <div class="goal-detail">In progress. Trained with a dental chew, worn for the duration of the chew then removed. Conditioning it properly before it is needed, not introduced reactively.</div>
+    </div>
+    <div class="goal">
+      <div class="goal-title">Canicross</div>
+      <div class="goal-detail">Now running 200m 2x a week with success (see wins). Building distance toward a full canicross setup as lead manners and recall firm up.</div>
+    </div>
+    <div class="goal">
+      <div class="goal-title">Reliable off-lead</div>
+      <div class="goal-detail">Currently practised in enclosed areas only. Whistle recall building the foundation.</div>
+    </div>
   </div>
 </div>
 
-<footer>Last updated May 2026 &middot; For Kaya, the floof</footer>
+<footer>Last updated July 2026 &middot; For Kaya, the floof</footer>
 </div>
 </body>
 </html>

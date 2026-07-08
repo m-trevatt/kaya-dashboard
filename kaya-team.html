@@ -1,433 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Team & Contacts - Kaya Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #f4efe6;
-      --bg-card: #fff;
-      --ink: #1a1814;
-      --ink-soft: #5a544a;
-      --ink-faint: #8a8378;
-      --rule: #e5ddd0;
-      --accent: #b8421a;
-      --accent-soft: #f3d9c6;
-      --gold: #c89b3c;
-      --green: #4a7c59;
-      --amber: #c8852f;
-      --red: #b04a3a;
-      --grey: #8a8378;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaya - Team & Contacts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4efe6;--bg-card:#fff;--ink:#1a1814;--ink-soft:#5a544a;--ink-faint:#8a8378;--rule:#e5ddd0;--accent:#b8421a;--accent-soft:#f3d9c6;--green:#4a7c59;--amber:#c8852f;--red:#b04a3a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;background-image:radial-gradient(circle at 20% 10%,rgba(184,66,26,.04) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(200,155,60,.05) 0%,transparent 50%)}
+.container{max-width:720px;margin:0 auto;padding:32px 20px 80px}
+.topnav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--rule);padding:10px 20px;margin:0 -20px 32px}
+.topnav-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;overflow-x:auto;scrollbar-width:none}
+.topnav-inner::-webkit-scrollbar{display:none}
+.topnav a{font-size:13px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--bg-card);white-space:nowrap;transition:all .15s;flex-shrink:0}
+.topnav a:hover{color:var(--ink);border-color:var(--ink-faint)}
+.topnav a.home{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.topnav a.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.page-header{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--rule)}
+.page-header h1{font-weight:800;font-size:clamp(28px,7vw,40px);letter-spacing:-.02em;margin-bottom:6px}
+.page-header h1 em{font-style:normal;color:var(--accent)}
+.page-header p{font-size:14px;color:var(--ink-soft)}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+.team-card{background:var(--bg-card);border:1px solid var(--rule);border-radius:6px;padding:24px;margin-bottom:16px}
+.team-card-header{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.team-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.avatar-vet{background:#d8e5d8;color:var(--green)}
+.avatar-trainer{background:var(--accent-soft);color:var(--accent)}
+.avatar-groomer{background:#e5d8e5;color:#6a3a6a}
+.avatar-walker{background:#e8e1d0;color:#6a5a30}
+.avatar-sitter{background:#d0e0f0;color:#3a5a7a}
+.team-name{font-weight:700;font-size:18px}
+.team-role{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-faint)}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at 20% 50%, rgba(184, 66, 26, 0.05) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 80%, rgba(200, 155, 60, 0.03) 0%, transparent 50%),
-                  var(--bg);
-      color: var(--ink);
-      line-height: 1.6;
-    }
+.team-details{display:flex;flex-direction:column;gap:8px}
+.team-row{display:flex;gap:10px;align-items:baseline}
+.team-label{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-faint);min-width:72px;flex-shrink:0;padding-top:3px}
+.team-value{font-size:14px;color:var(--ink-soft);flex:1;line-height:1.5}
+.team-value a{color:var(--ink);text-decoration:none}
+.team-value a:hover{text-decoration:underline}
 
-    /* Navigation */
-    .topnav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--rule);
-      backdrop-filter: blur(10px);
-      padding: 0.75rem 0;
-    }
+.emergency-banner{background:#fdf0ea;border:1px solid #e8c4b0;border-left:4px solid var(--red);border-radius:4px;padding:16px 20px;margin-bottom:24px}
+.emergency-banner strong{color:var(--red)}
+.emergency-banner a{color:var(--red);font-weight:600}
 
-    .topnav-inner {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      display: flex;
-      gap: 0.5rem;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-    }
-
-    .topnav a {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      border-radius: 2rem;
-      text-decoration: none;
-      color: var(--ink-soft);
-      font-size: 0.9rem;
-      font-weight: 500;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-
-    .topnav a:hover {
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    .topnav a.active,
-    .topnav a.home {
-      background: var(--accent);
-      color: var(--bg-card);
-    }
-
-    /* Main content */
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-    }
-
-    .page-header {
-      margin-bottom: 3rem;
-    }
-
-    .page-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 0.5rem;
-    }
-
-    .page-subtitle {
-      font-size: 1.1rem;
-      color: var(--ink-soft);
-      font-weight: 400;
-    }
-
-    /* Emergency Banner */
-    .emergency-banner {
-      background: rgba(176, 74, 58, 0.1);
-      border-left: 4px solid var(--red);
-      padding: 1.5rem;
-      margin-bottom: 3rem;
-      border-radius: 0.5rem;
-    }
-
-    .emergency-title {
-      font-weight: 700;
-      color: var(--red);
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .emergency-number {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--red);
-      letter-spacing: 0.05em;
-    }
-
-    /* Team Cards */
-    .team-card {
-      background: var(--bg-card);
-      border: 1px solid var(--rule);
-      border-radius: 1rem;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    .team-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: white;
-      flex-shrink: 0;
-    }
-
-    .avatar-green { background: var(--green); }
-    .avatar-accent { background: var(--accent); }
-    .avatar-purple { background: #8b6ba8; }
-    .avatar-gold { background: var(--gold); }
-    .avatar-blue { background: #4a7c9e; }
-    .avatar-grey { background: var(--grey); }
-
-    .team-content h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 0.5rem;
-    }
-
-    .team-role {
-      font-size: 0.95rem;
-      color: var(--ink-soft);
-      font-weight: 500;
-      margin-bottom: 1rem;
-    }
-
-    .detail-row {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-      margin-bottom: 0.75rem;
-    }
-
-    .detail-label {
-      font-weight: 600;
-      color: var(--ink);
-      min-width: 110px;
-      font-size: 0.95rem;
-    }
-
-    .detail-value {
-      color: var(--ink-soft);
-      flex: 1;
-      font-size: 0.95rem;
-    }
-
-    .phone-number {
-      font-family: 'JetBrains Mono', monospace;
-      letter-spacing: 0.02em;
-      font-weight: 500;
-    }
-
-    .detail-value p {
-      margin-bottom: 0.75rem;
-    }
-
-    .detail-value p:last-child {
-      margin-bottom: 0;
-    }
-
-    .phone-emergency {
-      color: var(--red);
-      font-weight: 600;
-    }
-
-    @media (max-width: 768px) {
-      .page-title {
-        font-size: 1.75rem;
-      }
-
-      .team-card {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      .topnav-inner {
-        padding: 0 1rem;
-      }
-
-      main {
-        padding: 1.5rem 1rem;
-      }
-    }
-  </style>
+footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid var(--rule);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.2em}
+@media(max-width:480px){.container{padding:24px 16px 60px}.topnav{margin-left:-16px;margin-right:-16px;padding:8px 16px}.team-row{flex-direction:column;gap:2px}.team-label{min-width:auto}}
+</style>
 </head>
 <body>
-  <nav class="topnav">
-    <div class="topnav-inner">
-      <a href="index.html" class="home">&larr; Dashboard</a>
-      <a href="kaya-commands.html">Commands</a>
-      <a href="kaya-routine.html">Routine</a>
-      <a href="kaya-diet.html">Diet</a>
-      <a href="kaya-training.html">Training</a>
-      <a href="kaya-behaviour.html">Behaviour</a>
-      <a href="kaya-grooming.html">Grooming</a>
-      <a href="kaya-health.html">Health</a>
-      <a href="kaya-team.html" class="active">Team</a>
-      <a href="kaya-rules.html">Rules</a>
-    </div>
-  </nav>
+<nav class="topnav"><div class="topnav-inner">
+  <a href="index.html" class="home">&larr; Dashboard</a>
+  <a href="kaya-commands.html">Commands</a>
+  <a href="kaya-routine.html">Routine</a>
+  <a href="kaya-diet.html">Diet</a>
+  <a href="kaya-training.html">Training</a>
+  <a href="kaya-behaviour.html">Behaviour</a>
+  <a href="kaya-grooming.html">Grooming</a>
+  <a href="kaya-health.html">Health</a>
+  <a href="kaya-team.html" class="active">Team</a>
+  <a href="kaya-rules.html">Rules</a>
+</div></nav>
+<div class="container">
+<div class="page-header">
+  <h1>Team &amp; <em>Contacts</em></h1>
+  <p>Everyone involved in Kaya's care</p>
+</div>
 
-  <main>
-    <div class="page-header">
-      <h1 class="page-title">Team & Contacts</h1>
-      <p class="page-subtitle">Everyone involved in Kaya's care</p>
-    </div>
+<div class="emergency-banner">
+  <strong>Emergency vet:</strong> <a href="tel:01634780073">01634 780 073</a> (Medway Park Veterinary Centre, out of hours)
+</div>
 
-    <!-- Emergency Banner -->
-    <div class="emergency-banner">
-      <div class="emergency-title">Emergency Vet</div>
-      <div class="emergency-number"><span class="phone-number">01634 780 073</span></div>
-    </div>
+<div class="team-card" style="border-left:4px solid var(--accent)">
+  <div class="team-card-header">
+    <div class="team-avatar avatar-walker">&#x1F4BC;</div>
+    <div><div class="team-name">Michael &amp; Esthefanea (Stef)</div><div class="team-role">Owners &middot; primary contact</div></div>
+  </div>
+  <div class="team-details">
+    <div class="team-row"><span class="team-label">Priority</span><span class="team-value">First point of contact for anything to do with Kaya. Reach us before anyone else on this page.</span></div>
+    <div class="team-row"><span class="team-label">Michael</span><span class="team-value"><a href="mailto:michael@trevattdesign.com">michael@trevattdesign.com</a></span></div>
+    <div class="team-row"><span class="team-label">Context</span><span class="team-value">Two owners. The hardest and most important part of training is us being consistent with each other. Every rule applies to both of us equally.</span></div>
+    <div class="team-row"><span class="team-label">Exercise</span><span class="team-value">We both run 3x a week. The goal is to run with Kaya (canicross), and we have started on short 200m runs.</span></div>
+    <div class="team-row"><span class="team-label">Approach</span><span class="team-value">Lots of routine and reward-based training. She reads our mood, so we try to stay calm around her. Copying what the trainer does in person is what helps most.</span></div>
+  </div>
+</div>
 
-    <!-- Medway Park Veterinary Centre -->
-    <div class="team-card">
-      <div class="team-avatar avatar-green">V</div>
-      <div class="team-content">
-        <h3>Medway Park Veterinary Centre</h3>
-        <div class="team-role">Vet</div>
+<div class="team-card">
+  <div class="team-card-header">
+    <div class="team-avatar avatar-vet">&#x1FA7A;</div>
+    <div><div class="team-name">Medway Park Veterinary Centre</div><div class="team-role">Veterinary practice</div></div>
+  </div>
+  <div class="team-details">
+    <div class="team-row"><span class="team-label">Address</span><span class="team-value">46 Watling Street, Gillingham, Kent, ME7 2YN</span></div>
+    <div class="team-row"><span class="team-label">Phone</span><span class="team-value"><a href="tel:01634570530">01634 570 530</a></span></div>
+    <div class="team-row"><span class="team-label">Emergency</span><span class="team-value"><a href="tel:01634780073" style="color:var(--red)">01634 780 073</a></span></div>
+    <div class="team-row"><span class="team-label">Email</span><span class="team-value"><a href="mailto:medwayparkvets@gmail.com">medwayparkvets@gmail.com</a></span></div>
+    <div class="team-row"><span class="team-label">Notes</span><span class="team-value">Performed exploratory surgery at ~4-5 months. Familiar with Kaya's history.</span></div>
+  </div>
+</div>
 
-        <div class="detail-row">
-          <div class="detail-label">Address</div>
-          <div class="detail-value">46 Watling Street, Gillingham, Kent, ME7 2YN</div>
-        </div>
+<div class="team-card">
+  <div class="team-card-header">
+    <div class="team-avatar avatar-trainer">&#x1F3AF;</div>
+    <div><div class="team-name">Adrian</div><div class="team-role">Trainer - ABC for Dogs</div></div>
+  </div>
+  <div class="team-details">
+    <div class="team-row"><span class="team-label">Phone</span><span class="team-value"><a href="tel:+447939203414">07939 203 414</a></span></div>
+    <div class="team-row"><span class="team-label">Sessions</span><span class="team-value">2 sessions completed. Available via message for extra help between sessions.</span></div>
+    <div class="team-row"><span class="team-label">Focus</span><span class="team-value">Two primary issues addressed. Good success so far. Warning bite pattern needs raising urgently.</span></div>
+  </div>
+</div>
 
-        <div class="detail-row">
-          <div class="detail-label">Phone</div>
-          <div class="detail-value"><span class="phone-number">01634 570 530</span></div>
-        </div>
+<div class="team-card">
+  <div class="team-card-header">
+    <div class="team-avatar avatar-groomer">&#x2728;</div>
+    <div><div class="team-name">Eleanor</div><div class="team-role">Dog groomer - mobile van</div></div>
+  </div>
+  <div class="team-details">
+    <div class="team-row"><span class="team-label">Phone</span><span class="team-value">TBC</span></div>
+    <div class="team-row"><span class="team-label">Sessions</span><span class="team-value">3 washes completed. Mobile grooming van comes to the house.</span></div>
+    <div class="team-row"><span class="team-label">Notes</span><span class="team-value">Last groom didn't manage to fully dry Kaya - blow-dry tolerance needs work before next session.</span></div>
+  </div>
+</div>
 
-        <div class="detail-row">
-          <div class="detail-label">Emergency</div>
-          <div class="detail-value"><span class="phone-number phone-emergency">01634 780 073</span></div>
-        </div>
+<div class="team-card">
+  <div class="team-card-header">
+    <div class="team-avatar avatar-walker">&#x1F6B6;</div>
+    <div><div class="team-name">Rhea</div><div class="team-role">Experienced dog walker</div></div>
+  </div>
+  <div class="team-details">
+    <div class="team-row"><span class="team-label">Phone</span><span class="team-value">TBC</span></div>
+    <div class="team-row"><span class="team-label">Experience</span><span class="team-value">Taken Kaya to the enclosed dog field with other dogs. Walked together for almost 2 hours. Can take Kaya in the car and walk her solo. Seems very confident with high-energy dogs.</span></div>
+    <div class="team-row"><span class="team-label">Potential</span><span class="team-value">Could introduce Kaya to a more mature dog at her house. Does dog sitting - one household of dogs at a time only.</span></div>
+  </div>
+</div>
 
-        <div class="detail-row">
-          <div class="detail-label">Email</div>
-          <div class="detail-value">medwayparkvets@gmail.com</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Notes</div>
-          <div class="detail-value">Performed exploratory surgery at ~4-5 months. Familiar with Kaya's history.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Adrian — Trainer -->
-    <div class="team-card">
-      <div class="team-avatar avatar-accent">A</div>
-      <div class="team-content">
-        <h3>Adrian</h3>
-        <div class="team-role">Trainer — ABC for Dogs</div>
-
-        <div class="detail-row">
-          <div class="detail-label">Phone</div>
-          <div class="detail-value"><span class="phone-number">07939 203 414</span></div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Sessions</div>
-          <div class="detail-value">2 completed. Available via message between sessions.</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Focus</div>
-          <div class="detail-value">Two primary issues addressed. Good success. Warning bite pattern needs raising urgently.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Eleanor — Groomer -->
-    <div class="team-card">
-      <div class="team-avatar avatar-purple">E</div>
-      <div class="team-content">
-        <h3>Eleanor</h3>
-        <div class="team-role">Groomer — Els' Dog Grooming</div>
-
-        <div class="detail-row">
-          <div class="detail-label">Contact</div>
-          <div class="detail-value">WhatsApp business account</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Sessions</div>
-          <div class="detail-value">3 washes completed</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Service</div>
-          <div class="detail-value">Mobile grooming van</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Notes</div>
-          <div class="detail-value">Last groom didn't fully dry — blow-dry tolerance needs work. Briefing on full dry requirement essential.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Ria Newcombe — Dog Walker -->
-    <div class="team-card">
-      <div class="team-avatar avatar-gold">R</div>
-      <div class="team-content">
-        <h3>Ria Newcombe</h3>
-        <div class="team-role">Experienced Dog Walker</div>
-
-        <div class="detail-row">
-          <div class="detail-label">Phone</div>
-          <div class="detail-value"><span class="phone-number">07494 475 494</span></div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Experience</div>
-          <div class="detail-value">
-            <p>Taken Kaya to enclosed dog field with other dogs. Walked almost 2 hours. Can take Kaya in car and walk solo. Very confident with high-energy dogs.</p>
-          </div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Potential</div>
-          <div class="detail-value">
-            <p>Could introduce Kaya to mature dog at her house. Does dog sitting — one household at a time only.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Briyen Haviska — Dog Sitter -->
-    <div class="team-card">
-      <div class="team-avatar avatar-blue">B</div>
-      <div class="team-content">
-        <h3>Briyen Haviska</h3>
-        <div class="team-role">Dog Sitter</div>
-
-        <div class="detail-row">
-          <div class="detail-label">Phone</div>
-          <div class="detail-value"><span class="phone-number">+39 351 559 1200</span></div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Schedule</div>
-          <div class="detail-value">Regular Fridays. One weekend sit.</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Experience</div>
-          <div class="detail-value">Student. One successful walk completed.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Michael & Esthefanea — Owners -->
-    <div class="team-card">
-      <div class="team-avatar avatar-grey">M</div>
-      <div class="team-content">
-        <h3>Michael & Esthefanea (Stef)</h3>
-        <div class="team-role">Owners</div>
-
-        <div class="detail-row">
-          <div class="detail-label">Context</div>
-          <div class="detail-value">Two owners. Consistency between them is the central challenge.</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Exercise</div>
-          <div class="detail-value">Both run 3x/week. Goal is canicross with Kaya.</div>
-        </div>
-
-        <div class="detail-row">
-          <div class="detail-label">Approach</div>
-          <div class="detail-value">
-            <p>Significant investment in structured routine and positive reinforcement. Owner self-aware about nervous system co-regulation. Modelled behaviour from trainer is most effective.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </main>
+<footer>Last updated July 2026 &middot; For Kaya, the floof</footer>
+</div>
 </body>
 </html>
