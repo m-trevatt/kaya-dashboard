@@ -24,6 +24,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 .page-header h1 em{font-style:normal;color:var(--accent)}
 .page-header p{font-size:14px;color:var(--ink-soft)}
 
+.tier-tabs{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-bottom:36px;padding-bottom:4px}
+.tier-tabs::-webkit-scrollbar{display:none}
+.tier-tab{font-size:12px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:7px 13px;border-radius:999px;border:1px solid var(--rule);background:var(--bg-card);white-space:nowrap;transition:all .15s}
+.tier-tab:hover{color:var(--ink);border-color:var(--ink-faint)}
+.tier-tab.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .rules-section{margin-bottom:36px;scroll-margin-top:80px}
 .rules-title{font-weight:700;font-size:18px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
 
@@ -67,7 +72,6 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
   <a href="kaya-routine.html">Routine</a>
   <a href="kaya-diet.html">Diet</a>
   <a href="kaya-training.html">Training</a>
-  <a href="kaya-behaviour.html">Behaviour</a>
   <a href="kaya-grooming.html">Grooming</a>
   <a href="kaya-health.html">Health</a>
   <a href="kaya-team.html">Team</a>
@@ -75,8 +79,18 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
 </div></nav>
 <div class="container">
 <div class="page-header">
-  <h1>Management <em>Rules</em></h1>
-  <p>Non-negotiable protocols for anyone handling Kaya</p>
+  <h1>Rules</h1>
+</div>
+<div class="tier-tabs">
+  <a href="#access" class="tier-tab">Access</a>
+  <a href="#guarding" class="tier-tab">Guarding</a>
+  <a href="#lead" class="tier-tab">Lead &amp; handling</a>
+  <a href="#pen" class="tier-tab">Pen &amp; rest</a>
+  <a href="#greeting" class="tier-tab">Greetings</a>
+  <a href="#manners" class="tier-tab">Manners</a>
+  <a href="#toilet" class="tier-tab">Toilet</a>
+  <a href="#recall" class="tier-tab">Recall</a>
+  <a href="#hot-weather" class="tier-tab">Hot weather</a>
 </div>
 
 <div class="rules-section" id="access">
@@ -131,7 +145,7 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
   </div>
 </div>
 
-<div class="rules-section">
+<div class="rules-section" id="lead">
   <div class="rules-title">Lead &amp; handling</div>
 
   <div class="rule-card critical">
@@ -149,7 +163,7 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
   </div>
 </div>
 
-<div class="rules-section">
+<div class="rules-section" id="pen">
   <div class="rules-title">Pen &amp; rest</div>
 
   <div class="rule-card standard">
@@ -168,7 +182,7 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
   </div>
 </div>
 
-<div class="rules-section">
+<div class="rules-section" id="greeting">
   <div class="rules-title">Greeting new people</div>
 
   <div class="rule-card important">
@@ -181,7 +195,7 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
   </div>
 </div>
 
-<div class="rules-section">
+<div class="rules-section" id="manners">
   <div class="rules-title">Household manners</div>
 
   <div class="rule-card important">
@@ -199,7 +213,7 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
   </div>
 </div>
 
-<div class="rules-section">
+<div class="rules-section" id="toilet">
   <div class="rules-title">Toilet</div>
 
   <div class="rule-card standard">
@@ -211,7 +225,7 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
   </div>
 </div>
 
-<div class="rules-section">
+<div class="rules-section" id="recall">
   <div class="rules-title">Recall</div>
 
   <div class="rule-card standard">
@@ -222,7 +236,7 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
   </div>
 </div>
 
-<div class="rules-section">
+<div class="rules-section" id="hot-weather">
   <div class="rules-title">Hot weather</div>
 
   <div class="rule-card critical">
@@ -243,6 +257,11 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
 
 <footer>Last updated July 2026 &middot; For Kaya, the floof</footer>
 </div>
+<script>
+const tabs=document.querySelectorAll('.tier-tab'),sections=Array.from(document.querySelectorAll('.rules-section'));
+function updateActive(){const s=window.scrollY+140;let a=0;sections.forEach((sec,i)=>{if(sec.offsetTop<=s)a=i});tabs.forEach((t,i)=>t.classList.toggle('active',i===a))}
+window.addEventListener('scroll',updateActive,{passive:true});updateActive();
+</script>
 <script src="review-widget.js"></script>
 </body>
 </html>

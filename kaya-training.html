@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kaya - Training & Problems</title>
+<title>Kaya - Training</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -22,11 +22,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 .page-header{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--rule)}
 .page-header h1{font-weight:800;font-size:clamp(28px,7vw,40px);letter-spacing:-.02em;margin-bottom:6px}
 .page-header h1 em{font-style:normal;color:var(--accent)}
-.page-header p{font-size:14px;color:var(--ink-soft)}
-.section{margin-bottom:40px}
-.section-title{font-weight:700;font-size:18px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.tier-tabs{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-bottom:36px;padding-bottom:4px}
+.tier-tabs::-webkit-scrollbar{display:none}
+.tier-tab{font-size:12px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:7px 13px;border-radius:999px;border:1px solid var(--rule);background:var(--bg-card);white-space:nowrap;transition:all .15s}
+.tier-tab:hover{color:var(--ink);border-color:var(--ink-faint)}
+.tier-tab.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.section{margin-bottom:40px;scroll-margin-top:80px}
+.section-title{font-weight:700;font-size:18px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:10px}
+.section-badge{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;padding:3px 8px;border-radius:2px;font-weight:500}
+.badge-red{background:#f5d0d0;color:var(--red)}
+.badge-amber{background:#fce8d0;color:var(--amber)}
+.badge-green{background:#d8e5d8;color:var(--green)}
 
-/* Problem cards */
 .problem{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;margin-bottom:16px;overflow:hidden}
 .problem-header{padding:16px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--rule)}
 .priority-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:4px 10px;border-radius:2px;flex-shrink:0}
@@ -39,13 +46,20 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--i
 .problem-label{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-faint);min-width:72px;flex-shrink:0;padding-top:3px}
 .problem-value{flex:1;line-height:1.5}
 
-/* Win cards */
+.profile-card{background:var(--bg-card);border:1px solid var(--rule);border-radius:4px;padding:18px 20px;margin-bottom:12px}
+.profile-card h4{font-weight:600;font-size:15px;margin-bottom:8px}
+.profile-card p{font-size:14px;color:var(--ink-soft);margin-bottom:6px;line-height:1.55}
+.profile-card p:last-child{margin-bottom:0}
+.key-point{padding-left:12px;border-left:3px solid var(--accent-soft);margin:8px 0;font-size:14px;color:var(--ink-soft)}
+.key-point strong{color:var(--ink)}
+.trigger-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.trigger-tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 10px;border-radius:2px;background:var(--accent-soft);color:var(--accent)}
+
 .wins{display:flex;flex-direction:column;gap:10px}
 .win{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--green);border-radius:4px;padding:14px 18px}
 .win-title{font-weight:600;font-size:15px;margin-bottom:4px}
 .win-detail{font-size:13px;color:var(--ink-soft)}
 
-/* Goals */
 .goals{display:flex;flex-direction:column;gap:10px}
 .goal{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--amber);border-radius:4px;padding:14px 18px}
 .goal-title{font-weight:600;font-size:15px;margin-bottom:4px}
@@ -62,7 +76,6 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
   <a href="kaya-routine.html">Routine</a>
   <a href="kaya-diet.html">Diet</a>
   <a href="kaya-training.html" class="active">Training</a>
-  <a href="kaya-behaviour.html">Behaviour</a>
   <a href="kaya-grooming.html">Grooming</a>
   <a href="kaya-health.html">Health</a>
   <a href="kaya-team.html">Team</a>
@@ -70,48 +83,149 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
 </div></nav>
 <div class="container">
 <div class="page-header">
-  <h1>Training &amp; <em>Problems</em></h1>
-  <p>Active priorities, current protocols, and training wins</p>
+  <h1>Training</h1>
+</div>
+<div class="tier-tabs">
+  <a href="#bites" class="tier-tab">Bites &amp; guarding</a>
+  <a href="#arousal" class="tier-tab">Arousal &amp; reactivity</a>
+  <a href="#protocols" class="tier-tab">Active protocols</a>
+  <a href="#walks" class="tier-tab">On-walk management</a>
+  <a href="#wins" class="tier-tab">What's working</a>
+  <a href="#goals" class="tier-tab">Goals</a>
 </div>
 
-<div class="section">
-  <div class="section-title">Active problems - priority order</div>
+<!-- BITES & GUARDING -->
+<div class="section" id="bites">
+  <div class="section-title">Warning bites &amp; guarding <span class="section-badge badge-red">Urgent</span></div>
 
-  <div class="problem">
-    <div class="problem-header"><span class="priority-badge p1">P1 - Urgent</span><span class="problem-title">Warning bites</span></div>
-    <div class="problem-body">
-      <div class="problem-row"><span class="problem-label">Contexts</span><span class="problem-value">Nail cutting, coat blowing, lead removal at bedtime, dangerous object guarding.</span></div>
-      <div class="problem-row"><span class="problem-label">Pattern</span><span class="problem-value">Spreading to new situations. She has worked out that a warning bite makes the unwanted thing stop, so every time it works it teaches her to do it again.</span></div>
-      <div class="problem-row"><span class="problem-label">Escalation</span><span class="problem-value">On 12 June 2026, a dog sitter tried to keep hold of a cardigan that Kaya had grabbed. Kaya gave warning bites on the sitter's forearm, breaking skin for the first time. On 25 June, a second sitter tried to pull a grabbed shoe from Kaya directly, and Kaya escalated to jumping and biting at clothing. This is exactly why we don't take things from her: anything that isn't life-threatening stays with her.</span></div>
-      <div class="problem-row"><span class="problem-label">Status</span><span class="problem-value">Trainer needs to assess this as a pattern, not individual incidents. Professional assessment urgently needed.</span></div>
-      <div class="problem-row"><span class="problem-label">Action</span><span class="problem-value">Discuss with Adrian at next session. Frame as an escalating pattern across multiple contexts.</span></div>
-    </div>
+  <div class="profile-card">
+    <h4>The pattern</h4>
+    <p>Kaya guards specific stolen or self-discovered objects, not food or space. When she grabs something and someone tries to take it directly, she escalates through warning bites. She has learned that biting makes the unwanted thing stop, so every time it works it reinforces the behaviour. This pattern is spreading to new contexts: nail cutting, coat blowing, lead removal at bedtime, and dangerous object guarding.</p>
+    <div class="key-point"><strong>Core rule:</strong> do not take items from her while she is guarding. Anything that is not life-threatening stays with her. Follow the <a href="kaya-rules.html#guarding">guarding protocol</a>.</div>
+  </div>
+
+  <div class="profile-card">
+    <h4>Bite incidents</h4>
+    <p><strong>12 June 2026:</strong> A dog sitter removed her own cardigan and wrapped it around her waist while walking Kaya. Kaya grabbed the cardigan. The sitter tried to keep hold of it, triggering the guarding response. Warning bites on the sitter's forearm, breaking skin for the first time.</p>
+    <p><strong>25 June 2026:</strong> A different sitter followed the crate release protocol. Kaya grabbed one of the sitter's trainers. The sitter tried to pull it from her directly rather than using the guarding protocol. Kaya escalated to jumping and grabbing at clothing, tearing it, and made contact with the sitter's upper arm. Skin was not broken.</p>
+    <div class="key-point"><strong>Both incidents</strong> happened because the person tried to take something from her. When the protocol is followed, these situations resolve calmly.</div>
   </div>
 
   <div class="problem">
     <div class="problem-header"><span class="priority-badge p2">P2 - Active</span><span class="problem-title">Dangerous object protocol ceiling</span></div>
     <div class="problem-body">
-      <div class="problem-row"><span class="problem-label">Issue</span><span class="problem-value">She knows the pattern. Locks jaw pre-emptively when she picks up dangerous items (glasses case, tin lids, screws, bolts).</span></div>
-      <div class="problem-row"><span class="problem-label">Tried</span><span class="problem-value">Treat scatter protocol - has stopped working because she's factored it in. Interventions happen too late (after jaw lock, not at pickup moment).</span></div>
-      <div class="problem-row"><span class="problem-label">Needed</span><span class="problem-value">Change the treat to something surprising. Intervene at the moment of pickup, not after lock. Two-person approach for genuinely dangerous objects - one distracts, one removes.</span></div>
+      <div class="problem-row"><span class="problem-label">Issue</span><span class="problem-value">She knows the treat scatter pattern. Locks jaw pre-emptively when she picks up dangerous items (glasses case, tin lids, screws, bolts).</span></div>
+      <div class="problem-row"><span class="problem-label">Tried</span><span class="problem-value">Treat scatter protocol has stopped working because she's factored it in. Interventions happen too late (after jaw lock, not at pickup moment).</span></div>
+      <div class="problem-row"><span class="problem-label">Needed</span><span class="problem-value">Change the treat to something surprising. Intervene at the moment of pickup, not after lock. Two-person approach for genuinely dangerous objects.</span></div>
       <div class="problem-row"><span class="problem-label">Outdoors</span><span class="problem-value">Improving. Dynamic movement helps natural drop without direct intervention.</span></div>
     </div>
   </div>
 
+  <div class="profile-card">
+    <h4>Status</h4>
+    <p>Trainer needs to assess this as a pattern across contexts, not individual incidents. Professional assessment urgently needed. Frame for Adrian at next session as an escalating pattern.</p>
+  </div>
+</div>
+
+<!-- AROUSAL & REACTIVITY -->
+<div class="section" id="arousal">
+  <div class="section-title">Arousal &amp; reactivity <span class="section-badge badge-amber">Elevated baseline</span></div>
+
+  <div class="profile-card">
+    <h4>How she works</h4>
+    <p>Kaya's arousal baseline is higher than normal for her age, confirmed by the trainer. Her first real heat (finished 12 June 2026) brought it down a little, but it is still high. If a stimulus reflects energy back at her, she escalates immediately. Calm dog means very excited but manageable. High-energy dog means she matches and doubles it. Same with people.</p>
+    <div class="trigger-list">
+      <span class="trigger-tag">Greetings with known people</span>
+      <span class="trigger-tag">Seeing other dogs</span>
+      <span class="trigger-tag">Lead going on</span>
+      <span class="trigger-tag">Transitions between activities</span>
+    </div>
+  </div>
+
+  <div class="profile-card">
+    <h4>Other dogs</h4>
+    <p>If the other dog is calm, she is mostly well behaved but very excited. This excitement can mask underlying anxiety. If the other dog is high energy, she matches and at least doubles it. Parallel walking at the enclosed dog field is helping her stay calmer around other dogs. The whistle recall once pulled her off a dog she was reacting to through a fence.</p>
+  </div>
+
+  <div class="profile-card">
+    <h4>People</h4>
+    <p>Same energy-mirroring pattern. Follow the <a href="kaya-rules.html#greeting">greeting protocol</a> (ignore completely, hands away, release from a sit). Visible progress. Pre-walk animation is frustration-based, not positive excitement.</p>
+  </div>
+
+  <div class="profile-card">
+    <h4>Management</h4>
+    <p>We practise engage-disengage outside regularly. The main thing is staying calm ourselves, because she settles when we settle. Copying what the trainer does in person has been the most useful thing.</p>
+    <p>Ball and tug are back since the heat, without the over-excitement they used to cause.</p>
+    <div class="key-point"><strong>Build trust:</strong> praise her a lot and don't be scared of her. She wants to do the right thing desperately, she just needs to know when she is doing it.</div>
+  </div>
+
+  <div class="profile-card">
+    <h4>Fear</h4>
+    <p>Minimal. One fear response to a sail being dropped quickly at the front of the house. No issues with fireworks, thunder, being alone, or new environments. Car travel settles eventually. Handling generally fine. Cats, squirrels, and small animals are untested.</p>
+  </div>
+</div>
+
+<!-- ACTIVE PROTOCOLS -->
+<div class="section" id="protocols">
+  <div class="section-title">Active protocols</div>
+
   <div class="problem">
     <div class="problem-header"><span class="priority-badge p3">P3 - Stalled</span><span class="problem-title">Halti conditioning</span></div>
     <div class="problem-body">
-      <div class="problem-row"><span class="problem-label">Status</span><span class="problem-value">Tolerates it for duration of high-value chew only. Removes it the moment chew ends or disappears.</span></div>
-      <div class="problem-row"><span class="problem-label">Ceiling</span><span class="problem-value">She puts up with it but hasn't come to like it, and that hasn't shifted in a while.</span></div>
-      <div class="problem-row"><span class="problem-label">Missing</span><span class="problem-value">We want her looking forward to it before it goes on, not just putting up with it while it's on. Need a new approach.</span></div>
+      <div class="problem-row"><span class="problem-label">Status</span><span class="problem-value">Tolerates it for duration of high-value chew only. Removes it the moment chew ends.</span></div>
+      <div class="problem-row"><span class="problem-label">Ceiling</span><span class="problem-value">She puts up with it but hasn't come to like it. We want her looking forward to it before it goes on.</span></div>
       <div class="problem-row"><span class="problem-label">Method</span><span class="problem-value">Both the Halti and the muzzle are trained with a dental chew: worn for the duration of the chew, then removed.</span></div>
       <div class="problem-row"><span class="problem-label">Timeline</span><span class="problem-value">Not suitable for walks for at least another couple of months. Indoor sessions continuing.</span></div>
     </div>
   </div>
+
+  <div class="profile-card">
+    <h4>Impulse control: don't take what you're not handed</h4>
+    <p>Teaching her not to take things she isn't handed. We walked around for a week with a cloth hanging out of a pocket, and have now graduated to a piece of worn (smelly) clothing. She can sniff it, but the moment her mouth opens it is the pen for 5 minutes. The same person who puts her in should take her out without fanfare, and she still needs the "break" command to be released.</p>
+  </div>
+
+  <div class="profile-card">
+    <h4>Leave it game</h4>
+    <p>Hold a low-value treat in your hand and show it to her. If she tries to grab it, close your hand. Whenever she leaves it, mark "Yes" and reward with a higher-value treat from the other hand (kept behind your back). When she is leaving it consistently, place the treat on the floor with your hand over the top, treating whenever she leaves it and covering it when she doesn't. She should never get the treat, or anything, she has been asked to leave.</p>
+  </div>
+
+  <div class="profile-card">
+    <h4>Collar grab desensitisation</h4>
+    <p>Training her to accept being taken by the collar, paired with treats, so a collar hold is a good thing rather than a trigger.</p>
+  </div>
 </div>
 
-<div class="section">
-  <div class="section-title">Training wins</div>
+<!-- ON-WALK MANAGEMENT -->
+<div class="section" id="walks">
+  <div class="section-title">On-walk management</div>
+
+  <div class="profile-card">
+    <h4>Heel walking</h4>
+    <p>Still needs a lot of treats but much better. Say "good girl" repeatedly while she is in range and not pulling, and "Yes" the moment she looks up at you, rewarding immediately. If she pulls ahead, stop and turn the other way ("this way") and circle until she locks back in. If she won't lock in she may be over-stimulated, so squat down until she re-engages.</p>
+    <p>No hellos on walks for now. You can ask for a sit with light lead tension near a trigger and reward. Whenever she is calm and looking at a trigger, count to 3, say "yes", and reward.</p>
+  </div>
+
+  <div class="profile-card">
+    <h4>Triggers on the street</h4>
+    <p>Cross the road or stick to one side when another dog or person approaches. Sometimes put in a sit, sometimes distraction treats straight on the nose.</p>
+    <div class="key-point"><strong>Foot-planting:</strong> if caught too close to a trigger (someone coming out of an alleyway), she plants her feet and no amount of pulling will move her. Ask the person to move on, encourage Kaya to stay on all fours.</div>
+    <p>After a trigger passes, sometimes follows behind at distance. Engage-disengage: whenever she is looking at a trigger, she will come to you for praise. Just say "good girl" and give her pats. If she is locked on and won't look away, cue "Yes" and throw a treat the other way.</p>
+  </div>
+
+  <div class="profile-card">
+    <h4>Walking setup</h4>
+    <p>No Halti currently. Retractable lead. Heel walk to the park, full 5 metres at the park for sniffing, released with a sit-wait then "break" or "go sniff". The Strand in mornings, lower footfall, better for threshold management.</p>
+  </div>
+
+  <div class="profile-card">
+    <h4>Foxtails</h4>
+    <p>There are currently many foxtails in all the standard walking areas. Avoid them. Her long fur hides them easily, and you need to check all four legs when you get home. Stick to the paved areas around the Strand, or take her the other way through the forest tunnel (expert handlers only).</p>
+  </div>
+</div>
+
+<!-- WHAT'S WORKING -->
+<div class="section" id="wins">
+  <div class="section-title">What's working <span class="section-badge badge-green">Progress</span></div>
   <div class="wins">
     <div class="win">
       <div class="win-title">Whistle recall</div>
@@ -126,30 +240,15 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
       <div class="win-detail">Working well post-heat without the arousal problems previously associated with them.</div>
     </div>
     <div class="win">
-      <div class="win-title">Impulse control - don't take what you're not handed</div>
-      <div class="win-detail">Teaching her not to take things she isn't handed. We walked around for a week with a cloth hanging out of a pocket, and have now graduated to a piece of worn (smelly) clothing. She can sniff it, but the moment her mouth opens it is the pen for 5 minutes. The same person who puts her in should take her out without fanfare, and she still needs the "break" command to be released.</div>
-    </div>
-    <div class="win">
-      <div class="win-title">Heel walking improving</div>
-      <div class="win-detail">Still needs a lot of treats but much better. Say "good girl" repeatedly while she is in range and not pulling, and "Yes" the moment she looks up at you, rewarding immediately. If she pulls ahead, stop and turn the other way ("this way") and circle until she locks back in. If she won't lock in she may be over-stimulated, so squat down until she re-engages. No hellos on walks for now. You can ask for a sit with light lead tension near a trigger and reward. Whenever she is calm and looking at a trigger, count to 3, say "yes", and reward.</div>
-    </div>
-    <div class="win">
-      <div class="win-title">Leave it game</div>
-      <div class="win-detail">Hold a low-value treat in your hand and show it to her. If she tries to grab it, close your hand. Whenever she leaves it, mark "Yes" and reward with a higher-value treat from the other hand (kept behind your back). When she is leaving it consistently, place the treat on the floor with your hand over the top, treating whenever she leaves it and covering it when she doesn't. She should never get the treat, or anything, she has been asked to leave.</div>
-    </div>
-    <div class="win">
-      <div class="win-title">Collar grab desensitisation</div>
-      <div class="win-detail">Training her to accept being taken by the collar, paired with treats, so a collar hold is a good thing rather than a trigger.</div>
-    </div>
-    <div class="win">
-      <div class="win-title">Running with Kaya (started)</div>
+      <div class="win-title">Running with Kaya</div>
       <div class="win-detail">Now running with her regularly, just 200m up and down the road, 2x a week, with great success. Building toward canicross.</div>
     </div>
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title">Longer-term goals</div>
+<!-- GOALS -->
+<div class="section" id="goals">
+  <div class="section-title">Goals</div>
   <div class="goals">
     <div class="goal">
       <div class="goal-title">Muzzle conditioning</div>
@@ -157,7 +256,7 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
     </div>
     <div class="goal">
       <div class="goal-title">Canicross</div>
-      <div class="goal-detail">Now running 200m 2x a week with success (see wins). Building distance toward a full canicross setup as lead manners and recall firm up.</div>
+      <div class="goal-detail">Now running 200m 2x a week. Building distance toward a full canicross setup as lead manners and recall firm up.</div>
     </div>
     <div class="goal">
       <div class="goal-title">Reliable off-lead</div>
@@ -168,6 +267,11 @@ footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid v
 
 <footer>Last updated July 2026 &middot; For Kaya, the floof</footer>
 </div>
+<script>
+const tabs=document.querySelectorAll('.tier-tab'),sections=Array.from(document.querySelectorAll('.section'));
+function updateActive(){const s=window.scrollY+140;let a=0;sections.forEach((sec,i)=>{if(sec.offsetTop<=s)a=i});tabs.forEach((t,i)=>t.classList.toggle('active',i===a))}
+window.addEventListener('scroll',updateActive,{passive:true});updateActive();
+</script>
 <script src="review-widget.js"></script>
 </body>
 </html>

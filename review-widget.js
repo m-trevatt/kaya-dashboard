@@ -319,9 +319,18 @@
         hl.style.display = 'none';
       }
     }
+    // Cmd/Ctrl+Enter to submit
     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && dlg.classList.contains('open')) {
       e.preventDefault();
       submit();
+    }
+    // "c" key toggles review mode (not when typing in a field)
+    if (e.key === 'c' && !e.metaKey && !e.ctrlKey && !e.altKey && !dlg.classList.contains('open')) {
+      var tag = (document.activeElement || {}).tagName;
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
+        e.preventDefault();
+        btn.click();
+      }
     }
   });
 
