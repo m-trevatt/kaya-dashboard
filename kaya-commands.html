@@ -180,5 +180,6 @@ const tabs=document.querySelectorAll('.tier-tab'),sections=Array.from(document.q
 function updateActive(){const s=window.scrollY+140;let a=0;sections.forEach((sec,i)=>{if(sec.offsetTop<=s)a=i});tabs.forEach((t,i)=>t.classList.toggle('active',i===a))}
 window.addEventListener('scroll',updateActive,{passive:true});updateActive();
 </script>
+<script src="review-widget.js"></script>
 </body>
 </html>
