@@ -9,32 +9,25 @@
  * 4. Type what should change, hit Send
  * 5. POSTs to /__review; if no endpoint, falls back to email
  *
- * Screen Capture API used for optional screenshots (user prompted once).
- * Everything degrades gracefully — no errors, no broken pages.
+ * No permissions required. No external dependencies.
  */
 (function () {
   'use strict';
 
   // ── Config ────────────────────────────────────────────────────────
   var CFG = {
-    endpoint: '/__review',
+    endpoint: '/review',
     email: 'michael@trevattdesign.com',
     widgetAttr: 'data-krw',
     hlColor: 'rgba(184,66,26,0.12)',
     hlBorder: '#b8421a',
-    maxSelDepth: 4,
-    shotPad: 24,
-    shotMaxW: 1200,
-    shotQ: 0.82
+    maxSelDepth: 4
   };
 
   // ── State ─────────────────────────────────────────────────────────
   var active = false;
-  var stream = null;
-  var vidEl = null;
-  var shotOk = false;
   var hoverEl = null;
-  var pending = null; // current revision payload
+  var pending = null;
 
   // ── Styles ────────────────────────────────────────────────────────
   var css = document.createElement('style');
@@ -138,73 +131,21 @@
       || '(no text captured)';
   }
 
-  // ── Screenshot ────────────────────────────────────────────────────
-  function startCapture() {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) return;
-    try {
-      navigator.mediaDevices.getDisplayMedia({
-        video: { frameRate: 8 }, audio: false, preferCurrentTab: true
-      }).then(function (s) {
-        stream = s;
-        vidEl = document.createElement('video');
-        vidEl.srcObject = s;
-        vidEl.muted = true;
-        vidEl.playsInline = true;
-        vidEl.play();
-        shotOk = true;
-        s.getVideoTracks()[0].addEventListener('ended', function () {
-          shotOk = false; stream = null;
-        });
-      }).catch(function () { shotOk = false; });
-    } catch (e) { shotOk = false; }
-  }
-
-  function grabShot(el) {
-    if (!shotOk || !vidEl || !vidEl.videoWidth) return null;
-    try {
-      var r = el.getBoundingClientRect();
-      var p = CFG.shotPad;
-      var sx = vidEl.videoWidth / window.innerWidth;
-      var sy = vidEl.videoHeight / window.innerHeight;
-
-      var cx = Math.max(0, (r.left - p) * sx);
-      var cy = Math.max(0, (r.top - p) * sy);
-      var cw = Math.min(vidEl.videoWidth - cx, (r.width + p * 2) * sx);
-      var ch = Math.min(vidEl.videoHeight - cy, (r.height + p * 2) * sy);
-
-      var dw = cw / sx, dh = ch / sy;
-      if (dw > CFG.shotMaxW) { var ratio = CFG.shotMaxW / dw; dw = CFG.shotMaxW; dh *= ratio; }
-
-      var c = document.createElement('canvas');
-      c.width = Math.round(dw); c.height = Math.round(dh);
-      c.getContext('2d').drawImage(vidEl, cx, cy, cw, ch, 0, 0, c.width, c.height);
-      return c.toDataURL('image/jpeg', CFG.shotQ);
-    } catch (e) { return null; }
-  }
-
-  function stopCapture() {
-    if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; }
-    vidEl = null; shotOk = false;
-  }
-
   // ── Build DOM ─────────────────────────────────────────────────────
   var root = document.createElement('div');
   root.setAttribute(CFG.widgetAttr, '');
 
-  // Button
   var btn = document.createElement('button');
   btn.className = 'krw-btn';
   btn.setAttribute(CFG.widgetAttr, '');
   btn.innerHTML = '&#9998; Suggest edit';
   root.appendChild(btn);
 
-  // Highlight
   var hl = document.createElement('div');
   hl.className = 'krw-hl';
   hl.setAttribute(CFG.widgetAttr, '');
   root.appendChild(hl);
 
-  // Dialog
   var dlg = document.createElement('div');
   dlg.className = 'krw-dlg';
   dlg.setAttribute(CFG.widgetAttr, '');
@@ -225,7 +166,6 @@
   ].join('');
   root.appendChild(dlg);
 
-  // Toast
   var toastEl = document.createElement('div');
   toastEl.className = 'krw-toast';
   toastEl.setAttribute(CFG.widgetAttr, '');
@@ -273,12 +213,10 @@
       selector: pending.selector,
       text: pending.text,
       request: req,
-      shot: pending.shot || null,
       timestamp: Date.now(),
       page: document.title
     };
 
-    // Try the endpoint first
     fetch(CFG.endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -289,7 +227,6 @@
         closeDlg();
       } else { throw new Error('not ok'); }
     }).catch(function () {
-      // Endpoint not set up — fall back to email
       fallbackEmail(payload);
     });
   }
@@ -307,7 +244,6 @@
       p.request
     ].join('\n');
 
-    // Try clipboard first
     var copied = false;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       try {
@@ -329,21 +265,16 @@
 
   // ── Event wiring ──────────────────────────────────────────────────
 
-  // Toggle review mode
   btn.addEventListener('click', function () {
     active = !active;
     btn.classList.toggle('on', active);
     document.body.classList.toggle('krw-on', active);
-    if (active) {
-      startCapture();
-    } else {
+    if (!active) {
       closeDlg();
       hl.style.display = 'none';
-      stopCapture();
     }
   });
 
-  // Hover highlight
   document.addEventListener('mousemove', function (e) {
     if (!active || dlg.classList.contains('open')) { hl.style.display = 'none'; return; }
     var el = document.elementFromPoint(e.clientX, e.clientY);
@@ -357,33 +288,27 @@
     hl.style.height = r.height + 'px';
   }, { passive: true });
 
-  // Click interceptor (CAPTURE phase)
   document.addEventListener('click', function (e) {
     if (!active) return;
-    if (isWidget(e.target)) return; // let widget clicks through
+    if (isWidget(e.target)) return;
     e.preventDefault();
     e.stopPropagation();
 
     var el = hoverEl || document.elementFromPoint(e.clientX, e.clientY);
     if (!el || isWidget(el)) return;
 
-    // Hide highlight before grabbing shot
     hl.style.display = 'none';
-    var shot = grabShot(el);
 
     openDlg({
       url: window.location.pathname,
       selector: getSelector(el),
-      text: getText(el),
-      shot: shot
+      text: getText(el)
     }, e.clientX, e.clientY);
   }, true);
 
-  // Dialog buttons
   dlg.querySelector('.krw-cancel').addEventListener('click', closeDlg);
   dlg.querySelector('.krw-send').addEventListener('click', submit);
 
-  // Keyboard
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
       if (dlg.classList.contains('open')) { closeDlg(); }
@@ -392,17 +317,12 @@
         btn.classList.remove('on');
         document.body.classList.remove('krw-on');
         hl.style.display = 'none';
-        stopCapture();
       }
     }
-    // Cmd/Ctrl+Enter to submit
     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && dlg.classList.contains('open')) {
       e.preventDefault();
       submit();
     }
   });
-
-  // Clean up on page unload
-  window.addEventListener('pagehide', stopCapture);
 
 })();

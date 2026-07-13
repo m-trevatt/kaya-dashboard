@@ -5,10 +5,18 @@
   "observability": {
     "enabled": true
   },
+  "main": "worker.js",
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "binding": "ASSETS"
   },
   "compatibility_flags": [
     "nodejs_compat"
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "REVIEWS",
+      "id": "f118ce880bcf4a08b607debdb4645e17"
+    }
   ]
 }
